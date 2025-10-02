@@ -1,20 +1,25 @@
-import { clsx, type ClassValue } from "clsx"
+import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-// src/lib/utils.ts
-
-export function formatRupiah(amount: number | undefined | null): string {
-  if (amount === null || amount === undefined) {
-    amount = 0;
+export const getImageUrl = (path: string | null | undefined): string => {
+  if (!path) {
+    return "/placeholder.svg";
   }
+  if (path.startsWith("http")) {
+    return path;
+  }
+  const storageUrl = import.meta.env.VITE_PUBLIC_STORAGE_URL || "";
+  return `${storageUrl}/${path}`;
+};
+
+export const formatRupiah = (amount: number): string => {
   return new Intl.NumberFormat("id-ID", {
     style: "currency",
     currency: "IDR",
     minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
   }).format(amount);
-}
+};

@@ -1,19 +1,23 @@
-import React, { useState, FormEvent } from 'react';
+import { useState, useEffect, FormEvent } from 'react';
 import { useCart } from '@/hooks/useCart';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Loader2, ShoppingCart } from 'lucide-react';
 import { formatRupiah } from '@/lib/utils';
-import { createGuestOrder, createOrder } from '@/services/checkoutService';
+import { createGuestOrder, createOrder, getShippingCost } from '@/services/checkoutService';
+
 import { useAuth } from '@/context/AuthContext';
+
 
 import { useToast } from '@/hooks/use-toast';
 import { Textarea } from '@/components/ui/textarea';
 
 import { useNavigate } from 'react-router-dom';
-import { useQueryClient } from '@tanstack/react-query';
+
+
 
 const CheckoutPage = () => {
   const { user } = useAuth();
@@ -21,87 +25,97 @@ const CheckoutPage = () => {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
 
-  const [formData, setFormData] = useState({
-    customer_name: '',
-    customer_email: '',
-    shipping_address: '',
-    bride_full_name: '',
-    groom_full_name: '',
-    bride_nickname: '',
-    groom_nickname: '',
-    bride_parents: '',
-    groom_parents: '',
-    akad_date: '',
-    akad_time: '',
-    akad_location: '',
-    reception_date: '',
-    reception_time: '',
-    reception_location: '',
-    gmaps_link: '',
-    prewedding_photo: null as File | null,
-  });
+  // Shipping State
+  const [shippingServices, setShippingServices] = useState<any[]>([]);
+  const [selectedCourier, setSelectedCourier] = useState<string>("jne");
+  const [shippingCost, setShippingCost] = useState<number>(0);
+  const [shippingService, setShippingService] = useState<string>("Gratis");
+  const [isCalculatingCost, setIsCalculatingCost] = useState(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-  };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      setFormData(prev => ({ ...prev, prewedding_photo: e.target.files[0] }));
-    }
-  };
 
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-
-    const data = new FormData();
-    // Append all formData fields to the FormData object
-    Object.entries(formData).forEach(([key, value]) => {
-      // Append all fields, even if empty, so backend can validate required fields
-      if (key === "prewedding_photo" && value instanceof File) {
-        data.append(key, value);
-      } else if (key !== "prewedding_photo") {
-        data.append(key, String(value));
+  useEffect(() => {
+    if (user) {
+      if (!user.address || !user.postal_code) {
+        toast({
+          title: "Alamat Profil Tidak Lengkap",
+          description: "Mohon lengkapi alamat Anda di halaman profil sebelum melanjutkan checkout.",
+          variant: "destructive",
+        });
+        // Optionally disable checkout button or redirect
+      } else if (user.postal_code && selectedCourier) {
+        const fetchShippingCost = async () => {
+          setIsCalculatingCost(true);
+          try {
+            const response = await getShippingCost("78116", user.postal_code, 1000, selectedCourier);
+            setShippingServices(response.rajaongkir.results[0].costs);
+          } catch (error) {
+            console.error("Error fetching shipping cost:", error);
+            toast({
+              title: "Gagal Menghitung Biaya Kirim",
+              description: "Tidak dapat mengambil data biaya pengiriman.",
+              variant: "destructive",
+            });
+          } finally {
+            setIsCalculatingCost(false);
+          }
+        };
+        fetchShippingCost();
       }
-    });
-
-    try {
-      let order;
-      if (user) {
-        order = await createOrder(data);
-      } else {
-        order = await createGuestOrder(data);
-      }
+    } else {
       toast({
-        title: "Pesanan Berhasil Dibuat!",
-        description: "Anda akan segera dihubungi oleh tim kami untuk proses selanjutnya.",
-      });
-      const orderId = order.id; // Access order.id directly
-      navigate(`/order-confirmation/${orderId}`);
-    } catch (error: any) {
-      console.error("Checkout error:", error);
-      let errorMessage = "Terjadi kesalahan saat memproses pesanan Anda.";
-      if (error.response && error.response.data) {
-        if (error.response.data.errors) {
-          // Convert validation errors object to a string
-          errorMessage = Object.values(error.response.data.errors).flat().join('\n');
-        } else if (error.response.data.message) {
-          errorMessage = error.response.data.message;
-        }
-      }
-      toast({
-        title: "Gagal Membuat Pesanan",
-        description: errorMessage,
+        title: "Login Diperlukan",
+        description: "Mohon login untuk melanjutkan checkout. Checkout sebagai tamu tidak didukung tanpa alamat profil.",
         variant: "destructive",
       });
+      // Optionally disable checkout button or redirect
+    }
+  }, [user.postal_code, selectedCourier, toast]);
+
+  const handleServiceSelection = (value: string) => {
+    const [service, cost] = value.split("|");
+    setShippingService(service);
+    setShippingCost(Number(cost));
+  };
+
+
+
+
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (shippingCost === 0 && cart.items.some(item => item.product?.requires_shipping)) {
+      toast({
+        title: "Pilih Layanan Pengiriman",
+        description: "Anda harus memilih layanan pengiriman terlebih dahulu.",
+        variant: "destructive",
+      });
+      return;
+    }
+    setIsSubmitting(true);
+
+    const formData = new FormData(e.currentTarget);
+    formData.append("shipping_address", user?.address || "");
+    formData.append("destination_city_id", String(user?.city_id));
+    formData.append("weight", "1000");
+    formData.append("courier", selectedCourier);
+    formData.append("shipping_cost", String(shippingCost));
+    formData.append("shipping_service", shippingService);
+
+    try {
+      const order = user ? await createOrder(formData) : await createGuestOrder(formData);
+      toast({ title: "Pesanan Berhasil Dibuat!", description: "Anda akan segera dihubungi oleh tim kami." });
+      navigate(`/order-confirmation/${order.id}`);
+    } catch (error: any) {
+      console.error("Checkout error:", error);
+      const errorMessage = error.response?.data?.errors ? Object.values(error.response.data.errors).flat().join('\n') : error.response?.data?.message || "Terjadi kesalahan.";
+      toast({ title: "Gagal Membuat Pesanan", description: errorMessage, variant: "destructive" });
     } finally {
       setIsSubmitting(false);
     }
   };
+
 
   if (isCartLoading) {
     return (
@@ -137,11 +151,45 @@ const CheckoutPage = () => {
             <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="customer_name">Nama Anda</Label>
-                <Input id="customer_name" name="customer_name" value={formData.customer_name} onChange={handleChange} placeholder="Nama Lengkap Anda" required />
+                <Input id="customer_name" name="customer_name" defaultValue={user?.full_name} placeholder="Nama Lengkap Anda" required />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="customer_email">Email Anda</Label>
-                <Input id="customer_email" name="customer_email" type="email" value={formData.customer_email} onChange={handleChange} placeholder="email@example.com" required />
+                <Input id="customer_email" name="customer_email" type="email" defaultValue={user?.email} placeholder="email@example.com" required />
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Shipping Details Card */}
+          <Card>
+            <CardHeader>
+              <CardTitle>Alamat Pengiriman</CardTitle>
+              <p className="text-sm text-gray-500">Alamat pengiriman akan diambil dari profil anda</p>
+            </CardHeader>
+            <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label>Provinsi</Label>
+                <p className="text-sm text-gray-500">{user?.province_name || ''}</p>
+              </div>
+              <div className="space-y-2">
+                <Label>Kota/Kabupaten</Label>
+                <p className="text-sm text-gray-500">{user?.city_name || ''}</p>
+              </div>
+              <div className="space-y-2">
+                <Label>Provinsi</Label>
+                <p className="text-sm text-gray-500">{user?.province_name || ''}</p>
+              </div>
+              <div className="space-y-2">
+                <Label>Kota/Kabupaten</Label>
+                <p className="text-sm text-gray-500">{user?.city_name || ''}</p>
+              </div>
+              <div className="md:col-span-2 space-y-2">
+                <Label htmlFor="shipping_address">Alamat Lengkap</Label>
+                <p className="text-sm text-gray-500">{user?.address || ''}</p>
+              </div>
+              <div className="space-y-2">
+                <Label>Kode Pos</Label>
+                <p className="text-sm text-gray-500">{user?.postal_code || ''}</p>
               </div>
             </CardContent>
           </Card>
@@ -159,27 +207,27 @@ const CheckoutPage = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <Label htmlFor="bride_full_name">Nama Lengkap Mempelai Wanita</Label>
-                    <Input id="bride_full_name" name="bride_full_name" value={formData.bride_full_name} onChange={handleChange} placeholder="Adinda Putri" required />
+                    <Input id="bride_full_name" name="bride_full_name" placeholder="Adinda Putri" required />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="groom_full_name">Nama Lengkap Mempelai Pria</Label>
-                    <Input id="groom_full_name" name="groom_full_name" value={formData.groom_full_name} onChange={handleChange} placeholder="Budi Setiawan" required />
+                    <Input id="groom_full_name" name="groom_full_name" placeholder="Budi Setiawan" required />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="bride_nickname">Nama Panggilan Mempelai Wanita</Label>
-                    <Input id="bride_nickname" name="bride_nickname" value={formData.bride_nickname} onChange={handleChange} placeholder="Dinda" required />
+                    <Input id="bride_nickname" name="bride_nickname" placeholder="Dinda" required />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="groom_nickname">Nama Panggilan Mempelai Pria</Label>
-                    <Input id="groom_nickname" name="groom_nickname" value={formData.groom_nickname} onChange={handleChange} placeholder="Budi" required />
+                    <Input id="groom_nickname" name="groom_nickname" placeholder="Budi" required />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="bride_parents">Nama Orang Tua Mempelai Wanita</Label>
-                    <Input id="bride_parents" name="bride_parents" value={formData.bride_parents} onChange={handleChange} placeholder="Bpk. Hermawan & Ibu Sri Lestari" required />
+                    <Input id="bride_parents" name="bride_parents" placeholder="Bpk. Hermawan & Ibu Sri Lestari" required />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="groom_parents">Nama Orang Tua Mempelai Pria</Label>
-                    <Input id="groom_parents" name="groom_parents" value={formData.groom_parents} onChange={handleChange} placeholder="Bpk. Agus Salim & Ibu Wati" required />
+                    <Input id="groom_parents" name="groom_parents" placeholder="Bpk. Agus Salim & Ibu Wati" required />
                   </div>
                 </div>
               </div>
@@ -192,30 +240,30 @@ const CheckoutPage = () => {
                   <h3 className="text-lg font-semibold">Detail Akad Nikah</h3>
                   <div className="space-y-2">
                     <Label htmlFor="akad_date">Tanggal Akad</Label>
-                    <Input id="akad_date" name="akad_date" type="date" value={formData.akad_date} onChange={handleChange} required />
+                    <Input id="akad_date" name="akad_date" type="date" required />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="akad_time">Waktu Akad</Label>
-                    <Input id="akad_time" name="akad_time" value={formData.akad_time} onChange={handleChange} placeholder="09:00 WIB" required />
+                    <Input id="akad_time" name="akad_time" placeholder="09:00 WIB" required />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="akad_location">Lokasi Akad</Label>
-                    <Input id="akad_location" name="akad_location" value={formData.akad_location} onChange={handleChange} placeholder="Masjid Raya Mujahidin" required />
+                    <Input id="akad_location" name="akad_location" placeholder="Masjid Raya Mujahidin" required />
                   </div>
                 </div>
                 <div className="space-y-4">
                   <h3 className="text-lg font-semibold">Detail Resepsi</h3>
                   <div className="space-y-2">
                     <Label htmlFor="reception_date">Tanggal Resepsi</Label>
-                    <Input id="reception_date" name="reception_date" type="date" value={formData.reception_date} onChange={handleChange} required />
+                    <Input id="reception_date" name="reception_date" type="date" required />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="reception_time">Waktu Resepsi</Label>
-                    <Input id="reception_time" name="reception_time" value={formData.reception_time} onChange={handleChange} placeholder="19:00 WIB" required />
+                    <Input id="reception_time" name="reception_time" placeholder="19:00 WIB" required />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="reception_location">Lokasi Resepsi</Label>
-                    <Input id="reception_location" name="reception_location" value={formData.reception_location} onChange={handleChange} placeholder="Gedung Pontianak Convention Center" required />
+                    <Input id="reception_location" name="reception_location" placeholder="Gedung Pontianak Convention Center" required />
                   </div>
                 </div>
               </div>
@@ -227,88 +275,87 @@ const CheckoutPage = () => {
                 <h3 className="text-lg font-semibold">Data Pendukung (Opsional)</h3>
                 <div className="space-y-2">
                   <Label htmlFor="gmaps_link">Link Google Maps</Label>
-                  <Input id="gmaps_link" name="gmaps_link" type="url" value={formData.gmaps_link} onChange={handleChange} placeholder="https://maps.app.goo.gl/..." />
+                  <Input id="gmaps_link" name="gmaps_link" type="url" placeholder="https://maps.app.goo.gl/..." />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="prewedding_photo">Foto Pre-wedding</Label>
-                  <Input id="prewedding_photo" name="prewedding_photo" type="file" onChange={handleFileChange} />
+                  <Input id="prewedding_photo" name="prewedding_photo" type="file" />
                   <p className="text-xs text-gray-500">Unggah satu foto untuk desain undangan Anda.</p>
                 </div>
               </div>
             </CardContent>
           </Card>
 
-          {/* Alamat Pengiriman */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Alamat Pengiriman</CardTitle>
-              <p className="text-sm text-gray-500">Alamat untuk pengiriman produk fisik.</p>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="shipping_address">Alamat Lengkap Pengiriman</Label>
-                <Textarea id="shipping_address" name="shipping_address" value={formData.shipping_address} onChange={handleChange} placeholder="Jl. Khatulistiwa No. 1, Pontianak" required className="h-24" />
-              </div>
-            </CardContent>
-          </Card>
-        </div>
 
-        {/* Kolom Kanan: Ringkasan Pesanan */}
+
+
+
+
+        </div>
         <div className="lg:col-span-1">
-          <Card className="sticky top-24">
+          <Card>
             <CardHeader>
               <CardTitle>Ringkasan Pesanan</CardTitle>
             </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
+            <CardContent className="space-y-4">
+              <div className="space-y-2">
                 {cart.items.map((item) => {
-                  const STORAGE_URL = import.meta.env.VITE_PUBLIC_STORAGE_URL;
-                  const placeholderImage = "/images/placeholder.svg";
-                  let imageToDisplay = item.variant?.images?.find(img => img.is_featured) || item.product.featured_image || item.variant?.images?.[0];
-                  const imageUrl = imageToDisplay?.image ? `${STORAGE_URL}${imageToDisplay.image}` : placeholderImage;
-
                   return (
-                    <div key={item.id} className="flex justify-between items-center">
-                      <div className="flex items-center space-x-4">
-                        <img src={imageUrl} alt={item.product.name} className="w-16 h-16 object-cover rounded-md" onError={(e) => (e.currentTarget.src = placeholderImage)} />
-                        <div>
-                          <p className="font-semibold">{item.product.name}</p>
-                          <p className="text-sm text-gray-500">Jumlah: {item.quantity}</p>
-                        </div>
+                  <div key={item.id} className="flex justify-between items-center">
+                    <div className="flex items-center space-x-2">
+                      {item.variant?.images && item.variant.images.length > 0 && (
+                        <img src={item.variant.images[0].image} alt={item.product?.name} className="w-16 h-16 object-cover rounded" />
+                      )}
+                      <div>
+                        <p className="text-sm font-medium">{item.product?.name} x {item.quantity}</p>
+                        <p className="text-xs text-gray-500">{item.customizations?.options?.map((opt: { name: string, value: string }) => opt.value).join(' / ')}</p>
                       </div>
-                      <p>{formatRupiah(item.sub_total)}</p>
                     </div>
-                  );
-                })}
-              </div>
-              <div className="border-t pt-4 mt-4 space-y-2">
-                <div className="flex justify-between">
-                  <span>Subtotal</span>
-                  <span>{formatRupiah(cart.subtotal)}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Pengiriman</span>
-                  <span className="text-sm">Akan dihitung</span>
-                </div>
-                <div className="border-t pt-2 mt-2">
-                  <div className="flex justify-between font-bold text-lg">
-                    <span>Total</span>
-                    <span>{formatRupiah(cart.subtotal)}</span>
+                    <span>{formatRupiah(item.sub_total)}</span>
                   </div>
-                </div>
+                )})}
               </div>
-            </CardContent>
-            <div className="p-6">
-              <Button type="submit" className="w-full" size="lg" disabled={isSubmitting}>
-                {isSubmitting ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
-                {isSubmitting ? 'Membuat Pesanan...' : 'Buat Pesanan'}
+              <div className="border-t border-gray-200 pt-4 space-y-2">
+                <Label htmlFor="shipping-service">Layanan Pengiriman</Label>
+                <Select onValueChange={handleServiceSelection} disabled={isCalculatingCost || shippingServices.length === 0}>
+                  <SelectTrigger>
+                    <SelectValue placeholder={isCalculatingCost ? "Menghitung..." : "Pilih layanan"} />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {shippingServices.map((service) => (
+                      <SelectItem key={service.service} value={`${service.service}|${service.cost[0].value}`}>
+                        <div className="flex justify-between w-full">
+                          <span>{service.description} ({service.service})</span>
+                          <span>{formatRupiah(service.cost[0].value)}</span>
+                        </div>
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="border-t border-gray-200 pt-4 flex justify-between">
+                <span>Subtotal</span>
+                <span>{formatRupiah(cart.subtotal)}</span>
+              </div>
+              <div className="flex justify-between">
+                <span>Biaya Pengiriman ({shippingService})</span>
+                <span>{formatRupiah(shippingCost)}</span>
+              </div>
+              <div className="border-t border-gray-200 pt-4 flex justify-between text-lg font-bold">
+                <span>Total Pembayaran</span>
+                <span>{formatRupiah(cart.subtotal + shippingCost)}</span>
+              </div>
+              <Button type="submit" className="w-full" disabled={isSubmitting || isCalculatingCost || !user}>
+                {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                Buat Pesanan
               </Button>
-            </div>
+            </CardContent>
           </Card>
         </div>
       </form>
     </div>
   );
 };
+
 
 export default CheckoutPage;

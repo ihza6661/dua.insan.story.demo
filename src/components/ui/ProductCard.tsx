@@ -2,19 +2,14 @@
 
 import { Link } from "react-router-dom";
 import { Product } from "@/services/productService";
+import { getImageUrl } from "@/lib/utils";
 
 interface ProductCardProps {
   product: Product;
 }
 
 const ProductCard = ({ product }: ProductCardProps) => {
-  const STORAGE_URL = import.meta.env.VITE_PUBLIC_STORAGE_URL;
-  const placeholderImage = "/placeholder.svg";
-
-  // This is the critical part that prevents errors.
-  const imageUrl = product.featured_image?.image
-    ? `${STORAGE_URL}${product.featured_image.image}`
-    : placeholderImage;
+  const imageUrl = getImageUrl(product.featured_image?.image);
 
   return (
     <Link
@@ -26,7 +21,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
           src={imageUrl}
           alt={product.featured_image?.alt_text ?? product.name}
           className="product-card-image w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-          onError={(e) => (e.currentTarget.src = placeholderImage)}
+          onError={(e) => (e.currentTarget.src = "/placeholder.svg")}
         />
       </div>
 

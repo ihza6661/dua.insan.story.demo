@@ -37,7 +37,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     queryFn: async () => {
       console.log('useCart: fetchCart called');
       const fetchedCart = await fetchCart();
-      console.log('useCart: fetchedCart result:', fetchedCart);
+      console.log('useCart: fetchedCart result:', fetchedCart); // ADDED LOG
       return fetchedCart;
     },
   });

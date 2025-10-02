@@ -1,5 +1,6 @@
 // src/components/product/ProductGallery.tsx (Dengan Carousel)
 
+import { getImageUrl } from "@/lib/utils";
 import React from 'react';
 import { ProductImage } from '@/services/productService';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -16,7 +17,6 @@ interface ProductGalleryProps {
 }
 
 const ProductGallery: React.FC<ProductGalleryProps> = ({ images, productName }) => {
-  const STORAGE_URL = import.meta.env.VITE_PUBLIC_STORAGE_URL;
   const placeholderImage = "/images/placeholder.svg";
 
   if (!images || images.length === 0) {
@@ -40,7 +40,7 @@ const ProductGallery: React.FC<ProductGalleryProps> = ({ images, productName }) 
         loop={images.length > 1} // Aktifkan loop jika ada lebih dari 1 gambar
       >
         {images.map((image) => {
-          const imageUrl = image?.image ? `${STORAGE_URL}${image.image}` : placeholderImage;
+          const imageUrl = getImageUrl(image?.image);
           return (
             <SwiperSlide key={image.id}>
               <div className="aspect-square w-full">

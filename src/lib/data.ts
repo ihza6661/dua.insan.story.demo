@@ -10,6 +10,7 @@ export interface Product {
   bestseller?: boolean;
   variants?: ProductVariant[];
   type?: "guestbook" | "invitation" | "envelope" | "other";
+  weight?: number;
 }
 
 export interface ProductVariant {

@@ -15,6 +15,11 @@ export interface User {
   email: string;
   phone_number: string | null;
   role: "customer" | "admin";
+  address?: string | null;
+  city_id?: number | null;
+  city_name?: string | null; // Changed from city_id
+  province_name?: string | null; // Changed from province_id
+  postal_code?: string | null;
 }
 
 // --- Payload untuk Permintaan API ---
@@ -26,15 +31,14 @@ export interface RegisterPayload {
   phone_number?: string;
 }
 
-export interface LoginPayload {
-  email: string;
-  password: string;
-}
-
 export interface UpdateProfilePayload {
   full_name: string;
   email: string;
   phone_number?: string;
+  address?: string;
+  city_name?: string; // Changed from city_id
+  province_name?: string; // Changed from province_id
+  postal_code?: string;
 }
 
 export interface ChangePasswordPayload {

@@ -16,7 +16,7 @@ export interface CartItem {
   quantity: number;
   unit_price: number;
   sub_total: number;
-  customization_details: object;
+  customizations: { options: { value: string }[] } | null;
   product: Product;
   variant: ProductVariant; // This now holds the specific variant details
 }
@@ -56,13 +56,15 @@ export interface AddToCartPayload {
  * Fetches the current user's or guest's cart from the server.
  */
 export const fetchCart = async (): Promise<Cart> => {
-  console.log('fetchCart: Making API call to /cart'); // ADDED LOG
   const response = await apiClient.get<CartResponse>('/cart', {
     headers: {
       'X-Session-ID': localStorage.getItem('cartSessionId') || '',
     },
   });
-  console.log('fetchCart: API response received:', response.data); // ADDED LOG
+  // Save the session_id to localStorage if it exists in the response
+  if (response.data.data.session_id) {
+    localStorage.setItem('cartSessionId', response.data.data.session_id);
+  }
   return response.data.data;
 };
 

@@ -10,18 +10,25 @@ import { toast } from "sonner";
 import { Loader2, Edit2Icon, XCircle } from "lucide-react";
 
 import { getMyProfile, updateProfile, changePassword, UpdateProfilePayload, ChangePasswordPayload } from "@/services/authService";
+import { getProvinces, getCities, Province, City } from "@/services/rajaOngkirService";
 import { useAuth } from "@/context/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Separator } from "@/components/ui/separator";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+
 
 // --- Form Schemas for Validation ---
 const profileFormSchema = z.object({
   full_name: z.string().min(3, "Nama lengkap minimal 3 karakter."),
   email: z.string().email("Format email tidak valid."),
   phone_number: z.string().optional(),
+  address: z.string().optional(),
+  province_name: z.string().optional(),
+  city_name: z.string().optional(),
+  postal_code: z.string().optional(),
 });
 
 const passwordFormSchema = z.object({
@@ -36,17 +43,25 @@ const passwordFormSchema = z.object({
 
 const ProfilePage: FC = () => {
     const queryClient = useQueryClient();
-    const { updateUser } = useAuth();
+    const { user: authUser, token, updateUser } = useAuth();
     const [isEditingProfile, setIsEditingProfile] = useState(false);
-
     const { data: user, isLoading, isError } = useQuery({
         queryKey: ['profile'],
         queryFn: getMyProfile,
+        enabled: !!token, // Only run this query if a token exists
     });
 
     const profileForm = useForm<UpdateProfilePayload>({
         resolver: zodResolver(profileFormSchema),
-        defaultValues: { full_name: '', email: '', phone_number: '' }
+        defaultValues: { 
+            full_name: '', 
+            email: '', 
+            phone_number: '',
+            address: '',
+            province_name: '',
+            city_name: '',
+            postal_code: '',
+        }
     });
 
     const passwordForm = useForm<ChangePasswordPayload>({
@@ -59,7 +74,11 @@ const ProfilePage: FC = () => {
             profileForm.reset({
                 full_name: user.full_name,
                 email: user.email,
-                phone_number: user.phone_number ?? ''
+                phone_number: user.phone_number ?? '',
+                address: user.address ?? '',
+                province_name: user.province_name ?? '',
+                city_name: user.city_name ?? '',
+                postal_code: user.postal_code ?? '',
             });
         }
     }, [user, profileForm]);
@@ -134,6 +153,18 @@ const ProfilePage: FC = () => {
                                     <FormField control={profileForm.control} name="phone_number" render={({ field }) => (
                                         <FormItem><FormLabel>Nomor Telepon</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
                                     )}/>
+                                    <FormField control={profileForm.control} name="address" render={({ field }) => (
+                                        <FormItem><FormLabel>Alamat Lengkap</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
+                                    )}/>
+                                    <FormField control={profileForm.control} name="province_name" render={({ field }) => (
+                                        <FormItem><FormLabel>Provinsi</FormLabel><FormControl><Input {...field} placeholder="Nama Provinsi" /></FormControl><FormMessage /></FormItem>
+                                    )}/>
+                                    <FormField control={profileForm.control} name="city_name" render={({ field }) => (
+                                        <FormItem><FormLabel>Kota/Kabupaten</FormLabel><FormControl><Input {...field} placeholder="Nama Kota/Kabupaten" /></FormControl><FormMessage /></FormItem>
+                                    )}/>
+                                    <FormField control={profileForm.control} name="postal_code" render={({ field }) => (
+                                        <FormItem><FormLabel>Kode Pos</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
+                                    )}/>
                                     <div className="flex justify-end gap-2">
                                         <Button type="button" variant="outline" onClick={() => setIsEditingProfile(false)}>Batal</Button>
                                         <Button type="submit" disabled={isUpdatingProfile}>
@@ -151,6 +182,14 @@ const ProfilePage: FC = () => {
                                 <div><p className="font-semibold">Email</p><p>{user?.email}</p></div>
                                 <Separator />
                                 <div><p className="font-semibold">Nomor Telepon</p><p>{user?.phone_number || "Belum ditambahkan"}</p></div>
+                                <Separator />
+                                <div><p className="font-semibold">Alamat</p><p>{user?.address || "Belum ditambahkan"}</p></div>
+                                <Separator />
+                                <div><p className="font-semibold">Provinsi</p><p>{user?.province_name || "Belum ditambahkan"}</p></div>
+                                <Separator />
+                                <div><p className="font-semibold">Kota/Kabupaten</p><p>{user?.city_name || "Belum ditambahkan"}</p></div>
+                                <Separator />
+                                <div><p className="font-semibold">Kode Pos</p><p>{user?.postal_code || "Belum ditambahkan"}</p></div>
                             </div>
                         )}
                     </CardContent>

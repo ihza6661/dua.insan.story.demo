@@ -1,3 +1,4 @@
+import { getImageUrl } from "@/lib/utils";
 // src/components/product/ProductHero.tsx (Corrected)
 
 import { useState, useEffect, useMemo, FC } from "react";
@@ -231,11 +232,11 @@ const ProductHero: FC<ProductHeroProps> = ({ product, onAddToCart }) => {
             <SocialShare
               url={window.location.href}
               title={product.name}
-              media={
+              media={getImageUrl(
                 activeVariant?.images.length
                   ? activeVariant.images[0].image_url
-                  : product.featured_image?.image_url || ""
-              }
+                  : product.featured_image?.image_url
+              )}
             />
           </div>
         </div>

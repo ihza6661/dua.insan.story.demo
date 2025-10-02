@@ -21,6 +21,7 @@ import PublicOnlyRoute from "@/components/PublicOnlyRoute";
 
 // --- Imports Halaman (Pages) ---
 import Home from "./pages/Home";
+import ShippingForm from "./components/ShippingForm"; // Import ShippingForm
 import Products from "./pages/Products";
 import ProductDetail from "./pages/ProductDetail";
 import NotFound from "./pages/NotFound";
@@ -88,6 +89,7 @@ const App = () => (
                 <Route path="gallery" element={<Gallery />} />
                 <Route path="CaraPesan" element={<CaraMemesan />} />
                 <Route path="info-pemesanan-cetak" element={<InfoPemesananCetak />} />
+                <Route path="shipping-calculator" element={<ShippingForm />} />
 
                 <Route path="*" element={<NotFound />} />
               </Route>

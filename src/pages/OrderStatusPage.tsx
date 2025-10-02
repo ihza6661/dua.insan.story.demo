@@ -1,3 +1,4 @@
+import { getImageUrl } from "@/lib/utils";
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -104,9 +105,7 @@ const OrderStatusPage = () => {
                 <h3 className="font-semibold mb-4">Item yang Dipesan</h3>
                 <div className="space-y-4">
                   {(order.items || []).map(item => {
-                    const imageUrl = item.product.featured_image?.image
-                      ? `${STORAGE_URL}/${item.product.featured_image.image}`
-                      : '/images/placeholder.svg';
+                    const imageUrl = getImageUrl(item.product.featured_image?.image);
                     return (
                       <div key={item.id} className="flex items-start space-x-4">
                         <img src={imageUrl} alt={item.product.name} className="w-20 h-20 object-cover rounded-md border" />

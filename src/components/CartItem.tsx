@@ -1,5 +1,4 @@
-// src/components/CartItem.tsx
-
+import { getImageUrl } from "@/lib/utils";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -14,7 +13,6 @@ interface CartItemProps {
 }
 
 export function CartItem({ item, onUpdateQuantity, onRemoveItem }: CartItemProps) {
-  const STORAGE_URL = import.meta.env.VITE_PUBLIC_STORAGE_URL;
   const placeholderImage = "/images/placeholder.svg";
 
   // --- ROBUST IMAGE LOGIC ---
@@ -32,11 +30,9 @@ export function CartItem({ item, onUpdateQuantity, onRemoveItem }: CartItemProps
   }
 
   // 4. Construct the final URL safely.
-  const imageUrl = imageToDisplay?.image
-    ? `${STORAGE_URL}${imageToDisplay.image}`
-    : placeholderImage;
+  const imageUrl = getImageUrl(imageToDisplay?.image);
 
-  const variantDescription = item.variant?.options?.map(opt => opt.value).join(' / ');
+  const variantDescription = item.customizations?.options?.map(opt => opt.value).join(' / ');
 
   return (
     <Card key={item.id} className="overflow-hidden">
