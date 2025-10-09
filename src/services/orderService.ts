@@ -1,4 +1,5 @@
 import api from '@/lib/api';
+import { ProductVariant } from './productService';
 
 export interface OrderItem {
   id: number;
@@ -14,6 +15,7 @@ export interface OrderItem {
       image_url: string;
     };
   };
+  variant: ProductVariant;
   // Add other fields as needed from your backend OrderItem structure
 }
 

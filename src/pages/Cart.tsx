@@ -46,56 +46,61 @@ export default function CartPage() {
 
   return (
     <div className="container mt-20 mx-auto px-4 py-8">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold">Keranjang Belanja Anda</h1>
-        <Button variant="outline" onClick={clearCart} disabled={isMutating}>
+      <div className="flex flex-col w-full mb-6">
+        <h1 className="text-2xl font-semibold">Keranjang Belanja Anda</h1>
+        <Button variant="outline" onClick={clearCart} disabled={isMutating} className="mt-4 w-fit rounded-lg">
           <Trash2 className="w-4 h-4 mr-2" />
           Kosongkan Keranjang
         </Button>
       </div>
 
       <div
-        className={`grid grid-cols-1 lg:grid-cols-3 gap-8 relative ${isMutating ? "opacity-50 pointer-events-none" : ""}`}
+        className={`grid grid-cols-1 md:grid-cols-3 gap-8 relative ${isMutating ? "opacity-50 pointer-events-none" : ""}`}
       >
         {/* Kolom Kiri: Daftar Item */}
-        <div className="lg:col-span-2 space-y-4">
-          {cart.items.map((item) => (
-            <CartItem
-              key={item.id}
-              item={item}
-              onUpdateQuantity={debouncedUpdateQuantity}
-              onRemoveItem={removeItem}
-            />
-          ))}
-        </div>
+        
+<div className="col-span-1 md:col-span-2 rounded-xl shadow-md">
+  <Card className="h-full shadow-none bg-transparent">
+    <CardContent className="p-0 sm:p-2 md:p-4">
+      <div className="divide-y divide-gray-200">
+        {cart.items.map((item) => (
+          <CartItem
+            key={item.id}
+            item={item}
+            onUpdateQuantity={debouncedUpdateQuantity}
+            onRemoveItem={removeItem}
+          />
+        ))}
+      </div>
+    </CardContent>
+  </Card>
+</div>
 
         {/* Kolom Kanan: Ringkasan Belanja */}
-        <div className="lg:col-span-1">
-          <Card className="sticky top-24">
-            <CardHeader>
-              <CardTitle>Ringkasan Belanja</CardTitle>
+        <div className="md:col-span-1">
+          <Card className="sticky top-24 shadow-md rounded-xl">
+            <CardHeader className="bg-gray-50 rounded-t-xl py-4">
+              <CardTitle className="text-lg font-semibold text-center">Ringkasan Belanja</CardTitle>
             </CardHeader>
-            <CardContent>
-              <div className="space-y-2">
+            <CardContent className="p-6">
+              <div className="space-y-4">
                 <div className="flex justify-between">
                   <span>Subtotal</span>
-                  {/* Gunakan fungsi formatRupiah */}
                   <span>{formatRupiah(cart.subtotal)}</span>
                 </div>
                 <div className="flex justify-between">
                   <span>Pengiriman</span>
-                  <span>Akan dihitung saat checkout</span>
+                  <span className="text-right">Akan dihitung saat checkout</span>
                 </div>
-                <div className="border-t pt-2 mt-2">
+                <div className="border-t pt-4 mt-4">
                   <div className="flex justify-between font-bold text-lg">
                     <span>Total</span>
-                    {/* Gunakan fungsi formatRupiah */}
                     <span>{formatRupiah(cart.subtotal)}</span>
                   </div>
                 </div>
               </div>
             </CardContent>
-            <CardFooter>
+            <CardFooter className="rounded-b-xl py-4">
               <Button
                 onClick={() => navigate("/checkout")}
                 className="w-full"
