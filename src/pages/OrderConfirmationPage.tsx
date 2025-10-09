@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getOrderById } from '@/services/orderService'; // We'll create this
 import { Loader2, CheckCircle, XCircle } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { formatRupiah } from '@/lib/utils';
+import { formatRupiah, getImageUrl } from '@/lib/utils';
 
 const OrderConfirmationPage = () => {
   const { orderId } = useParams<{ orderId: string }>();
@@ -81,11 +81,17 @@ const OrderConfirmationPage = () => {
 
           <h3 className="text-xl font-semibold mb-4">Item Pesanan</h3>
           <div className="space-y-4 mb-6">
-            {order.items.map((item: any) => (
+            {order.items.map((item) => {
+              const variantImage = item.product.variants.find(v => v.id === item.variant.id)?.images[0]?.image;
+              const imageUrl = variantImage ? getImageUrl(variantImage) : '/placeholder.svg';
+              return (
               <div key={item.id} className="flex justify-between items-center border-b pb-2">
                 <div className="flex items-center space-x-4">
-                  {/* Assuming item.product.featured_image or similar exists */}
-                  <img src={item.variant?.images?.length > 0 ? item.variant.images[0].image : '/placeholder.svg'} alt={item.product.name} className="w-16 h-16 object-cover rounded-md" />
+                  <img 
+                    src={imageUrl} 
+                    alt={item.product.name} 
+                    className="w-16 h-16 object-cover rounded-md" 
+                  />
                   <div>
                     <p className="font-semibold">{item.product.name}</p>
                     <p className="text-sm text-gray-500">Qty: {item.quantity}</p>
@@ -94,7 +100,7 @@ const OrderConfirmationPage = () => {
                 </div>
                 <p className="font-semibold">{formatRupiah(item.sub_total)}</p>
               </div>
-            ))}
+            )})}
           </div>
 
           <div className="border-t pt-4 mt-4 space-y-2">
