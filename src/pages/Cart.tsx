@@ -10,8 +10,8 @@ import {
 } from "@/components/ui/card";
 import { Trash2, Loader2, ShoppingCart } from "lucide-react";
 import { useDebouncedCallback } from "use-debounce";
-import { formatRupiah } from "@/lib/utils"; // Import utilitas
-import { CartItem } from "@/components/CartItem"; // Import komponen baru
+import { formatRupiah } from "@/lib/utils"; 
+import { CartItem } from "@/components/CartItem";
 
 export default function CartPage() {
   const { cart, isLoading, updateQuantity, removeItem, clearCart, isMutating } =
@@ -59,7 +59,7 @@ export default function CartPage() {
       >
         {/* Kolom Kiri: Daftar Item */}
         
-<div className="col-span-1 md:col-span-2 rounded-xl shadow-md">
+<div className="col-span-1 md:col-span-2 rounded-xl shadow-sm">
   <Card className="h-full shadow-none bg-transparent">
     <CardContent className="p-0 sm:p-2 md:p-4">
       <div className="divide-y divide-gray-200">
@@ -78,7 +78,7 @@ export default function CartPage() {
 
         {/* Kolom Kanan: Ringkasan Belanja */}
         <div className="md:col-span-1">
-          <Card className="sticky top-24 shadow-md rounded-xl">
+          <Card className="sticky top-24 shadow-sm rounded-xl">
             <CardHeader className="bg-gray-50 rounded-t-xl py-4">
               <CardTitle className="text-lg font-semibold text-center">Ringkasan Belanja</CardTitle>
             </CardHeader>

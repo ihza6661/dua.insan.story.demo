@@ -28,7 +28,7 @@ const InfoPemesananCetak = () => {
       title: '5. Pelunasan & Pengiriman',
       description: 'Lakukan pelunasan dan undangan Anda siap kami kirimkan ke alamat tujuan dengan aman.',
     },
-     {
+    {
       icon: <FaWhatsapp className="text-4xl" />,
       title: 'Hubungi Kami Sekarang',
       description: 'Siap untuk memulai? Klik tombol di bawah untuk langsung terhubung dengan kami di WhatsApp!',
@@ -59,22 +59,21 @@ const InfoPemesananCetak = () => {
   ];
 
   return (
-    <div className="container mx-auto px-4 py-24 font-serif">
+    <div className="container mx-auto px-4 py-24">
       <div className="text-center mb-12">
-        <h1 className="text-4xl md:text-5xl font-bold text-gray-800">Pesan Undangan Cetak Custom</h1>
-        {/* <p className="text-lg text-gray-600 mt-4">Wujudkan undangan impian Anda bersama Dua Insan Story. Kualitas terbaik dengan desain eksklusif.</p> */}
+        <h1 className="text-3xl md:text-4xl font-bold text-gray-800">Pemesanan Undangan Cetak Custom</h1>
       </div>
 
       <div className="max-w-4xl mx-auto">
         <h2 className="text-3xl font-semibold text-center text-gray-800 mb-8">Alur Pemesanan</h2>
         <div className="grid md:grid-cols-2 gap-8">
           {steps.map((step, index) => (
-            <div key={index} className="flex items-start p-6 bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
+            <div key={index} className="flex items-start p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300">
               <div className="mr-6">
                 {step.icon}
               </div>
               <div>
-                <h3 className="text-xl font-bold text-gray-700">{step.title}</h3>
+                <h3 className="text-xl font-semibold text-gray-700">{step.title}</h3>
                 <p className="text-gray-600 mt-2">{step.description}</p>
               </div>
             </div>
@@ -85,7 +84,7 @@ const InfoPemesananCetak = () => {
       {/* --- Bagian Harga dan Jenis Kertas --- */}
       <div className="max-w-4xl mx-auto mt-16">
         <h2 className="text-3xl font-semibold text-center text-gray-800 mb-8">Pilihan Kertas & Estimasi Harga</h2>
-        <div className="overflow-x-auto bg-white rounded-lg shadow-md">
+        <div className="overflow-x-auto bg-white rounded-lg shadow-sm">
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
@@ -113,7 +112,7 @@ const InfoPemesananCetak = () => {
           href="https://wa.me/6281234567890" // Ganti dengan nomor WhatsApp Anda
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center justify-center px-8 py-4 bg-green-500 text-white font-bold rounded-full shadow-md hover:bg-green-600 transition-colors duration-300 text-lg"
+          className="inline-flex items-center justify-center px-8 py-4 bg-black text-white font-bold rounded-full shadow-md hover:bg-gray-800 transition-colors duration-300 text-lg"
         >
           <FaWhatsapp className="mr-3 text-2xl" />
           Hubungi via WhatsApp

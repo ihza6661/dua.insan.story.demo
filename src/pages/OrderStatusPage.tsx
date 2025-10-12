@@ -154,7 +154,7 @@ const OrderStatusPage = () => {
       <div className="container mt-20 mx-auto text-center py-20">
         <h1 className="text-2xl font-bold">Belum Ada Pesanan</h1>
         <p className="text-gray-600">Anda belum memiliki pesanan apapun. Silakan jelajahi produk kami!</p>
-        <Link to="/products" className="mt-4 inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+        <Link to="/products" className="mt-4 inline-block bg-black text-white px-4 py-2 rounded hover:bg-gray-800">
           Jelajahi Produk
         </Link>
       </div>

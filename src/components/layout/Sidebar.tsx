@@ -1,5 +1,6 @@
 // src/components/layout/Sidebar.tsx
 
+import { useAuth } from "@/context/AuthContext";
 import { Link } from "react-router-dom";
 import { XIcon } from "lucide-react";
 import { useState } from "react";
@@ -13,6 +14,7 @@ interface SidebarProps {
 }
 
 const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
+  const { user, logout } = useAuth();
   const [productsOpen, setProductsOpen] = useState(false);
   const [companyOpen, setCompanyOpen] = useState(false);
 
@@ -125,11 +127,19 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
         
 
           {/* Footer (Login/Logout) */}
-          {/* Tautan masuk dan cara memesan sebaiknya dimasukkan ke dalam 'Company' atau ditempatkan di luar navigasi */}
           <div className="mt-8 space-y-3 text-sm">
-            <Link to="/login" className="block" onClick={onClose}>
-              Masuk
-            </Link>
+            {user ? (
+              <div>
+                <span>Hi, {user.full_name}</span>
+                <button onClick={() => { logout(); onClose(); }} className="block w-full text-left mt-2">
+                  Logout
+                </button>
+              </div>
+            ) : (
+              <Link to="/login" className="block" onClick={onClose}>
+                Masuk
+              </Link>
+            )}
           </div>
         </div>
       </div>

@@ -29,6 +29,41 @@ const profileFormSchema = z.object({
   province_name: z.string().optional(),
   city_name: z.string().optional(),
   postal_code: z.string().optional(),
+}).superRefine((data, ctx) => {
+    const addressFields = [data.address, data.province_name, data.city_name, data.postal_code];
+    const filledFields = addressFields.filter(field => field && field.trim() !== '');
+    const allFieldsEmpty = filledFields.length === 0;
+
+    if (!allFieldsEmpty && filledFields.length < addressFields.length) {
+        if (!data.address) {
+            ctx.addIssue({
+                code: z.ZodIssueCode.custom,
+                message: "Alamat lengkap harus diisi.",
+                path: ["address"],
+            });
+        }
+        if (!data.province_name) {
+            ctx.addIssue({
+                code: z.ZodIssueCode.custom,
+                message: "Provinsi harus diisi.",
+                path: ["province_name"],
+            });
+        }
+        if (!data.city_name) {
+            ctx.addIssue({
+                code: z.ZodIssueCode.custom,
+                message: "Kota/Kabupaten harus diisi.",
+                path: ["city_name"],
+            });
+        }
+        if (!data.postal_code) {
+            ctx.addIssue({
+                code: z.ZodIssueCode.custom,
+                message: "Kode pos harus diisi.",
+                path: ["postal_code"],
+            });
+        }
+    }
 });
 
 const passwordFormSchema = z.object({
@@ -143,7 +178,22 @@ const ProfilePage: FC = () => {
                     <CardContent>
                         {isEditingProfile ? (
                             <Form {...profileForm}>
-                                <form onSubmit={profileForm.handleSubmit(data => updateProfileMutate(data))} className="space-y-4">
+                                <form onSubmit={profileForm.handleSubmit(data => {
+                                    const payload = { ...data };
+                                    if (payload.address === '') {
+                                        payload.address = null;
+                                    }
+                                    if (payload.province_name === '') {
+                                        payload.province_name = null;
+                                    }
+                                    if (payload.city_name === '') {
+                                        payload.city_name = null;
+                                    }
+                                    if (payload.postal_code === '') {
+                                        payload.postal_code = null;
+                                    }
+                                    updateProfileMutate(payload);
+                                })} className="space-y-4">
                                     <FormField control={profileForm.control} name="full_name" render={({ field }) => (
                                         <FormItem><FormLabel>Nama Lengkap</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
                                     )}/>

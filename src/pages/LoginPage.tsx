@@ -1,9 +1,8 @@
 // src/pages/LoginPage.tsx (Dengan Redirect setelah Login)
 
-import React, { useState, FormEvent } from 'react';
-// 1. Impor hook useNavigate dan komponen Link dari React Router
+import { useState, FormEvent } from 'react';
 import { Link } from 'react-router-dom';
-import { useLogin } from '../hooks/useLogin'; // Impor hook `useLogin` kita
+import { useLogin } from '../hooks/useLogin';
 
 const LoginPage = () => {
   // State lokal untuk mengelola nilai dari form input
@@ -17,9 +16,9 @@ const LoginPage = () => {
   // Memanggil custom hook `useLogin` untuk mendapatkan semua logika login
   const { isLoading, error, performLogin } = useLogin();
 
-  /**
-   * Handler untuk menangani proses submit form.
-   */
+  /*
+    Handler untuk menangani proses submit form.
+  */
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault(); // Mencegah form dari refresh halaman
 
@@ -32,7 +31,7 @@ const LoginPage = () => {
         <div className="text-center mb-8">
           <h2 className="text-2xl font-normal tracking-wider text-gray-800">MASUK</h2>
         </div>
-        
+
         <form onSubmit={handleSubmit}>
           {/* Menampilkan pesan error jika login gagal */}
           {error && (
@@ -64,7 +63,7 @@ const LoginPage = () => {
               Email
             </label>
           </div>
-          
+
           {/* Input Password dengan Floating Label */}
           <div className="relative mb-6">
             <input
@@ -88,11 +87,11 @@ const LoginPage = () => {
               Password
             </label>
           </div>
-          
+
           <div className="mb-6 text-right">
             <a href="#" className="text-sm text-gray-600 hover:underline">Lupa Password?</a>
           </div>
-          
+
           <button
             type="submit"
             disabled={isLoading} // Tombol dinonaktifkan saat proses login berjalan
@@ -100,7 +99,7 @@ const LoginPage = () => {
           >
             {isLoading ? 'MEMPROSES...' : 'Masuk'}
           </button>
-          
+
           <div className="text-center">
             {/* 4. Menggunakan komponen <Link> untuk navigasi yang lebih baik */}
             <Link to="/register" className="text-sm text-gray-600 hover:underline">

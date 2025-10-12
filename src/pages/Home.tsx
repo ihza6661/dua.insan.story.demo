@@ -59,7 +59,7 @@ const Home = () => {
                 Chat Admin
               </a>
               <a
-                href="/shop"
+                href="/products"
                 className="inline-block bg-gray-900 text-white hover:bg-gray-700 transition px-6 py-3 rounded-full shadow-sm text-sm font-medium"
               >
                 Lihat Koleksi
@@ -112,7 +112,7 @@ const Home = () => {
 
 
       <CategoryGrid />
-      <BestSeller/>
+      <BestSeller />
       <ExploreTheNewestTrend />
 
       <WhyDuaInsan />

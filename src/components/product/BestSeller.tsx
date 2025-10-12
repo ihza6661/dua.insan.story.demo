@@ -1,6 +1,5 @@
 // src/components/BestSeller.tsx (Refactored for general products)
 
-import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { fetchProducts } from "@/services/productService";
 import type { Product } from "@/services/productService";
@@ -22,7 +21,7 @@ const BestSeller = () => {
       <h2 className="text-lg sm:text-xl font-normal mb-4 sm:mb-8 text-center uppercase tracking-widest pt-6 sm:pt-8">
         Our Featured Products
       </h2>
-      <div className="flex space-x-2 overflow-x-scroll pb-6 sm:pb-10 custom-scrollbar">
+      <div className="flex space-x-10 overflow-x-scroll pb-6 sm:pb-10 custom-scrollbar">
         {isLoading ? (
           // Display skeletons while loading
           Array.from({ length: 4 }).map((_, index) => (
@@ -32,7 +31,7 @@ const BestSeller = () => {
           ))
         ) : isError ? (
           // Display an error message if the fetch fails
-          <p className="text-red-500">Could not load products.</p>
+          <p className="text-red-500">Tidak dapat memuat produk.</p>
         ) : (
           // Render the products once they are loaded
           products.map((item: Product) => (
@@ -44,16 +43,6 @@ const BestSeller = () => {
             </div>
           ))
         )}
-      </div>
-
-      {/* View All Button */}
-      <div className="text-center mt-4 pb-8 sm:pb-12">
-        <Link
-          to="/products"
-          className="text-lg inline-block font-normal border-b border-black text-gray-800 hover:text-black transition duration-200"
-        >
-          VIEW ALL PRODUCTS
-        </Link>
       </div>
     </div>
   );

@@ -54,7 +54,13 @@ const CheckoutPage = () => {
 
   useEffect(() => {
     if (user) {
-      if (!user.address || !user.postal_code) {
+      if (!user.phone_number) {
+        toast({
+          title: "Nomor Telepon Tidak Ditemukan",
+          description: "Mohon tambahkan nomor telepon Anda di halaman profil sebelum melanjutkan checkout.",
+          variant: "destructive",
+        });
+      } else if (!user.address || !user.postal_code) {
         toast({
           title: "Alamat Profil Tidak Lengkap",
           description: "Mohon lengkapi alamat Anda di halaman profil sebelum melanjutkan checkout.",
@@ -398,7 +404,7 @@ const CheckoutPage = () => {
                 <span>Total Pembayaran</span>
                 <span>{formatRupiah(cart.subtotal + shippingCost)}</span>
               </div>
-              <Button type="submit" className="w-full" disabled={isSubmitting || isCalculatingCost || !user}>
+              <Button type="submit" className="w-full" disabled={isSubmitting || isCalculatingCost || !user || !user.phone_number || !user.postal_code}>
                 {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                 Buat Pesanan
               </Button>

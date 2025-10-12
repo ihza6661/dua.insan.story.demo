@@ -51,6 +51,45 @@ export interface ProductVariant {
   images: ProductImage[];
 }
 
+export interface Product {
+  id: number;
+  name: string;
+  slug: string;
+  base_price: number;
+  featured_image: ProductImage | null;
+}
+
+export interface PaginatedProducts {
+  data: Product[];
+  links: {
+    first: string;
+    last: string;
+    prev: string | null;
+    next: string | null;
+  };
+  meta: {
+    current_page: number;
+    from: number;
+    last_page: number;
+    path: string;
+    per_page: number;
+    to: number;
+    total: number;
+  };
+}
+
+export interface ProductDetail extends Product {
+  description: string;
+  min_order_quantity: number;
+  category: ProductCategory;
+  images: ProductImage[];
+  variants: ProductVariant[];
+}
+
+export interface ProductDetailResponse {
+    data: ProductDetail
+}
+
 interface FetchProductsParams {
   category?: string;
   search?: string;

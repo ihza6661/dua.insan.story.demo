@@ -18,7 +18,8 @@ export default function GalleryPage() {
     isFetchingNextPage,
   } = useInfiniteQuery({
     queryKey: ["galleryItems"],
-    queryFn: fetchGalleryItems,
+    queryFn: ({ pageParam }) => fetchGalleryItems({ pageParam }),
+    initialPageParam: '/customer/gallery-items',
     getNextPageParam: (lastPage) => lastPage.links.next, // Gunakan URL dari link 'next' untuk halaman berikutnya
   });
 

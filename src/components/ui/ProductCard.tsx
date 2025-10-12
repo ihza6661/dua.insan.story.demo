@@ -20,7 +20,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
         <img
           src={imageUrl}
           alt={product.featured_image?.alt_text ?? product.name}
-          className="product-card-image w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+          className="product-card-image w-full h-full object-cover transition-transform duration-300 group-hover:scale-105 p-10"
           onError={(e) => (e.currentTarget.src = "/placeholder.svg")}
         />
       </div>
