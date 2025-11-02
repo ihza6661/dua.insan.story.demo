@@ -16,6 +16,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import ActualBrandSlider from "@/components/ui/ActualBrandSlider";
 import ProductCardSkeleton from "@/components/ui/ProductCardSkeleton";
 
 // Helper for formatting currency
@@ -232,6 +233,7 @@ const Products = () => {
             </div>
           </div>
         </div>
+      <ActualBrandSlider />
       </main>
     </div>
   );

@@ -37,42 +37,42 @@ export function CartItem({ item, onUpdateQuantity, onRemoveItem }: CartItemProps
   return (
     <Card key={item.id} className="overflow-hidden">
       <CardContent className="flex flex-col sm:flex-row items-start gap-4 p-4">
-        
-        <div className="flex-1 w-full">
-          
-          <div className="flex justify-between items-start gap-3 sm:gap-4">
-  {/* LEFT: Product info */}
-  <div className="flex-1">
-    <div className="flex justify-between items-start">
-      <div>
-        <h3 className="font-semibold text-base md:text-lg">{item.product.name}</h3>
-        {variantDescription && (
-          <p className="text-sm text-gray-500">{variantDescription}</p>
-        )}
-        <p className="text-gray-600 font-medium mt-1 sm:hidden">
-          {formatRupiah(item.unit_price)}
-        </p>
-      </div>
-      <Button
-        variant="ghost"
-        size="icon"
-        className="text-gray-400 hover:text-red-500 -mt-2 -mr-2"
-        onClick={() => onRemoveItem(item.id)}
-        aria-label={`Hapus ${item.product.name} dari keranjang`}
-      >
-        <Trash2 className="w-4 h-4" />
-      </Button>
-    </div>
-  </div>
 
-  {/* RIGHT: Product image */}
-  <img
-    src={imageUrl}
-    alt={item.product.name}
-    className="w-24 h-24 sm:w-28 sm:h-28 object-cover rounded-md border flex-shrink-0"
-    onError={(e) => (e.currentTarget.src = placeholderImage)}
-  />
-</div>
+        <div className="flex-1 w-full">
+
+          <div className="flex justify-between items-start gap-3 sm:gap-4">
+            {/* LEFT: Product info */}
+            <div className="flex-1">
+              <div className="flex justify-between items-start">
+                <div>
+                  <h3 className="font-semibold text-base md:text-lg">{item.product.name}</h3>
+                  {variantDescription && (
+                    <p className="text-sm text-gray-500">{variantDescription}</p>
+                  )}
+                  <p className="text-gray-600 font-medium mt-1 sm:hidden">
+                    {formatRupiah(item.unit_price)}
+                  </p>
+                </div>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="text-gray-400 hover:text-red-500 -mt-2 -mr-2"
+                  onClick={() => onRemoveItem(item.id)}
+                  aria-label={`Hapus ${item.product.name} dari keranjang`}
+                >
+                  <Trash2 className="w-4 h-4" />
+                </Button>
+              </div>
+            </div>
+
+            {/* RIGHT: Product image */}
+            <img
+              src={imageUrl}
+              alt={item.product.name}
+              className="w-24 h-24 sm:w-28 sm:h-28 object-cover rounded-md border flex-shrink-0"
+              onError={(e) => (e.currentTarget.src = placeholderImage)}
+            />
+          </div>
 
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mt-2">
             <div className="flex items-center gap-2">
@@ -89,7 +89,7 @@ export function CartItem({ item, onUpdateQuantity, onRemoveItem }: CartItemProps
                 value={item.quantity}
                 min={item.product.min_order_quantity}
                 onChange={(e) => onUpdateQuantity(item.id, parseInt(e.target.value) || item.product.min_order_quantity)}
-                className="text-center w-20 h-8"
+                className="text-center w-20 h-8 rounded-md"
                 aria-label={`Kuantitas untuk ${item.product.name}`}
               />
               <Button

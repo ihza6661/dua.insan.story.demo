@@ -1,6 +1,6 @@
 // src/components/layout/Sidebar.tsx
 
-import { useAuth } from "@/context/AuthContext";
+import { useAuth } from "@/context/useAuth";
 import { Link } from "react-router-dom";
 import { XIcon } from "lucide-react";
 import { useState } from "react";

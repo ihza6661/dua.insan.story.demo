@@ -1,5 +1,5 @@
 import { useState, useEffect, FormEvent } from 'react';
-import { useCart } from '@/hooks/useCart';
+import { useCart } from '@/hooks/use-cart';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -8,8 +8,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Loader2, ShoppingCart } from 'lucide-react';
 import { formatRupiah } from '@/lib/utils';
 import { createGuestOrder, createOrder, getShippingCost } from '@/services/checkoutService';
+import { AxiosError } from 'axios';
 
-import { useAuth } from '@/context/AuthContext';
+import { useAuth } from '@/context/useAuth';
 
 
 import { useToast } from '@/hooks/use-toast';
@@ -19,32 +20,28 @@ import { useNavigate } from 'react-router-dom';
 
 
 
+interface ShippingService {
+  service: string;
+  description: string;
+  cost: {
+    value: number;
+    etd: string;
+    note: string;
+  }[];
+}
+
 const CheckoutPage = () => {
+  const { cart, isLoading } = useCart();
   const { user } = useAuth();
-  const { cart, isLoading: isCartLoading } = useCart();
   const { toast } = useToast();
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [snapToken, setSnapToken] = useState<string | null>(null);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const snapScript = "https://app.sandbox.midtrans.com/snap/snap.js";
-    const clientKey = "Mid-client-6W1y3oBKXW-BmodW";
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [snapToken, setSnapToken] = useState<string | null>(null);
 
-    const script = document.createElement("script");
-    script.src = snapScript;
-    script.setAttribute("data-client-key", clientKey);
-    script.async = true;
-
-    document.body.appendChild(script);
-
-    return () => {
-      document.body.removeChild(script);
-    };
-  }, []);
 
   // Shipping State
-  const [shippingServices, setShippingServices] = useState<any[]>([]);
+  const [shippingServices, setShippingServices] = useState<ShippingService[]>([]);
   const [selectedCourier, setSelectedCourier] = useState<string>("jne");
   const [shippingCost, setShippingCost] = useState<number>(0);
   const [shippingService, setShippingService] = useState<string>(" ");
@@ -94,7 +91,7 @@ const CheckoutPage = () => {
       });
       // Optionally disable checkout button or redirect
     }
-  }, [user.postal_code, selectedCourier, toast]);
+  }, [selectedCourier, toast, user]);
 
   const handleServiceSelection = (value: string) => {
     const [service, cost] = value.split("|");
@@ -108,7 +105,7 @@ const CheckoutPage = () => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (shippingCost === 0 && cart.items.some(item => item.product?.requires_shipping)) {
+    if (shippingCost === 0 && cart && cart.items.some(item => item.product?.requires_shipping)) {
       toast({
         title: "Pilih Layanan Pengiriman",
         description: "Anda harus memilih layanan pengiriman terlebih dahulu.",
@@ -161,9 +158,13 @@ const CheckoutPage = () => {
         });
       }
 
-    } catch (error: any) {
-      console.error("Checkout error:", error);
-      const errorMessage = error.response?.data?.errors ? Object.values(error.response.data.errors).flat().join('\n') : error.response?.data?.message || "Terjadi kesalahan.";
+    } catch (error) {
+      const axiosError = error as AxiosError<{
+        message: string;
+        errors?: Record<string, string[]>;
+      }>;
+      console.error("Checkout error:", axiosError);
+      const errorMessage = axiosError.response?.data?.errors ? Object.values(axiosError.response.data.errors).flat().join('\n') : axiosError.response?.data?.message || "Terjadi kesalahan.";
       toast({ title: "Gagal Membuat Pesanan", description: errorMessage, variant: "destructive" });
     } finally {
       setIsSubmitting(false);
@@ -171,11 +172,13 @@ const CheckoutPage = () => {
   };
 
 
-  if (isCartLoading) {
+  
+
+  if (isLoading) {
     return (
       <div className="container mt-20 mx-auto text-center py-20">
-        <Loader2 className="h-12 w-12 animate-spin mx-auto text-gray-400" />
-        <p className="mt-4 text-lg">Memuat Checkout...</p>
+        <Loader2 className="h-20 w-20 mx-auto text-gray-300 animate-spin" />
+        <h1 className="text-3xl font-semibold mt-4">Memuat Keranjang...</h1>
       </div>
     );
   }

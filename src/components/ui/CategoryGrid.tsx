@@ -11,7 +11,7 @@ const CategorySkeleton = () => (
 );
 
 const CategoryGrid = () => {
-  const STORAGE = import.meta.env.VITE_PUBLIC_STORAGE_URL;
+  
   // Fetch categories from the API using React Query
   const { data: categories, isLoading, isError, error } = useQuery<ProductCategory[]>({
     queryKey: ['categories'],
@@ -49,7 +49,7 @@ const CategoryGrid = () => {
                 <div className="relative h-[500px] overflow-hidden">
                   <img
                     // Use the image_url from the API
-                    src={`${STORAGE}`+category.image}
+                    src={category.image_url}
                     alt={category.name}
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />

@@ -10,7 +10,7 @@ const ShippingForm = () => {
     const [weight, setWeight] = useState(1000); // Example weight in grams
     const [courier, setCourier] = useState('jne'); // Example courier
 
-    const API_BASE_URL = 'http://localhost:8000/api/v1'; // IMPORTANT: Replace with your Laravel backend URL
+    const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
     useEffect(() => {
         // Fetch provinces on component mount
@@ -25,7 +25,7 @@ const ShippingForm = () => {
             }
         };
         fetchProvinces();
-    }, []);
+    }, [API_BASE_URL]);
 
     useEffect(() => {
         // Fetch cities when a province is selected
@@ -44,7 +44,7 @@ const ShippingForm = () => {
             }
         };
         fetchCities();
-    }, [selectedProvince]);
+    }, [selectedProvince, API_BASE_URL]);
 
     const handleCalculateCost = async () => {
         if (!selectedCity || !weight || !courier) {

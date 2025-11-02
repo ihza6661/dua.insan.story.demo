@@ -47,13 +47,20 @@ export const useRegister = () => {
       const response = await registerUser(data);
       // Jika berhasil, atur pesan sukses dari response API.
       setSuccessMessage(response.message || "Registrasi berhasil! Silakan login.");
+interface ErrorResponse {
+  message: string;
+  errors?: ValidationErrors;
+}
+
+// ... (keep the existing code)
+
     } catch (err) {
       // 3. Menangkap error yang dilempar oleh Axios jika response status bukan 2xx.
-      const error = err as AxiosError<any>; // Type casting untuk akses properti error.
+      const error = err as AxiosError<ErrorResponse>; // Type casting untuk akses properti error.
       
       if (error.response) {
         // Jika error memiliki 'response', berarti error berasal dari server.
-        if (error.response.status === 422) {
+        if (error.response.status === 422 && error.response.data.errors) {
           // Status 422 (Unprocessable Entity) khusus untuk error validasi.
           setValidationErrors(error.response.data.errors);
           setError("Data yang diberikan tidak valid. Silakan periksa kembali isian Anda.");

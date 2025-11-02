@@ -11,7 +11,7 @@ import { Loader2, Edit2Icon, XCircle } from "lucide-react";
 
 import { getMyProfile, updateProfile, changePassword, UpdateProfilePayload, ChangePasswordPayload } from "@/services/authService";
 import { getProvinces, getCities, Province, City } from "@/services/rajaOngkirService";
-import { useAuth } from "@/context/AuthContext";
+import { useAuth } from "@/context/useAuth";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";

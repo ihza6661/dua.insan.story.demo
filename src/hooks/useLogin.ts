@@ -2,8 +2,12 @@
 
 import { useState } from "react";
 import { AxiosError } from "axios";
-import { useAuth } from "../context/AuthContext"; // <-- 1. Impor useAuth
+import { useAuth } from "../context/useAuth"; // <-- 1. Impor useAuth
 import { loginUser, LoginPayload } from "../services/authService";
+
+interface ErrorResponse {
+  message: string;
+}
 
 /**
  * Custom hook `useLogin` yang sekarang terintegrasi dengan AuthContext.
@@ -33,7 +37,7 @@ export const useLogin = () => {
       return true;
 
     } catch (err) {
-      const error = err as AxiosError<any>;
+      const error = err as AxiosError<ErrorResponse>;
       if (error.response) {
         setError(error.response.data.message || "Email atau password salah.");
       } else {

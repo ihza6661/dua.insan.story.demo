@@ -1,12 +1,8 @@
 import api from '@/lib/api';
 
 export const fetchProvinces = async () => {
-  try {
     const response = await api.get('/rajaongkir/provinces');
     return response.data;
-  } catch (error) {
-    throw error;
-  }
 };
 
 export const fetchCities = async (provinceId: string) => {
@@ -27,8 +23,11 @@ export const fetchCities = async (provinceId: string) => {
       console.error("Unexpected response format from RajaOngkir API:", response.data);
       return [];
     }
-  } catch (error: any) {
-    console.error("API call failed:", error.response?.data || error.message);
+  } catch (error) {
+    const axiosError = error as AxiosError<{
+      message: string;
+    }>;
+    console.error("API call failed:", axiosError.response?.data || axiosError.message);
     // If there's a network error or other exception, return an empty array
     return [];
   }
@@ -39,16 +38,12 @@ export const fetchCities = async (provinceId: string) => {
  * @returns Respon dari server.
  */
 export const createOrder = async (checkoutData: FormData) => {
-  try {
     const response = await api.post('/checkout', checkoutData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
     });
     return response.data;
-  } catch (error) {
-    throw error;
-  }
 };
 
 /**
@@ -57,7 +52,6 @@ export const createOrder = async (checkoutData: FormData) => {
  * @returns Respon dari server.
  */
 export const createGuestOrder = async (checkoutData: FormData) => {
-  try {
     const sessionId = localStorage.getItem('cartSessionId');
     const headers: { [key: string]: string } = {
       'Content-Type': 'multipart/form-data',
@@ -68,13 +62,9 @@ export const createGuestOrder = async (checkoutData: FormData) => {
 
     const response = await api.post('/guest-checkout', checkoutData, { headers });
     return response.data;
-  } catch (error) {
-    throw error;
-  }
 };
 
 export const getShippingCost = async (origin: string, destination: string, weight: number, courier: string) => {
-  try {
     const response = await api.post('/rajaongkir/cost', {
       origin,
       destination,
@@ -82,7 +72,4 @@ export const getShippingCost = async (origin: string, destination: string, weigh
       courier,
     });
     return response.data;
-  } catch (error) {
-    throw error;
-  }
 };

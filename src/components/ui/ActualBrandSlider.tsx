@@ -1,18 +1,11 @@
 const ActualBrandSlider = () => {
   const brands = [
-    // '/brand_logo/moe.avif',
-    // '/brand_logo/lenitif.webp',
-    // '/brand_logo/santa.avif',
-    // '/brand_logo/nife.avif',
-    // '/brand_logo/lalupa.avif',
-    // '/brand_logo/figl.avif',
     '/brand_logo/duainsan.png',
     '/brand_logo/duainsan.png',
     '/brand_logo/duainsan.png',
     '/brand_logo/duainsan.png',
     '/brand_logo/duainsan.png',
     '/brand_logo/duainsan.png',
-
   ];
 
   const brandItems = brands.map((src, idx) => (

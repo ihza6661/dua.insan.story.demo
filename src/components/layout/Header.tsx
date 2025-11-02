@@ -9,9 +9,9 @@ import MenuIcon from "/svg/menu.svg";
 import Sidebar from "./Sidebar";
 
 // --- Impor Hook Kustom & Konteks ---
-import { useCart } from "@/hooks/useCart";
+import { useCart } from "@/hooks/use-cart";
 import { useScrollDirection } from "@/hooks/useScrollDirection";
-import { useAuth } from "@/context/AuthContext";
+import { useAuth } from "@/context/useAuth";
 
 const Header = () => {
   // --- State Lokal untuk UI ---

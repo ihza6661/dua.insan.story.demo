@@ -1,32 +1,21 @@
-// src/hooks/useCart.ts (Refactored dari components/ui/Cart.tsx)
-
-import React, { createContext, useContext } from "react";
+import React, { createContext } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { 
-  fetchCart, 
-  addToCart as apiAddToCart, 
+import {
+  fetchCart,
+  addToCart as apiAddToCart,
   updateCartItem as apiUpdateCartItem,
   removeCartItem as apiRemoveCartItem,
   clearCart as apiClearCart,
   Cart
 } from "@/services/cartService";
 import type { AddToCartPayload } from "@/services/cartService";
+import { useCart } from "./use-cart";
 
 // Ekspor kembali tipe ini agar mudah diakses
 export type { AddToCartPayload };
 
-interface CartContextType {
-  cart: Cart | undefined;
-  isLoading: boolean;
-  addToCart: (payload: AddToCartPayload, callbacks?: { onSuccess?: () => void }) => void;
-  updateQuantity: (itemId: number, quantity: number) => void;
-  removeItem: (itemId: number) => void;
-  clearCart: () => void;
-  isMutating: boolean; // Status loading untuk semua aksi perubahan
-}
-
-const CartContext = createContext<CartContextType | undefined>(undefined);
+import { CartContext, CartContextType } from './cart-context';
 
 export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const queryClient = useQueryClient();
@@ -37,7 +26,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     queryFn: async () => {
       console.log('useCart: fetchCart called');
       const fetchedCart = await fetchCart();
-      console.log('useCart: fetchedCart result:', fetchedCart); // ADDED LOG
+      console.log('useCart: fetchedCart result:', fetchedCart);
       return fetchedCart;
     },
   });
@@ -50,7 +39,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
   // 2. SEMUA AKSI PERUBAHAN (MUTATIONS)
   const { mutate: addToCartMutate, isPending: isAdding } = useMutation({
     mutationFn: apiAddToCart,
-    onSuccess: (data, variables, context: any) => {
+    onSuccess: (data, variables, context: { onSuccess?: () => void } | undefined) => {
       onMutationSuccess();
       toast.success("Produk berhasil ditambahkan!");
       context?.onSuccess?.();
@@ -96,12 +85,4 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
       {children}
     </CartContext.Provider>
   );
-};
-
-export const useCart = () => {
-  const context = useContext(CartContext);
-  if (context === undefined) {
-    throw new Error("useCart must be used within a CartProvider");
-  }
-  return context;
 };
