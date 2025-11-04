@@ -117,7 +117,7 @@ const Products = () => {
   return (
     <div className="min-h-screen flex flex-col pt-16">
       <main className="flex-grow py-8">
-        <div className="container">
+        <div className="container pb-44">
           <h1 className="text-3xl font-medium mb-8">
             {activeCategory ? activeCategory.name : "Semua Produk"}
           </h1>
@@ -131,9 +131,8 @@ const Products = () => {
                   <Button
                     variant={!categorySlugFromUrl ? "default" : "ghost"}
                     onClick={() => handleCategoryChange(undefined)}
-                    className={`w-full justify-start text-left ${
-                      !categorySlugFromUrl ? "bg-shop-accent text-white" : ""
-                    }`}
+                    className={`w-full justify-start text-left ${!categorySlugFromUrl ? "bg-shop-accent text-white" : ""
+                      }`}
                   >
                     Semua Produk
                   </Button>
@@ -147,11 +146,10 @@ const Products = () => {
                           categorySlugFromUrl === cat.slug ? "default" : "ghost"
                         }
                         onClick={() => handleCategoryChange(cat.slug)}
-                        className={`w-full justify-start text-left ${
-                          categorySlugFromUrl === cat.slug
-                            ? "bg-shop-accent text-white"
-                            : ""
-                        }`}
+                        className={`w-full justify-start text-left ${categorySlugFromUrl === cat.slug
+                          ? "bg-shop-accent text-white"
+                          : ""
+                          }`}
                       >
                         {cat.name}
                       </Button>
@@ -164,17 +162,17 @@ const Products = () => {
               <div className="bg-white p-6 rounded-lg border border-shop-medium-gray">
                 <h2 className="text-lg font-medium mb-4">Filter Harga</h2>
                 <div className="space-y-4">
-                    <Slider
-                        value={priceRange}
-                        onValueChange={setPriceRange}
-                        max={MAX_PRICE}
-                        step={1000}
-                        className="w-full"
-                    />
-                    <div className="flex justify-between text-sm text-shop-dark-gray">
-                        <span>{formatCurrency(priceRange[0])}</span>
-                        <span>{formatCurrency(priceRange[1])}</span>
-                    </div>
+                  <Slider
+                    value={priceRange}
+                    onValueChange={setPriceRange}
+                    max={MAX_PRICE}
+                    step={1000}
+                    className="w-full"
+                  />
+                  <div className="flex justify-between text-sm text-shop-dark-gray">
+                    <span>{formatCurrency(priceRange[0])}</span>
+                    <span>{formatCurrency(priceRange[1])}</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -233,7 +231,7 @@ const Products = () => {
             </div>
           </div>
         </div>
-      <ActualBrandSlider />
+        <ActualBrandSlider />
       </main>
     </div>
   );

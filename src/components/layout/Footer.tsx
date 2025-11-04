@@ -139,10 +139,18 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  to="/legal"
+                  to="/kebijakan-privasi"
                   className="text-gray-800 text-sm block py-1 hover:text-black"
                 >
                   Kebijakan Privasi
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/pengembalian-refund"
+                  className="text-gray-800 text-sm block py-1 hover:text-black"
+                >
+                  Pengembalian & Refund
                 </Link>
               </li>
               <li>

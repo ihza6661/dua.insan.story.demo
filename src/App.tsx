@@ -36,6 +36,8 @@ import CheckoutPage from "./pages/CheckoutPage";
 import OrderStatusPage from "./pages/OrderStatusPage";
 import OrderConfirmationPage from "./pages/OrderConfirmationPage";
 import SyaratKetentuan from "./pages/SyaratKetentuan";
+import KebijakanPrivasi from "./pages/KebijakanPrivasi";
+import PengembalianRefund from "./pages/PengembalianRefund";
 
 // Inisialisasi Query Client
 const queryClient = new QueryClient();
@@ -92,6 +94,8 @@ const App = () => (
                 <Route path="info-pemesanan-cetak" element={<InfoPemesananCetak />} />
                 <Route path="shipping-calculator" element={<ShippingForm />} />
                 <Route path="syarat-ketentuan" element={<SyaratKetentuan />} />
+                <Route path="kebijakan-privasi" element={<KebijakanPrivasi />} />
+                <Route path="pengembalian-refund" element={<PengembalianRefund />} />
 
                 <Route path="*" element={<NotFound />} />
               </Route>

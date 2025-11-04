@@ -21,7 +21,7 @@ const BestSeller = () => {
       <h2 className="text-lg sm:text-xl font-normal mb-4 sm:mb-8 text-center uppercase tracking-widest pt-6 sm:pt-8">
         Our Featured Products
       </h2>
-      <div className="flex space-x-10 overflow-x-scroll pb-6 sm:pb-10 custom-scrollbar">
+      <div className="flex space-x-5 overflow-x-scroll pb-6 sm:pb-10 custom-scrollbar">
         {isLoading ? (
           // Display skeletons while loading
           Array.from({ length: 4 }).map((_, index) => (
