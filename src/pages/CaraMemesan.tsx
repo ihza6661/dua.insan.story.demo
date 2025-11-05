@@ -1,5 +1,3 @@
-import { FaCheckCircle } from "react-icons/fa";
-
 const steps = [
   {
     number: 1,
@@ -9,27 +7,27 @@ const steps = [
   },
   {
     number: 2,
-    title: "Booking 30% dari Total Pesanan",
+    title: "Tambahkan Undangan Pilihan ke Keranjang & Lakukan Pembayaran",
     description:
-      "Lakukan pembayaran 30% untuk mengamankan harga dan slot produksi. Booking ini jadi tanda jadi untuk mulai proses.",
+      "Lakukan pembayaran untuk mengamankan harga dan slot produksi. ini tanda jadi untuk mulai proses.",
   },
   {
     number: 3,
     title: "Isi Data Pengantin",
     description:
-      "Sebelum Lanjut ke pembayaran, Anda akan diminta untuk mengisi form data undangan.",
+      "Sebelum lanjut ke pembayaran, Anda akan diminta untuk mengisi form data undangan.",
   },
   {
     number: 4,
-    title: "Fix Desain & Bayar Sisa 70%",
+    title: "Fix Desain",
     description:
-      "Setelah kamu setuju dengan desain akhir, CS akan kirim invoice sisa pelunasan. Pesananmu akan masuk ketahap produksi.",
+      "Setelah kamu checkout, Pesananmu akan masuk ketahap produksi.",
   },
   {
     number: 5,
     title: "Undangan Diproduksi & Dikirim",
     description:
-      "Setelah selesai diproduksi, kamu akan dihubungi untuk pelunasan dan pengiriman. Kami juga akan infokan resi pengiriman.",
+      "Setelah selesai diproduksi, Anda akan dihubungi untuk diinfokan resi pengiriman.",
   },
 ];
 
@@ -50,7 +48,7 @@ const OrderSteps = () => {
                 {step.number}
               </div>
               <div>
-                <h3 className="font-semibold text-base sm:text-lg mb-1">
+                <h3 className="font-semibold text-base text-primary sm:text-lg mb-1">
                   {step.title}
                 </h3>
                 <p className="text-sm sm:text-base text-muted-foreground">

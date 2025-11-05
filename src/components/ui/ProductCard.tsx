@@ -26,14 +26,14 @@ const ProductCard = ({ product, loading = false }: ProductCardProps) => {
   return (
     <Link
       to={`/product/${product.id}`}
-      className="group product-card block bg-secondary overflow-hidden transition-all duration-300 h-full border border-border rounded-lg hover:shadow-lg hover:border-primary/20 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+      className="p-5 group product-card block bg-secondary overflow-hidden transition-all duration-300 h-full border border-border rounded-lg hover:shadow-lg hover:border-primary/20 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
       aria-label={`View details for ${product.name}`}
     >
       <div className="aspect-square relative w-full overflow-hidden bg-muted/50">
         <img
           src={imageUrl}
           alt={product.featured_image?.alt_text ?? product.name}
-          className="product-card-image w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+          className="product-card-image w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 rounded"
           onError={(e) => {
             e.currentTarget.src = "/placeholder.svg";
             e.currentTarget.alt = "Product image unavailable";

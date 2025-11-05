@@ -79,7 +79,7 @@ const SyaratKetentuan: React.FC = () => {
           <div className="flex items-start">
             <AlertCircle className="w-6 h-6 mr-3 flex-shrink-0 mt-1" />
             <div>
-              <h3 className="font-semibold mb-2">Pemberitahuan Penting</h3>
+              <h3 className="text-foreground font-semibold mb-2">Pemberitahuan Penting</h3>
               <p className="text-foreground text-sm leading-relaxed">
                 Dengan melakukan pemesanan, Anda secara otomatis menyetujui seluruh syarat dan ketentuan yang tertera di halaman ini.
                 Pastikan Anda memahami setiap poin sebelum melanjutkan transaksi.
@@ -125,9 +125,9 @@ const SyaratKetentuan: React.FC = () => {
 
         {/* Footer */}
         <div className="mt-12 text-center">
-          <div className="p-8 border-4 border-border">
-            <h3 className="text-2xl  mb-3">Ada Pertanyaan?</h3>
-            <p className="mb-6">
+          <div className="p-8 border-2 border-border">
+            <h3 className="text-2xl text-primary mb-3">Ada Pertanyaan?</h3>
+            <p className="mb-6 text-muted-foreground">
               Jika Anda memiliki pertanyaan mengenai syarat dan ketentuan kami,
               jangan ragu untuk menghubungi tim kami.
             </p>
@@ -136,7 +136,7 @@ const SyaratKetentuan: React.FC = () => {
                 href="https://wa.me/6281234567890" // Ganti dengan nomor WhatsApp Anda
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center px-8 py-4 bg-black text-white  rounded-full shadow-md hover:bg-gray-800 transition-colors duration-300 text-lg"
+                className="inline-flex items-center justify-center px-8 py-4 rounded-full shadow-md bg-background hover:bg-secondary transition-colors duration-300 text-lg"
               >
                 <FaWhatsapp className="mr-3 text-2xl" />
                 Hubungi via WhatsApp
