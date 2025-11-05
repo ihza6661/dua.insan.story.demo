@@ -42,7 +42,7 @@ const features = [
 
 const WhyDuaInsan = () => {
   return (
-    <section className="py-10 px-4 sm:px-6 md:px-12 lg:px-24 xl:px-36 bg-secondary dark:bg-secondary">
+    <section className="py-10 px-4 sm:px-6 md:px-12 lg:px-24 xl:px-36 bg-background">
       <h2 className="text-foreground text-center text-2xl sm:text-3xl lg:text-4xl font-serif italic mb-10 md:mb-14">
         Why <span className="">DuaInsan.story</span>?
       </h2>

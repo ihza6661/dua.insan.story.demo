@@ -103,7 +103,7 @@ const OrderStatusPage = () => {
 
               {/* Item yang Dipesan */}
               <div>
-                <h3 className="font-semibold mb-4 text-foreground">Item yang Dipesan</h3>
+                <h4 className="font-semibold mb-4 text-foreground">Item yang Dipesan</h4>
                 <div className="space-y-4">
                   {(order.items || []).map(item => {
                     // Build image src: prefer image_url, fallback to image, handle absolute vs relative paths
@@ -133,7 +133,7 @@ const OrderStatusPage = () => {
               {/* Detail Pernikahan & Pengiriman */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <h3 className="font-semibold mb-4 text-foreground">Informasi Pernikahan</h3>
+                  <h4 className="font-semibold mb-4 text-foreground">Informasi Pernikahan</h4>
                   <div className="space-y-2 text-sm">
                     <p><span className="text-muted-foreground">Mempelai:</span> {order.custom_data?.bride_full_name} & {order.custom_data?.groom_full_name}</p>
                     <p><span className="text-muted-foreground">Akad:</span> {order.custom_data?.akad_date && new Date(order.custom_data.akad_date).toLocaleDateString('id-ID')} di {order.custom_data?.akad_location}</p>
@@ -141,7 +141,7 @@ const OrderStatusPage = () => {
                   </div>
                 </div>
                 <div>
-                  <h3 className="font-semibold mb-4 text-foreground">Alamat Pengiriman</h3>
+                  <h4 className="font-semibold mb-4 text-foreground">Alamat Pengiriman</h4>
                   <p className="text-sm whitespace-pre-line text-muted-foreground">{order.shipping_address}</p>
                 </div>
               </div>

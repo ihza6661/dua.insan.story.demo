@@ -45,7 +45,7 @@ export default function CartPage() {
   }
 
   return (
-    <div className="container mt-20 mx-auto px-4 py-8 bg-background">
+    <div className="container mt-20 mx-auto px-4 py-8">
       <div className="flex flex-col w-full mb-6">
         <h1 className="text-2xl font-semibold text-foreground">Keranjang Belanja Anda</h1>
         <Button variant="outline" onClick={clearCart} disabled={isMutating} className="mt-4 w-fit rounded-lg">

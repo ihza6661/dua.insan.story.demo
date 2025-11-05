@@ -1,0 +1,271 @@
+/* ============================================
+   COMPLETE CSS VARIABLES REFERENCE
+   Copy this entire section to replace :root and .dark blocks
+   ============================================ */
+
+@layer base {
+  :root {
+    /* ──────────────────────────────────────
+       LIGHT MODE: Modern Minimalist Palette
+       Soft cream, warm brown, subtle gold
+       ────────────────────────────────────── */
+
+    /* ━━━ Foundation Colors ━━━ */
+    --background: 40 30% 97%;
+    /* Warm cream background - soft, inviting, elegant */
+    
+    --foreground: 20 20% 25%;
+    /* Warm dark brown - excellent readability, sophisticated */
+
+    /* ━━━ Primary Action Colors ━━━ */
+    --primary: 20 25% 22%;
+    /* Deep warm brown - main action color, elegant and refined */
+    
+    --primary-foreground: 40 30% 97%;
+    /* Cream text on dark brown for maximum contrast */
+    
+    --primary-hover: 20 25% 28%;
+    /* Lighter warm brown - provides visual feedback on hover */
+    
+    --primary-active: 20 25% 18%;
+    /* Darker warm brown - pressed/active state appearance */
+
+    /* ━━━ Secondary Colors ━━━ */
+    --secondary: 40 25% 88%;
+    /* Very light warm cream - secondary elements */
+    
+    --secondary-foreground: 20 20% 25%;
+    /* Warm brown text on secondary backgrounds */
+
+    /* ━━━ Accent Colors (Luxury Gold) ━━━ */
+    --accent: 35 45% 58%;
+    /* Warm gold - premium accent, highlights, and featured items */
+    
+    --accent-foreground: 40 30% 97%;
+    /* Cream text on gold for strong contrast */
+    
+    --accent-hover: 35 50% 52%;
+    /* Richer, more saturated gold - interactive feedback */
+
+    /* ━━━ Muted/Disabled Colors ━━━ */
+    --muted: 30 20% 88%;
+    /* Subtle warm gray - muted elements */
+    
+    --muted-foreground: 20 15% 55%;
+    /* Muted warm brown - reduced prominence text */
+
+    /* ━━━ UI Elements ━━━ */
+    --card: 40 40% 96%;
+    /* Soft warm cream - card backgrounds with subtle gold tone */
+    
+    --card-foreground: 20 20% 25%;
+    /* Warm brown text on cards */
+    
+    --popover: 40 40% 96%;
+    /* Warm cream for dropdown/popover backgrounds */
+    
+    --popover-foreground: 20 20% 25%;
+    /* Warm brown text in popovers */
+    
+    --border: 30 15% 88%;
+    /* Subtle warm border color - delicate visual separation */
+    
+    --input: 40 30% 94%;
+    /* Slightly warmer than background for form inputs */
+    
+    --ring: 20 25% 30%;
+    /* Warm brown focus ring - keyboard navigation visibility */
+
+    /* ━━━ Sidebar Theme ━━━ */
+    --sidebar-background: 40 30% 96%;
+    /* Very light warm sidebar background */
+    
+    --sidebar-foreground: 20 20% 25%;
+    /* Warm brown sidebar text */
+    
+    --sidebar-primary: 20 25% 22%;
+    /* Deep brown for sidebar primary elements */
+    
+    --sidebar-primary-foreground: 40 30% 97%;
+    /* Cream text on dark sidebar elements */
+    
+    --sidebar-accent: 35 45% 58%;
+    /* Warm gold accent in sidebar */
+    
+    --sidebar-accent-foreground: 40 30% 97%;
+    /* Cream text on gold sidebar elements */
+    
+    --sidebar-border: 30 15% 88%;
+    /* Warm border for sidebar divisions */
+    
+    --sidebar-ring: 20 25% 30%;
+    /* Warm focus ring for sidebar navigation */
+
+    /* ━━━ Error/Destructive ━━━ */
+    --destructive: 0 70% 52%;
+    /* Warm red with better contrast than default */
+    
+    --destructive-foreground: 0 0% 100%;
+    /* White text on red for maximum contrast */
+
+    /* ━━━ Border Radius ━━━ */
+    --radius: 0.5rem;
+    /* Consistent rounded corners - subtle, elegant */
+  }
+
+  .dark {
+    /* ──────────────────────────────────────
+       DARK MODE: Luxurious Mauve Palette
+       Deep mauve, warm ivory, warm gold
+       ────────────────────────────────────── */
+
+    /* ━━━ Foundation Colors ━━━ */
+    --background: 270 15% 11%;
+    /* Deep mauve background - luxurious, sophisticated dark tone */
+    
+    --foreground: 40 20% 92%;
+    /* Warm ivory/cream text - elegant, never pure white */
+
+    /* ━━━ Primary Action Colors ━━━ */
+    --primary: 270 20% 38%;
+    /* Muted warm mauve - harmonizes with dark background */
+    
+    --primary-foreground: 40 20% 92%;
+    /* Warm ivory text on mauve for excellent readability */
+    
+    --primary-hover: 270 20% 45%;
+    /* Lighter mauve - clear interactive feedback */
+    
+    --primary-active: 270 20% 32%;
+    /* Darker mauve - pressed state appearance */
+
+    /* ━━━ Secondary Colors ━━━ */
+    --secondary: 270 15% 27%;
+    /* Darker mauve for secondary elements */
+    
+    --secondary-foreground: 40 20% 92%;
+    /* Warm ivory text on darker mauve */
+
+    /* ━━━ Accent Colors (Luxury Gold) ━━━ */
+    --accent: 35 50% 60%;
+    /* Warm gold - creates elegant pop against mauve */
+    
+    --accent-foreground: 270 15% 11%;
+    /* Deep mauve text on gold for maximum contrast */
+    
+    --accent-hover: 35 55% 66%;
+    /* Brighter gold - interactive feedback */
+
+    /* ━━━ Muted/Disabled Colors ━━━ */
+    --muted: 270 12% 24%;
+    /* Deep mauve gray - muted elements */
+    
+    --muted-foreground: 40 15% 78%;
+    /* Muted ivory text - reduced prominence */
+
+    /* ━━━ UI Elements ━━━ */
+    --card: 270 12% 17%;
+    /* Slightly lighter deep mauve - card depth */
+    
+    --card-foreground: 40 20% 92%;
+    /* Warm ivory text on dark cards */
+    
+    --popover: 270 12% 17%;
+    /* Deep mauve for popovers */
+    
+    --popover-foreground: 40 20% 92%;
+    /* Warm ivory text in popovers */
+    
+    --border: 270 15% 24%;
+    /* Subtle mauve borders with better definition */
+    
+    --input: 270 12% 22%;
+    /* Slightly lighter mauve for form inputs */
+    
+    --ring: 35 50% 60%;
+    /* Gold focus ring - excellent visibility on dark background */
+
+    /* ━━━ Sidebar Theme ━━━ */
+    --sidebar-background: 270 14% 15%;
+    /* Slightly warmer mauve sidebar background */
+    
+    --sidebar-foreground: 40 20% 92%;
+    /* Warm ivory sidebar text */
+    
+    --sidebar-primary: 270 20% 38%;
+    /* Muted mauve for sidebar primary */
+    
+    --sidebar-primary-foreground: 40 20% 92%;
+    /* Warm ivory text on dark sidebar */
+    
+    --sidebar-accent: 35 50% 60%;
+    /* Warm gold accent in sidebar */
+    
+    --sidebar-accent-foreground: 270 15% 11%;
+    /* Deep mauve text on gold sidebar elements */
+    
+    --sidebar-border: 270 15% 24%;
+    /* Mauve borders for sidebar */
+    
+    --sidebar-ring: 35 50% 60%;
+    /* Gold focus ring for dark mode sidebar */
+
+    /* ━━━ Error/Destructive ━━━ */
+    --destructive: 0 65% 45%;
+    /* Warm coral-red with good dark mode contrast */
+    
+    --destructive-foreground: 40 20% 92%;
+    /* Warm ivory text on red */
+  }
+}
+
+/* ============================================
+   USAGE GUIDE
+   ============================================
+
+   These CSS variables are automatically used by:
+   - Tailwind theme.extend.colors
+   - shadcn/ui components
+   - All native HTML elements through @layer base
+
+   Example implementations:
+
+   1. BUTTONS:
+      <button class="bg-primary text-primary-foreground 
+                    hover:bg-primary-hover active:bg-primary-active">
+        Click Me
+      </button>
+
+   2. CARDS:
+      <div class="bg-card text-card-foreground border-border">
+        Content here
+      </div>
+
+   3. INPUTS:
+      <input class="bg-input border-border text-foreground
+                    focus:ring-2 focus:ring-ring">
+
+   4. ACCENTS:
+      <span class="bg-accent text-accent-foreground">
+        Special offer
+      </span>
+
+   5. DARK MODE (automatic with .dark class):
+      <html class="dark">
+        All CSS variables switch automatically
+      </html>
+
+   CUSTOMIZATION:
+   To adjust a color, change the HSL value:
+   --primary: 20 25% 22%;
+               ↑  ↑  ↑
+            hue saturation lightness
+
+   - Hue: 0-360 (position on color wheel)
+   - Saturation: 0-100% (colorfulness)
+   - Lightness: 0-100% (brightness)
+
+   Example: Make primary lighter
+   --primary: 20 25% 28%;  (increased lightness from 22% to 28%)
+
+   ============================================ */

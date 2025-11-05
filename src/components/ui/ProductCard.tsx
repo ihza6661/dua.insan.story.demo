@@ -26,35 +26,34 @@ const ProductCard = ({ product, loading = false }: ProductCardProps) => {
   return (
     <Link
       to={`/product/${product.id}`}
-      className="p-5 group product-card block bg-secondary overflow-hidden transition-all duration-300 h-full border border-border rounded-lg hover:shadow-lg hover:border-primary/20 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+      className="group product-card block bg-card overflow-hidden transition-all duration-300 h-full border border-border rounded-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
       aria-label={`View details for ${product.name}`}
     >
-      <div className="aspect-square relative w-full overflow-hidden bg-muted/50">
+      <div className="relative w-full overflow-hidden aspect-square">
         <img
           src={imageUrl}
           alt={product.featured_image?.alt_text ?? product.name}
-          className="product-card-image w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 rounded"
+          className="product-card-image w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
           onError={(e) => {
             e.currentTarget.src = "/placeholder.svg";
             e.currentTarget.alt = "Product image unavailable";
           }}
           loading="lazy"
         />
-
-        {/* Hover overlay effect */}
-        <div className="absolute inset-0 opacity-0 group-hover:opacity-5 transition-opacity duration-300" />
+        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+        </div>
       </div>
 
       <div className="p-4">
         <h3
-          className="text-base font-semibold text-foreground mb-2 line-clamp-2 min-h-[3rem] group-hover:text-primary transition-colors duration-200"
+          className="text-base font-semibold text-foreground mb-2 line-clamp-2 min-h-[3rem]"
           title={product.name}
         >
           {product.name}
         </h3>
 
         <div className="flex items-baseline justify-between">
-          <p className="text-lg font-bold text-primary">
+          <p className="text-lg font-bold text-foreground">
             {new Intl.NumberFormat("id-ID", {
               style: "currency",
               currency: "IDR",
@@ -64,7 +63,7 @@ const ProductCard = ({ product, loading = false }: ProductCardProps) => {
           </p>
 
           <span className="text-sm text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-            View →
+            Lihat →
           </span>
         </div>
       </div>

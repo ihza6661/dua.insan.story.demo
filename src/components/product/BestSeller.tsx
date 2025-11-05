@@ -17,7 +17,7 @@ const BestSeller = () => {
   const products = productData?.data.slice(0, 8) || [];
 
   return (
-    <div className="px-4">
+    <div className="px-4 bg-background">
       <h2 className="text-lg sm:text-xl font-normal mb-4 sm:mb-8 text-center uppercase tracking-widest pt-6 sm:pt-8 text-foreground">
         Our Featured Products
       </h2>

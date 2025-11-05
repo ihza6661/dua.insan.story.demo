@@ -48,7 +48,7 @@ const OrderSteps = () => {
                 {step.number}
               </div>
               <div>
-                <h3 className="font-semibold text-base text-primary sm:text-lg mb-1">
+                <h3 className="font-semibold text-base text-foreground sm:text-lg mb-1">
                   {step.title}
                 </h3>
                 <p className="text-sm sm:text-base text-muted-foreground">

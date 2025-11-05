@@ -169,7 +169,7 @@ const Header = () => {
                 <button className="relative flex items-center justify-center w-8 h-10">
                   <ShoppingBag className="w-6 h-6 text-foreground" />
                   {totalItems > 0 && (
-                    <span className="absolute -top-2 sm:-top-3 -right-1 bg-black text-white text-[10px] md:text-xs rounded-full h-4 w-3 md:h-5 md:w-4 flex items-center justify-center min-w-[30px] px-[2px]">
+                    <span className="absolute -top-2 sm:-top-3 -right-1 bg-popover text-[10px] md:text-xs rounded-full h-4 w-3 md:h-5 md:w-4 flex items-center justify-center min-w-[30px] px-[2px]">
                       {totalItems > 99 ? "99+" : totalItems}
                     </span>
                   )}
