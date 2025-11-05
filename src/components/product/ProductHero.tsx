@@ -136,12 +136,12 @@ const ProductHero: FC<ProductHeroProps> = ({ product, onAddToCart }) => {
       />
 
       <div className="pt-0 md:pt-20 px-4 sm:px-8 md:px-12 lg:px-16 sticky top-24 self-start">
-        <h1 className="text-2xl lg:text-3xl tracking-wide my-4 font-bold uppercase">
+        <h1 className="text-2xl lg:text-3xl tracking-wide my-4 font-bold uppercase text-foreground">
           {product.name}
         </h1>
 
         <div className="mb-4">
-          <div className="text-lg text-gray-600">
+          <div className="text-lg text-muted-foreground">
             Harga Satuan:
             {!activeVariant && <span className="text-sm"> Mulai dari </span>}
             {new Intl.NumberFormat("id-ID", {
@@ -150,7 +150,7 @@ const ProductHero: FC<ProductHeroProps> = ({ product, onAddToCart }) => {
               minimumFractionDigits: 0,
             }).format(pricePerItem)}
           </div>
-          <div className="text-2xl text-shop-accent font-bold pt-1">
+          <div className="text-2xl text-primary font-bold pt-1">
             Total:{" "}
             {new Intl.NumberFormat("id-ID", {
               style: "currency",
@@ -160,10 +160,10 @@ const ProductHero: FC<ProductHeroProps> = ({ product, onAddToCart }) => {
           </div>
         </div>
 
-        <div className="py-4 border-y">
+        <div className="py-4 border-y border-border">
           <button
             onClick={() => setShowDescription(!showDescription)}
-            className="text-black flex flex-row justify-between w-full items-center"
+            className="text-foreground flex flex-row justify-between w-full items-center"
           >
             <p className="text-base tracking-widest font-normal">
               Deskripsi produk
@@ -179,7 +179,7 @@ const ProductHero: FC<ProductHeroProps> = ({ product, onAddToCart }) => {
               showDescription ? "max-h-[1000px] mt-4" : "max-h-0"
             }`}
           >
-            <p className="text-base text-gray-700 whitespace-pre-line">
+            <p className="text-base text-muted-foreground whitespace-pre-line">
               {product.description ?? "Tidak ada deskripsi untuk produk ini."}
             </p>
           </div>
@@ -215,7 +215,7 @@ const ProductHero: FC<ProductHeroProps> = ({ product, onAddToCart }) => {
           <Button
             onClick={handleAddToCartClick}
             size="lg"
-            className="bg-shop-accent hover:bg-shop-accent/90 text-white w-full rounded-lg tracking-widest flex items-center justify-center gap-2 text-base"
+            className="bg-primary hover:bg-primary/90 text-primary-foreground w-full rounded-lg tracking-widest flex items-center justify-center gap-2 text-base"
             disabled={!activeVariant}
           >
             <ShoppingCart className="w-5 h-5" />
@@ -223,7 +223,7 @@ const ProductHero: FC<ProductHeroProps> = ({ product, onAddToCart }) => {
           </Button>
 
            {!activeVariant && (
-            <p className="text-sm text-center text-gray-500 mt-2">
+            <p className="text-sm text-center text-muted-foreground mt-2">
               Pilih semua opsi untuk melanjutkan.
             </p>
           )}

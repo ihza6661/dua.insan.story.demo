@@ -18,7 +18,7 @@ const BestSeller = () => {
 
   return (
     <div className="px-4">
-      <h2 className="text-lg sm:text-xl font-normal mb-4 sm:mb-8 text-center uppercase tracking-widest pt-6 sm:pt-8">
+      <h2 className="text-lg sm:text-xl font-normal mb-4 sm:mb-8 text-center uppercase tracking-widest pt-6 sm:pt-8 text-foreground">
         Our Featured Products
       </h2>
       <div className="flex space-x-5 overflow-x-scroll pb-6 sm:pb-10 custom-scrollbar">

@@ -24,17 +24,17 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-white pt-8 sm:pt-16 pb-8 border-t">
+    <footer className="bg-background pt-8 sm:pt-16 pb-8 border-t border-border">
       <div className="px-4 sm:px-8">
         <div className="grid grid-cols-1 md:grid-cols-4 mb-12 gap-4 sm:gap-8">
           {/* Products Section (Now Dynamic) */}
           <div>
             <button
-              className="sm:border-none border-b pb-8 sm:pb-0 border-gray-200 w-full flex items-center justify-between text-left text-lg uppercase mb-4 font-normal tracking-widest md:cursor-default md:pointer-events-none"
+              className="sm:border-none border-b pb-8 sm:pb-0 border-border w-full flex items-center justify-between text-left text-lg uppercase mb-4 font-normal tracking-widest md:cursor-default md:pointer-events-none text-foreground"
               onClick={() => toggleSection("products")}
             >
               Produk
-              <span className="text-4xl text-gray-600 font-thin md:hidden ml-2">
+              <span className="text-4xl text-muted-foreground font-thin md:hidden ml-2">
                 {openSection === "products" ? "−" : "+"}
               </span>
             </button>
@@ -47,12 +47,12 @@ const Footer = () => {
             >
               {isLoading && (
                 <li>
-                  <span className="text-gray-500 text-sm">Loading...</span>
+                  <span className="text-muted-foreground text-sm">Loading...</span>
                 </li>
               )}
               {isError && (
                 <li>
-                  <span className="text-red-500 text-sm">
+                  <span className="text-destructive text-sm">
                     Error loading categories.
                   </span>
                 </li>
@@ -61,7 +61,7 @@ const Footer = () => {
                 <li key={category.id}>
                   <Link
                     to={`/products/category/${category.slug}`}
-                    className="text-gray-800 text-sm block py-1 hover:text-black"
+                    className="text-muted-foreground text-sm block py-1 hover:text-foreground"
                   >
                     {category.name}
                   </Link>
@@ -73,11 +73,11 @@ const Footer = () => {
           {/* Service Section (Static) */}
           <div>
             <button
-              className="sm:border-none border-b pb-8 sm:pb-0 border-gray-200 w-full flex items-center justify-between text-left text-lg uppercase mb-4 font-normal tracking-widest md:cursor-default md:pointer-events-none"
+              className="sm:border-none border-b pb-8 sm:pb-0 border-border w-full flex items-center justify-between text-left text-lg uppercase mb-4 font-normal tracking-widest md:cursor-default md:pointer-events-none text-foreground"
               onClick={() => toggleSection("service")}
             >
               Layanan
-              <span className="text-4xl text-gray-600 font-thin md:hidden ml-2">
+              <span className="text-4xl text-muted-foreground font-thin md:hidden ml-2">
                 {openSection === "service" ? "−" : "+"}
               </span>
             </button>
@@ -89,7 +89,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="/faq"
-                  className="text-gray-800 text-sm block py-1 hover:text-black"
+                  className="text-muted-foreground text-sm block py-1 hover:text-foreground"
                 >
                   FAQ
                 </Link>
@@ -97,7 +97,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="/shipping"
-                  className="text-gray-800 text-sm block py-1 hover:text-black"
+                  className="text-muted-foreground text-sm block py-1 hover:text-foreground"
                 >
                   Pengiriman
                 </Link>
@@ -105,7 +105,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="/contact"
-                  className="text-gray-800 text-sm block py-1 hover:text-black"
+                  className="text-muted-foreground text-sm block py-1 hover:text-foreground"
                 >
                   Kontak
                 </Link>
@@ -116,11 +116,11 @@ const Footer = () => {
           {/* Information Section (Static) */}
           <div>
             <button
-              className="sm:border-none border-b pb-8 sm:pb-0 border-gray-200 w-full flex items-center justify-between text-left text-lg uppercase mb-4 font-normal tracking-widest md:cursor-default md:pointer-events-none"
+              className="sm:border-none border-b pb-8 sm:pb-0 border-border w-full flex items-center justify-between text-left text-lg uppercase mb-4 font-normal tracking-widest md:cursor-default md:pointer-events-none text-foreground"
               onClick={() => toggleSection("info")}
             >
               Informasi
-              <span className="text-4xl text-gray-600 font-thin md:hidden ml-2">
+              <span className="text-4xl text-muted-foreground font-thin md:hidden ml-2">
                 {openSection === "info" ? "−" : "+"}
               </span>
             </button>
@@ -132,7 +132,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="/syarat-ketentuan"
-                  className="text-gray-800 text-sm block py-1 hover:text-black"
+                  className="text-muted-foreground text-sm block py-1 hover:text-foreground"
                 >
                   Syarat & Ketentuan
                 </Link>
@@ -140,7 +140,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="/kebijakan-privasi"
-                  className="text-gray-800 text-sm block py-1 hover:text-black"
+                  className="text-muted-foreground text-sm block py-1 hover:text-foreground"
                 >
                   Kebijakan Privasi
                 </Link>
@@ -148,7 +148,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="/pengembalian-refund"
-                  className="text-gray-800 text-sm block py-1 hover:text-black"
+                  className="text-muted-foreground text-sm block py-1 hover:text-foreground"
                 >
                   Pengembalian & Refund
                 </Link>
@@ -156,7 +156,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="/info-pemesanan-cetak"
-                  className="text-gray-800 text-sm block py-1 hover:text-black"
+                  className="text-muted-foreground text-sm block py-1 hover:text-foreground"
                 >
                   Pemesanan Undangan Cetak
                 </Link>
@@ -166,14 +166,14 @@ const Footer = () => {
 
           {/* Social Media Section (Static) */}
           <div>
-            <h3 className="text-lg uppercase mb-4 font-normal tracking-widest">
+            <h3 className="text-lg uppercase mb-4 font-normal tracking-widest text-foreground">
               Sosial Media
             </h3>
             <div className="flex items-center space-x-4 mt-4">
               <a
                 href="#"
                 aria-label="Facebook"
-                className="text-shop-dark-gray hover:text-black transition-colors"
+                className="text-muted-foreground hover:text-foreground transition-colors"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -189,7 +189,7 @@ const Footer = () => {
               <a
                 href="https://www.instagram.com/duainsan.story/"
                 aria-label="Instagram"
-                className="text-shop-dark-gray hover:text-black transition-colors"
+                className="text-muted-foreground hover:text-foreground transition-colors"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -208,7 +208,7 @@ const Footer = () => {
               <a
                 href="#"
                 aria-label="Pinterest"
-                className="text-shop-dark-gray hover:text-black transition-colors"
+                className="text-muted-foreground hover:text-foreground transition-colors"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -224,8 +224,8 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="border-t border-shop-medium-gray pt-8 flex flex-col md:flex-row items-center justify-between">
-          <p className="text-xs text-shop-dark-gray">
+        <div className="border-t border-border pt-8 flex flex-col md:flex-row items-center justify-between">
+          <p className="text-xs text-muted-foreground">
             © {currentYear} DuaInsan.Story. All rights reserved.
           </p>
         </div>
@@ -233,15 +233,14 @@ const Footer = () => {
         <div className="mt-16 flex justify-center">
           <Link
             to="/"
-            className="text-xl md:text-3xl font-semibold font-fancy tracking-widest text-start italic text-transparent bg-clip-text bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900"
+            className="text-xl md:text-3xl font-semibold font-fancy tracking-widest text-start italic text-foreground"
           >
             DuaInsan.Story
           </Link>
         </div>
       </div>
-    </footer>
+</footer>
   );
 };
 
 export default Footer;
-

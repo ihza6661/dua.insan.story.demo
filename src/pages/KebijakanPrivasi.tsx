@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Shield, Lock, Eye, Users, FileText, Mail, ChevronDown, ChevronUp } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export default function PrivacyPolicy() {
   const [expandedSection, setExpandedSection] = useState(null);
@@ -47,10 +48,10 @@ export default function PrivacyPolicy() {
       {/* Hero Section */}
       <div className="container mx-auto px-10 py-10 max-w-4xl">
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-4xl md:text-5xl mb-4">
+          <h1 className="text-4xl md:text-5xl mb-4 text-foreground">
             Kebijakan Privasi
           </h1>
-          <p className="text-gray-700">
+          <p className="text-muted-foreground">
             Terakhir diperbarui: 05 November 2025
           </p>
         </div>
@@ -59,7 +60,7 @@ export default function PrivacyPolicy() {
       {/* Breadcrumb */}
       <div className="max-w-6xl mx-auto px-6 py-4">
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
-          <a href="#" className="hover:text-foreground transition">Home</a>
+          <Link to="/" className="hover:text-foreground transition">Home</Link>
           <span>/</span>
           <span className="text-foreground font-medium">Kebijakan Privasi</span>
         </div>
@@ -89,7 +90,7 @@ export default function PrivacyPolicy() {
                   <div className="p-2 bg-primary text-primary-foreground rounded">
                     {section.icon}
                   </div>
-                  <h2 className="text-xl font-bold text-left">{section.title}</h2>
+                  <h2 className="text-foreground text-xl text-left">{section.title}</h2>
                 </div>
                 {expandedSection === section.id ? (
                   <ChevronUp className="w-6 h-6 flex-shrink-0" />
@@ -107,15 +108,15 @@ export default function PrivacyPolicy() {
         </div>
 
         {/* Contact Section */}
-        <section className="bg-primary text-primary-foreground rounded-lg p-8">
+        <section className="bg-secondary text-primary-foreground rounded-lg p-8">
           <div className="flex items-center gap-3 mb-4">
-            <Mail className="w-6 h-6" />
-            <h2 className="text-primary-foreground text-2xl font-bold">Kontak Kami</h2>
+            <Mail className="w-6 h-6 text-foreground" />
+            <h2 className="text-secondary-foreground text-2xl">Kontak Kami</h2>
           </div>
-          <p className="text-primary-foreground/80 mb-4">
+          <p className="text-secondary-foreground/80 mb-4">
             Jika Anda memiliki pertanyaan tentang Kebijakan Privasi ini, Anda dapat menghubungi kami:
           </p>
-          <ul className="space-y-2 text-primary-foreground/80">
+          <ul className="space-y-2 text-secondary-foreground/80">
             <li>• Melalui email: duainsan@story.com</li>
             <li>• Dengan mengunjungi halaman ini di situs web kami: www.duainsan.com/contact</li>
           </ul>

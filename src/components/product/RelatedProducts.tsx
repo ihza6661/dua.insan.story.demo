@@ -1,4 +1,4 @@
-// src/components/product/RelatedProducts.tsx (Refactored)
+// src/components/product/RelatedProducts.tsx
 
 import { useQuery } from "@tanstack/react-query";
 import { fetchProducts } from "@/services/productService";
@@ -29,25 +29,25 @@ const RelatedProducts = ({ categorySlug, currentProductId }: RelatedProductsProp
   }
 
   return (
-    <section className="py-10 bg-white">
-      <h2 className="text-lg sm:text-2xl font-normal mb-4 sm:mb-6 text-center uppercase tracking-widest pt-6 sm:pt-16">
+    <section className="py-10 bg-background">
+      <h2 className="text-lg sm:text-2xl font-normal mb-4 sm:mb-6 text-center uppercase tracking-widest pt-6 sm:pt-16 text-foreground">
         Produk yang anda mungkin suka      </h2>
       <div className="custom-scrollbar flex space-x-2 overflow-x-scroll pb-6 sm:pb-10 m-6">
         {isLoading ? (
-            Array.from({ length: 4 }).map((_, index) => (
-                <div key={index} className="flex-none w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/4 h-full">
-                    <ProductCardSkeleton />
-                </div>
-            ))
-        ) : (
-            relatedProducts.map((item) => (
-            <div
-                key={item.id}
-                className="flex-none w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/4 h-full"
-            >
-                <ProductCard product={item} />
+          Array.from({ length: 4 }).map((_, index) => (
+            <div key={index} className="flex-none w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/4 h-full">
+              <ProductCardSkeleton />
             </div>
-            ))
+          ))
+        ) : (
+          relatedProducts.map((item) => (
+            <div
+              key={item.id}
+              className="flex-none w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/4 h-full"
+            >
+              <ProductCard product={item} />
+            </div>
+          ))
         )}
       </div>
     </section>

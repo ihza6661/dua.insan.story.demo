@@ -19,7 +19,7 @@ const AddOnSelector: React.FC<AddOnSelectorProps> = ({ addOns, selectedAddOnIds,
 
   return (
     <div>
-      <Label className="font-semibold text-base text-gray-800">Pilih Tambahan</Label>
+      <Label className="font-semibold text-base">Pilih Tambahan</Label>
       {/* Added a border and padding for better visual grouping */}
       <div className="mt-2 space-y-1 border p-4 rounded-lg">
         {addOns.map((addOn) => (
@@ -27,19 +27,19 @@ const AddOnSelector: React.FC<AddOnSelectorProps> = ({ addOns, selectedAddOnIds,
             key={addOn.id}
             // The whole row is now clickable
             onClick={() => onAddOnChange(addOn.id, !selectedAddOnIds.includes(addOn.id))}
-            className="flex items-center space-x-3 p-2 rounded-md hover:bg-gray-50 cursor-pointer transition-colors"
+            className="flex items-center space-x-3 p-2 rounded-md cursor-pointer transition-colors hover:bg-accent"
           >
             <Checkbox
               id={`addon-${addOn.id}`}
               checked={selectedAddOnIds.includes(addOn.id)}
               // The parent div's onClick now handles the logic
-              onCheckedChange={() => {}} 
+              onCheckedChange={() => { }}
             />
             <Label
               htmlFor={`addon-${addOn.id}`}
               className="flex justify-between w-full cursor-pointer text-sm"
             >
-              <span className="text-gray-700">{addOn.name}</span>
+              <span className="">{addOn.name}</span>
               <span className="font-medium text-green-600">
                 (+{new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR", minimumFractionDigits: 0 }).format(addOn.price)})
               </span>

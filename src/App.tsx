@@ -54,58 +54,160 @@ const Layout = () => {
   );
 };
 
+import { ThemeProvider } from "@/components/ThemeProvider";
+
+
+
 const App = () => (
+
   <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <CartProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <AuthProvider>
-            <ScrollToTop />
-            <Routes>
-              <Route path="/" element={<Layout />}>
-                {/* Routes only for guests (not logged in) */}
-                <Route element={<PublicOnlyRoute />}>
-                  <Route path="login" element={<LoginPage />} />
-                  <Route path="register" element={<RegisterPage />} />
+
+    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+
+      <TooltipProvider>
+
+        <CartProvider>
+
+          <Toaster />
+
+          <Sonner />
+
+          <BrowserRouter>
+
+            <AuthProvider>
+
+              <ScrollToTop />
+
+              <Routes>
+
+                <Route path="/" element={<Layout />}>
+
+                  {/* Routes only for guests (not logged in) */}
+
+                  <Route element={<PublicOnlyRoute />}>
+
+                    <Route path="login" element={<LoginPage />} />
+
+                    <Route path="register" element={<RegisterPage />} />
+
+                  </Route>
+
+
+
+                  {/* Routes only for authenticated users */}
+
+                  <Route element={<ProtectedRoute />}>
+
+                    <Route path="profile" element={<ProfilePage />} />
+
+                    <Route path="checkout" element={<CheckoutPage />} />
+
+                    <Route path="status-pesanan" element={<OrderStatusPage />} />
+
+                    <Route
+
+                      path="status-pesanan/:orderId"
+
+                      element={<OrderStatusPage />}
+
+                    />
+
+                    <Route
+
+                      path="order-confirmation/:orderId"
+
+                      element={<OrderConfirmationPage />}
+
+                    />
+
+                  </Route>
+
+
+
+                  {/* Public routes */}
+
+                  <Route index element={<Home />} />
+
+                  <Route path="products" element={<Products />} />
+
+                  <Route
+
+                    path="products/category/:category"
+
+                    element={<Products />}
+
+                  />
+
+                  <Route path="product/:id" element={<ProductDetail />} />
+
+                  <Route path="cart" element={<Cart />} />
+
+                  <Route path="gallery" element={<Gallery />} />
+
+                  <Route path="CaraPesan" element={<CaraMemesan />} />
+
+                  <Route
+
+                    path="info-pemesanan-cetak"
+
+                    element={<InfoPemesananCetak />}
+
+                  />
+
+                  <Route
+
+                    path="shipping-calculator"
+
+                    element={<ShippingForm />}
+
+                  />
+
+                  <Route
+
+                    path="syarat-ketentuan"
+
+                    element={<SyaratKetentuan />}
+
+                  />
+
+                  <Route
+
+                    path="kebijakan-privasi"
+
+                    element={<KebijakanPrivasi />}
+
+                  />
+
+                  <Route
+
+                    path="pengembalian-refund"
+
+                    element={<PengembalianRefund />}
+
+                  />
+
+
+
+                  <Route path="*" element={<NotFound />} />
+
                 </Route>
 
-                {/* Routes only for authenticated users */}
-                <Route element={<ProtectedRoute />}>
-                  <Route path="profile" element={<ProfilePage />} />
-                  <Route path="checkout" element={<CheckoutPage />} />
-                  <Route path="status-pesanan" element={<OrderStatusPage />} />
-                  <Route path="status-pesanan/:orderId" element={<OrderStatusPage />} />
-                  <Route path="order-confirmation/:orderId" element={<OrderConfirmationPage />} />
-                </Route>
+              </Routes>
 
-                {/* Public routes */}
-                <Route index element={<Home />} />
-                <Route path="products" element={<Products />} />
-                <Route
-                  path="products/category/:category"
-                  element={<Products />}
-                />
-                <Route path="product/:id" element={<ProductDetail />} />
-                <Route path="cart" element={<Cart />} />
-                <Route path="gallery" element={<Gallery />} />
-                <Route path="CaraPesan" element={<CaraMemesan />} />
-                <Route path="info-pemesanan-cetak" element={<InfoPemesananCetak />} />
-                <Route path="shipping-calculator" element={<ShippingForm />} />
-                <Route path="syarat-ketentuan" element={<SyaratKetentuan />} />
-                <Route path="kebijakan-privasi" element={<KebijakanPrivasi />} />
-                <Route path="pengembalian-refund" element={<PengembalianRefund />} />
+              <FloatingIcons />
 
-                <Route path="*" element={<NotFound />} />
-              </Route>
-            </Routes>
-            <FloatingIcons />
-          </AuthProvider>
-        </BrowserRouter>
-      </CartProvider>
-    </TooltipProvider>
+            </AuthProvider>
+
+          </BrowserRouter>
+
+        </CartProvider>
+
+      </TooltipProvider>
+
+    </ThemeProvider>
+
   </QueryClientProvider>
+
 );
 
 export default App;

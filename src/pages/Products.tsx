@@ -104,7 +104,7 @@ const Products = () => {
   // --- RENDER ---
   if (isError) {
     return (
-      <div className="text-center py-20 text-red-500">
+      <div className="text-center py-20 text-destructive">
         Terjadi kesalahan: {error?.message}
       </div>
     );
@@ -115,23 +115,23 @@ const Products = () => {
   );
 
   return (
-    <div className="min-h-screen flex flex-col pt-16">
+    <div className="min-h-screen flex flex-col pt-16 bg-background">
       <main className="flex-grow py-8">
         <div className="container pb-44">
-          <h1 className="text-3xl font-medium mb-8">
+          <h1 className="text-3xl font-medium mb-8 text-foreground">
             {activeCategory ? activeCategory.name : "Semua Produk"}
           </h1>
           <div className="flex flex-col lg:flex-row gap-8">
             {/* --- SIDEBAR FILTERS --- */}
             <div className="lg:w-1/4">
               {/* Category Filter */}
-              <div className="bg-white p-6 rounded-lg border border-shop-medium-gray mb-6">
-                <h2 className="text-lg font-medium mb-4">Kategori</h2>
+              <div className="bg-card p-6 rounded-lg border border-border mb-6">
+                <h2 className="text-lg font-medium mb-4 text-foreground">Kategori</h2>
                 <div className="space-y-2">
                   <Button
                     variant={!categorySlugFromUrl ? "default" : "ghost"}
                     onClick={() => handleCategoryChange(undefined)}
-                    className={`w-full justify-start text-left ${!categorySlugFromUrl ? "bg-shop-accent text-white" : ""
+                    className={`w-full justify-start text-left ${!categorySlugFromUrl ? "bg-primary text-primary-foreground" : ""
                       }`}
                   >
                     Semua Produk
@@ -147,7 +147,7 @@ const Products = () => {
                         }
                         onClick={() => handleCategoryChange(cat.slug)}
                         className={`w-full justify-start text-left ${categorySlugFromUrl === cat.slug
-                          ? "bg-shop-accent text-white"
+                          ? "bg-primary text-primary-foreground"
                           : ""
                           }`}
                       >
@@ -159,8 +159,8 @@ const Products = () => {
               </div>
 
               {/* Price Filter with Slider */}
-              <div className="bg-white p-6 rounded-lg border border-shop-medium-gray">
-                <h2 className="text-lg font-medium mb-4">Filter Harga</h2>
+              <div className="bg-card p-6 rounded-lg border border-border">
+                <h2 className="text-lg font-medium mb-4 text-foreground">Filter Harga</h2>
                 <div className="space-y-4">
                   <Slider
                     value={priceRange}
@@ -169,7 +169,7 @@ const Products = () => {
                     step={1000}
                     className="w-full"
                   />
-                  <div className="flex justify-between text-sm text-shop-dark-gray">
+                  <div className="flex justify-between text-sm text-muted-foreground">
                     <span>{formatCurrency(priceRange[0])}</span>
                     <span>{formatCurrency(priceRange[1])}</span>
                   </div>
@@ -189,7 +189,7 @@ const Products = () => {
                   className="w-full md:max-w-xs"
                 />
                 <div className="flex items-center gap-4 w-full md:w-auto">
-                  <span className="text-shop-dark-gray whitespace-nowrap">Urutkan:</span>
+                  <span className="text-muted-foreground whitespace-nowrap">Urutkan:</span>
                   <Select value={sortOption} onValueChange={setSortOption}>
                     <SelectTrigger className="w-full md:w-[180px]">
                       <SelectValue placeholder="Pilih Urutan" />
@@ -204,7 +204,7 @@ const Products = () => {
               </div>
 
               <div className="flex justify-between items-center mb-6">
-                <p className="text-shop-dark-gray">
+                <p className="text-muted-foreground">
                   Menampilkan {paginatedProducts?.meta?.total || 0} produk
                 </p>
               </div>
@@ -222,7 +222,7 @@ const Products = () => {
                   ))
                 ) : (
                   <div className="col-span-full py-12 text-center">
-                    <p className="text-lg text-shop-dark-gray">
+                    <p className="text-lg text-muted-foreground">
                       Produk tidak ditemukan. Coba ubah filter Anda.
                     </p>
                   </div>

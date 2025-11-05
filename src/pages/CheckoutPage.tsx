@@ -177,7 +177,7 @@ const CheckoutPage = () => {
   if (isLoading) {
     return (
       <div className="container mt-20 mx-auto text-center py-20">
-        <Loader2 className="h-20 w-20 mx-auto text-gray-300 animate-spin" />
+        <Loader2 className="h-20 w-20 mx-auto text-muted-foreground animate-spin" />
         <h1 className="text-3xl font-semibold mt-4">Memuat Keranjang...</h1>
       </div>
     );
@@ -186,9 +186,9 @@ const CheckoutPage = () => {
   if (!cart || cart.items.length === 0) {
     return (
       <div className="container mt-20 mx-auto text-center py-20">
-        <ShoppingCart className="h-20 w-20 mx-auto text-gray-300" />
+        <ShoppingCart className="h-20 w-20 mx-auto text-muted-foreground" />
         <h1 className="text-3xl font-semibold mt-4">Keranjang Anda Kosong</h1>
-        <p className="text-gray-500 mt-2">
+        <p className="text-muted-foreground mt-2">
           Anda tidak bisa melanjutkan ke checkout karena keranjang kosong.
         </p>
       </div>
@@ -203,7 +203,7 @@ const CheckoutPage = () => {
           <Card>
             <CardHeader>
               <CardTitle>Kontak Anda</CardTitle>
-              <p className="text-sm text-gray-500">Kami akan mengirimkan konfirmasi pesanan ke email ini.</p>
+              <p className="text-sm text-muted-foreground">Kami akan mengirimkan konfirmasi pesanan ke email ini.</p>
             </CardHeader>
             <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
@@ -221,24 +221,24 @@ const CheckoutPage = () => {
           <Card>
             <CardHeader>
               <CardTitle>Alamat Pengiriman</CardTitle>
-              <p className="text-sm text-gray-500">Alamat pengiriman dari profil anda</p>
+              <p className="text-sm text-muted-foreground">Alamat pengiriman dari profil anda</p>
             </CardHeader>
             <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label>Provinsi</Label>
-                <p className="text-sm text-gray-500">{user?.province_name || ''}</p>
+                <p className="text-sm text-muted-foreground">{user?.province_name || ''}</p>
               </div>
               <div className="space-y-2">
                 <Label>Kota/Kabupaten</Label>
-                <p className="text-sm text-gray-500">{user?.city_name || ''}</p>
+                <p className="text-sm text-muted-foreground">{user?.city_name || ''}</p>
               </div>
               <div className="md:col-span-2 space-y-2">
                 <Label htmlFor="shipping_address">Alamat Lengkap</Label>
-                <p className="text-sm text-gray-500">{user?.address || ''}</p>
+                <p className="text-sm text-muted-foreground">{user?.address || ''}</p>
               </div>
               <div className="space-y-2">
                 <Label>Kode Pos</Label>
-                <p className="text-sm text-gray-500">{user?.postal_code || ''}</p>
+                <p className="text-sm text-muted-foreground">{user?.postal_code || ''}</p>
               </div>
             </CardContent>
           </Card>
@@ -247,7 +247,7 @@ const CheckoutPage = () => {
           <Card>
             <CardHeader>
               <CardTitle>Data Pernikahan</CardTitle>
-              <p className="text-sm text-gray-500">Isi detail lengkap untuk undangan Anda.</p>
+              <p className="text-sm text-muted-foreground">Isi detail lengkap untuk undangan Anda.</p>
             </CardHeader>
             <CardContent className="space-y-6">
               {/* Data Mempelai */}
@@ -281,7 +281,7 @@ const CheckoutPage = () => {
                 </div>
               </div>
 
-              <div className="border-t border-gray-200"></div>
+              <div className="border-t border-border"></div>
 
               {/* Detail Acara */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
@@ -317,7 +317,7 @@ const CheckoutPage = () => {
                 </div>
               </div>
 
-              <div className="border-t border-gray-200"></div>
+              <div className="border-t border-border"></div>
 
               {/* Data Pendukung */}
               <div className="space-y-4">
@@ -329,7 +329,7 @@ const CheckoutPage = () => {
                 <div className="space-y-2">
                   <Label htmlFor="prewedding_photo">Foto Pre-wedding</Label>
                   <Input id="prewedding_photo" name="prewedding_photo" type="file" />
-                  <p className="text-xs text-gray-500">Unggah satu foto untuk desain undangan Anda.</p>
+                  <p className="text-xs text-muted-foreground">Unggah satu foto untuk desain undangan Anda.</p>
                 </div>
               </div>
             </CardContent>
@@ -357,14 +357,14 @@ const CheckoutPage = () => {
                       )}
                       <div>
                         <p className="text-sm font-medium">{item.product?.name} x {item.quantity}</p>
-                        <p className="text-xs text-gray-500">{item.customizations?.options?.map((opt: { name: string, value: string }) => opt.value).join(' / ')}</p>
+                        <p className="text-xs text-muted-foreground">{item.customizations?.options?.map((opt: { name: string, value: string }) => opt.value).join(' / ')}</p>
                       </div>
                     </div>
                     <span>{formatRupiah(item.sub_total)}</span>
                   </div>
                 )})}
               </div>
-              <div className="border-t border-gray-200 pt-4 space-y-2">
+              <div className="border-t border-border pt-4 space-y-2">
                 <Label htmlFor="courier">Kurir</Label>
                 <Select onValueChange={setSelectedCourier} defaultValue={selectedCourier}>
                   <SelectTrigger>
@@ -377,7 +377,7 @@ const CheckoutPage = () => {
                   </SelectContent>
                 </Select>
               </div>
-              <div className="border-t border-gray-200 pt-4 space-y-2">
+              <div className="border-t border-border pt-4 space-y-2">
                 <Label htmlFor="shipping-service">Layanan Pengiriman</Label>
                 <Select onValueChange={handleServiceSelection} disabled={isCalculatingCost || shippingServices.length === 0}>
                   <SelectTrigger>
@@ -395,7 +395,7 @@ const CheckoutPage = () => {
                   </SelectContent>
                 </Select>
               </div>
-              <div className="border-t border-gray-200 pt-4 flex justify-between">
+              <div className="border-t border-border pt-4 flex justify-between">
                 <span>Subtotal</span>
                 <span>{formatRupiah(cart.subtotal)}</span>
               </div>
@@ -403,7 +403,7 @@ const CheckoutPage = () => {
                 <span>Biaya Pengiriman ({shippingService})</span>
                 <span>{formatRupiah(shippingCost)}</span>
               </div>
-              <div className="border-t border-gray-200 pt-4 flex justify-between text-lg font-bold">
+              <div className="border-t border-border pt-4 flex justify-between text-lg font-bold">
                 <span>Total Pembayaran</span>
                 <span>{formatRupiah(cart.subtotal + shippingCost)}</span>
               </div>

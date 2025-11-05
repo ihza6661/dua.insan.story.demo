@@ -97,7 +97,7 @@ const SyaratKetentuan: React.FC = () => {
             >
               <div className="p-6">
                 <div className="flex items-center mb-4">
-                  <div className="bg-primary p-3 text-primary-foreground mr-4">
+                  <div className="bg-primary p-3 text-primary-foreground mr-4 rounded">
                     {section.icon}
                   </div>
                   <h2 className="text-2xl text-foreground">

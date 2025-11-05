@@ -13,11 +13,11 @@ const ProductCard = ({ product, loading = false }: ProductCardProps) => {
 
   if (loading) {
     return (
-      <div className="group product-card block bg-white overflow-hidden transition-all duration-300 h-full border rounded-lg animate-pulse">
-        <div className="aspect-square relative w-full overflow-hidden bg-gray-200" />
+      <div className="group product-card block bg-card overflow-hidden transition-all duration-300 h-full border rounded-lg animate-pulse">
+        <div className="aspect-square relative w-full overflow-hidden bg-muted" />
         <div className="p-4">
-          <div className="h-5 bg-gray-200 rounded mb-3 w-3/4" />
-          <div className="h-6 bg-gray-200 rounded w-1/2" />
+          <div className="h-5 bg-muted rounded mb-3 w-3/4" />
+          <div className="h-6 bg-muted rounded w-1/2" />
         </div>
       </div>
     );
@@ -26,10 +26,10 @@ const ProductCard = ({ product, loading = false }: ProductCardProps) => {
   return (
     <Link
       to={`/product/${product.id}`}
-      className="group product-card block bg-white overflow-hidden transition-all duration-300 h-full border border-gray-200 rounded-lg hover:shadow-lg hover:border-gray-300 focus:outline-none focus:ring-2 focus:ring-shop-accent focus:ring-offset-2"
+      className="group product-card block bg-secondary overflow-hidden transition-all duration-300 h-full border border-border rounded-lg hover:shadow-lg hover:border-primary/20 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
       aria-label={`View details for ${product.name}`}
     >
-      <div className="aspect-square relative w-full overflow-hidden bg-gray-50">
+      <div className="aspect-square relative w-full overflow-hidden bg-muted/50">
         <img
           src={imageUrl}
           alt={product.featured_image?.alt_text ?? product.name}
@@ -42,19 +42,19 @@ const ProductCard = ({ product, loading = false }: ProductCardProps) => {
         />
 
         {/* Hover overlay effect */}
-        <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-5 transition-opacity duration-300" />
+        <div className="absolute inset-0 opacity-0 group-hover:opacity-5 transition-opacity duration-300" />
       </div>
 
       <div className="p-4">
         <h3
-          className="text-base font-semibold text-shop-text mb-2 line-clamp-2 min-h-[3rem] group-hover:text-shop-accent transition-colors duration-200"
+          className="text-base font-semibold text-foreground mb-2 line-clamp-2 min-h-[3rem] group-hover:text-primary transition-colors duration-200"
           title={product.name}
         >
           {product.name}
         </h3>
 
         <div className="flex items-baseline justify-between">
-          <p className="text-lg font-bold text-shop-accent">
+          <p className="text-lg font-bold text-primary">
             {new Intl.NumberFormat("id-ID", {
               style: "currency",
               currency: "IDR",
@@ -63,7 +63,7 @@ const ProductCard = ({ product, loading = false }: ProductCardProps) => {
             }).format(product.base_price)}
           </p>
 
-          <span className="text-sm text-gray-500 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+          <span className="text-sm text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity duration-200">
             View →
           </span>
         </div>

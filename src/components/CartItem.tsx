@@ -45,18 +45,18 @@ export function CartItem({ item, onUpdateQuantity, onRemoveItem }: CartItemProps
             <div className="flex-1">
               <div className="flex justify-between items-start">
                 <div>
-                  <h3 className="font-semibold text-base md:text-lg">{item.product.name}</h3>
+                  <h3 className="font-semibold text-foreground text-base md:text-lg">{item.product.name}</h3>
                   {variantDescription && (
-                    <p className="text-sm text-gray-500">{variantDescription}</p>
+                    <p className="text-sm">{variantDescription}</p>
                   )}
-                  <p className="text-gray-600 font-medium mt-1 sm:hidden">
+                  <p className="font-medium mt-1 sm:hidden">
                     {formatRupiah(item.unit_price)}
                   </p>
                 </div>
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="text-gray-400 hover:text-red-500 -mt-2 -mr-2"
+                  className="hover:text-red-500 -mt-2 -mr-2"
                   onClick={() => onRemoveItem(item.id)}
                   aria-label={`Hapus ${item.product.name} dari keranjang`}
                 >
@@ -101,7 +101,7 @@ export function CartItem({ item, onUpdateQuantity, onRemoveItem }: CartItemProps
               </Button>
             </div>
             <div className="mt-2 sm:mt-0 text-right">
-              <p className="hidden sm:block text-gray-600 font-medium">{formatRupiah(item.unit_price)}</p>
+              <p className="hidden sm:block text-gray-500 font-medium">{formatRupiah(item.unit_price)}</p>
               <p className="font-bold text-base md:text-lg">{formatRupiah(item.sub_total)}</p>
             </div>
           </div>

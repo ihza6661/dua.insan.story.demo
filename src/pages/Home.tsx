@@ -27,7 +27,7 @@ const Home = () => {
   return (
     <div className="min-h-screen w-full overflow-hidden">
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center font-serif bg-white overflow-hidden">
+      <section className="relative min-h-screen flex items-center justify-center font-serif bg-background overflow-hidden">
         {/* Background Image */}
         <div className="absolute inset-0">
           <img
@@ -36,17 +36,17 @@ const Home = () => {
             className="w-full h-full object-cover brightness-90 saturate-75"
           />
           {/* Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-b from-white/60 via-white/30 to-white/70" />
+          <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/30 to-background/70" />
         </div>
 
         {/* Main Content */}
         <div className="relative z-20 max-w-5xl mx-auto px-6 sm:px-10 lg:px-16 grid lg:grid-cols-[1.2fr_0.8fr] gap-10 items-center">
           {/* Glass Card */}
-          <div className="bg-white/70 backdrop-blur-md rounded-3xl shadow-lg p-8 sm:p-12 animate-fadeIn border border-white/40">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight tracking-wide">
+          <div className="bg-card/70 backdrop-blur-md rounded-3xl shadow-lg p-8 sm:p-12 animate-fadeIn border border-border/40">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight tracking-wide">
               Create Your Perfect Invitation
             </h1>
-            <p className="text-base sm:text-lg text-gray-700 italic mb-10">
+            <p className="text-base sm:text-lg text-muted-foreground italic mb-10">
               Make every event unforgettable — starting with the invitation.
             </p>
 
@@ -54,13 +54,13 @@ const Home = () => {
             <div className="flex flex-wrap gap-4">
               <a
                 href={`https://wa.me/${phoneNumber.replace("+", "")}`}
-                className="inline-block border border-gray-800 text-gray-800 hover:bg-gray-800 hover:text-white transition px-6 py-3 rounded-full shadow-sm text-sm font-medium"
+                className="inline-block border border-foreground text-foreground hover:bg-foreground hover:text-background transition px-6 py-3 rounded-full shadow-sm text-sm font-medium"
               >
                 Chat Admin
               </a>
               <a
                 href="/products"
-                className="inline-block bg-gray-900 text-white hover:bg-gray-700 transition px-6 py-3 rounded-full shadow-sm text-sm font-medium"
+                className="inline-block bg-primary text-primary-foreground hover:bg-primary/80 transition px-6 py-3 rounded-full shadow-sm text-sm font-medium"
               >
                 Lihat Koleksi
               </a>
@@ -123,7 +123,7 @@ const Home = () => {
 
       {/* Termin Pembayaran dan Free items Information */}
       <section className="pt-10 sm:pt-12 md:pt-16">
-        <div className="bg-[#f1ede9]">
+        <div className="">
           <p className="text-center pt-10 text-xl">Cara Order via WhatsApp</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2">
             {highlight.map((post) => (

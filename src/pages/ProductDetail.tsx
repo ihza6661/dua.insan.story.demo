@@ -1,5 +1,4 @@
-// src/pages/ProductDetail.tsx (Updated & Final)
-
+// src/pages/ProductDetail.tsx
 import { Link, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 
@@ -71,7 +70,7 @@ const ProductDetail = () => {
   // 1. Display skeleton while data is loading
   if (isLoading) {
     return (
-      <div className="min-h-screen flex flex-col">
+      <div className="min-h-screen flex flex-col bg-background">
         <Header />
         <main className="flex-grow pt-8">
           {/* <ProductDetailSkeleton /> */}
@@ -84,14 +83,14 @@ const ProductDetail = () => {
   // 2. Display error message if fetching fails or product is not found
   if (isError || !product) {
     return (
-      <div className="min-h-screen flex flex-col">
+      <div className="min-h-screen flex flex-col bg-background">
         <Header />
         <main className="flex-grow py-16">
           <div className="container text-center">
-            <h1 className="text-3xl font-medium mb-6">
+            <h1 className="text-3xl font-medium mb-6 text-foreground">
               Produk Tidak Ditemukan
             </h1>
-            <p className="text-shop-dark-gray mb-8">
+            <p className="text-muted-foreground mb-8">
               {error instanceof Error
                 ? error.message
                 : "Kami tidak dapat menemukan produk yang Anda cari."}
@@ -111,7 +110,7 @@ const ProductDetail = () => {
 
   // 3. Display the main content if data is loaded successfully
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-background">
       <main className="flex-grow">
         <ProductHero product={product} onAddToCart={handleAddToCart} />
         <ProductServices />
@@ -124,18 +123,18 @@ const ProductDetail = () => {
             <BreadcrumbList>
               <BreadcrumbItem>
                 <BreadcrumbLink asChild>
-                  <Link to="/">Home</Link>
+                  <Link to="/" className="text-muted-foreground hover:text-foreground">Home</Link>
                 </BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
                 <BreadcrumbLink asChild>
-                  <Link to="/products">Products</Link>
+                  <Link to="/products" className="text-muted-foreground hover:text-foreground">Products</Link>
                 </BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
-                <BreadcrumbPage>{product.name}</BreadcrumbPage>
+                <BreadcrumbPage className="text-foreground">{product.name}</BreadcrumbPage>
               </BreadcrumbItem>
             </BreadcrumbList>
           </Breadcrumb>

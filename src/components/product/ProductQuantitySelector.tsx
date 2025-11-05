@@ -19,14 +19,14 @@ const ProductQuantitySelector = ({
   return (
     <div className="flex flex-col gap-4 my-4">
       <div className="flex items-center">
-        <span className="mr-4 font-medium text-gray-700">Jumlah</span>
-        <div className="flex items-center border border-shop-medium-gray rounded-md">
+        <span className="mr-4 font-medium">Jumlah</span>
+        <div className="flex items-center border rounded-md">
           <Button
             type="button"
             variant="ghost"
             size="icon"
             onClick={() => onQuantityChange(-100)}
-            className="h-10 w-10 text-shop-dark-gray"
+            className="h-10 w-10"
             // 2. Gunakan 'minOrder' untuk menonaktifkan tombol secara dinamis
             disabled={quantity <= minOrder}
           >
@@ -40,7 +40,7 @@ const ProductQuantitySelector = ({
             variant="ghost"
             size="icon"
             onClick={() => onQuantityChange(100)}
-            className="h-10 w-10 text-shop-dark-gray"
+            className="h-10 w-10"
           >
             <PlusIcon className="h-4 w-4" />
           </Button>
