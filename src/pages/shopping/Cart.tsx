@@ -11,7 +11,7 @@ import {
 import { Trash2, Loader2, ShoppingCart } from "lucide-react";
 import { useDebouncedCallback } from "use-debounce";
 import { formatRupiah } from "@/lib/utils"; 
-import CartItem from "@/components/ui/feature/CartItem";
+import { CartItem } from "@/components/ui/feature/CartItem";
 
 export default function CartPage() {
   const { cart, isLoading, updateQuantity, removeItem, clearCart, isMutating } =
