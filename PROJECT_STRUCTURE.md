@@ -29,10 +29,6 @@ src/
 │   │   │   ├── ProductQuantitySelector.tsx
 │   │   │   └── RelatedProducts.tsx
 │   │   │
-│   │   ├── ProductCard/        # Kartu produk
-│   │   │   ├── ProductCard.tsx
-│   │   │   └── ProductCardSkeleton.tsx
-│   │   │
 │   │   ├── selectors/          # Selector produk
 │   │   │   ├── AddOnSelector.tsx
 │   │   │   ├── OptionSelector.tsx
@@ -49,7 +45,7 @@ src/
 │   │   │   └── FeaturedProducts.tsx
 │   │   │
 │   │   └── banners/            # Banner produk
-│   │       ├── SustainabilityBanner.tsx
+│   │       └── SustainabilityBanner.tsx
 │   │
 │   ├── ui/                     # Komponen UI murni (shadcn-ui)
 │   │   ├── buttons/            # Komponen tombol
@@ -130,18 +126,15 @@ src/
 │   │       ├── Newsletter.tsx
 │   │       ├── SocialShare.tsx
 │   │       ├── ActualBrandSlider.tsx
-│   │       └── CenterModeSlider.jsx
+│   │       ├── CenterModeSlider.jsx
+│   │       ├── ProductCard.tsx
+│   │       └── ProductCardSkeleton.tsx
 │   │
 │   ├── modals/                 # Modal komponen
 │   │   └── InvitationForm.tsx
 │   │
-│   ├── context-providers/      # Context provider komponen
-│   │   ├── ThemeProvider.tsx
-│   │   └── other-providers.tsx
-│   │
-│   └── root/                   # Root level komponen
-│       ├── App.css
-│       └── App.tsx
+│   └── context-providers/      # Context provider komponen
+│       └── ThemeProvider.tsx
 │
 ├── pages/                      # Halaman (page components)
 │   ├── auth/
@@ -184,23 +177,18 @@ src/
 │   │   └── galleryService.ts
 │   │
 │   ├── shipping/
-│   │   ├── rajaOngkirService.ts
+│   │   └── rajaOngkirService.ts
 │   │
 │   ├── options/
 │   │   └── optionService.ts
 │   │
-│   ├── admin/
-│   │   └── adminService.ts
-│   │
-│   ├── api.ts                  # Base API setup
-│   ├── homeService.ts
-│   └── index.ts                # Export semua services
+│   └── admin/
+│       └── adminService.ts
 │
 ├── context/                    # React Context
 │   ├── AuthContext.tsx
 │   ├── AuthContext-definition.ts
-│   ├── useAuth.ts
-│   └── other-contexts.ts
+│   └── useAuth.ts
 │
 ├── hooks/                      # Custom React Hooks
 │   ├── cart/
@@ -222,8 +210,7 @@ src/
 ├── lib/                        # Utility libraries
 │   ├── api.ts                  # API client configuration
 │   ├── data.ts                 # Static data & constants
-│   ├── utils.ts                # Utility functions
-│   └── constants.ts            # (recommended) App constants
+│   └── utils.ts                # Utility functions
 │
 ├── types/                      # TypeScript type definitions
 │   └── midtrans.d.ts
@@ -234,15 +221,16 @@ src/
 ├── styles/                     # Global styles (recommended)
 │   ├── index.css
 │   ├── theme-enhancements.css
-│   └── variables.css           # (recommended) CSS variables
+│   └── App.css
 │
 ├── svg/                        # SVG assets
-│   └── socialmedia.txt
+│   ├── menu.svg
+│   ├── search.svg
+│   ├── shopping-bag.svg
+│   ├── socialmedia.txt
+│   └── user.svg
 │
 ├── main.tsx                    # Entry point
-├── App.tsx                     # Root component
-├── App.css
-├── index.css
 └── vite-env.d.ts
 ```
 
@@ -339,4 +327,3 @@ import { Button } from "../../../components/ui/button"
 // Sesudah (dengan path aliases)
 import { Button } from "@/components/ui/button"
 ```
-

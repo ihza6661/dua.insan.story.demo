@@ -64,60 +64,57 @@ MASALAH:
 
 ```
 src/
-├── components/
-│   ├── auth/                     ← Auth specific
+├── components/                  # Komponen React
+│   ├── auth/                   # Komponen autentikasi
 │   │   ├── ProtectedRoute.tsx
 │   │   ├── PublicOnlyRoute.tsx
 │   │   └── ShippingForm.tsx
 │   │
-│   ├── layout/                   ← Layout components
+│   ├── layout/                 # Komponen tata letak
 │   │   ├── Header.tsx
 │   │   ├── Footer.tsx
 │   │   ├── Sidebar.tsx
 │   │   ├── ScrollToTop.tsx
-│   │   └── sections/            ← Large sections
+│   │   └── sections/           # Bagian halaman besar
 │   │       ├── DuaInsanQuotes.tsx
 │   │       ├── ExploreTheNewestTrend.tsx
 │   │       └── WhyDuaInsan.tsx
 │   │
-│   ├── product/                  ← Product components
-│   │   ├── ProductDetail/       ← Detail page components
+│   ├── product/                # Komponen produk
+│   │   ├── ProductDetail/      # Detail produk
 │   │   │   ├── ProductGallery.tsx
 │   │   │   ├── ProductHero.tsx
 │   │   │   ├── ProductServices.tsx
 │   │   │   ├── ProductQuantitySelector.tsx
 │   │   │   └── RelatedProducts.tsx
 │   │   │
-│   │   ├── ProductCard/         ← Card components
-│   │   │   ├── ProductCard.tsx
-│   │   │   └── ProductCardSkeleton.tsx
-│   │   │
-│   │   ├── selectors/           ← Product selections
+│   │   ├── selectors/          # Selector produk
 │   │   │   ├── AddOnSelector.tsx
 │   │   │   ├── OptionSelector.tsx
+│   │   │   ├── ProductQuantitySelector.tsx
 │   │   │   ├── ProductVariantSelect.tsx
 │   │   │   ├── GuestbookTypeSelect.tsx
 │   │   │   ├── PaperTypeSelect.jsx
 │   │   │   ├── PaperSizeInput.jsx
 │   │   │   └── InvitationSizeSelect.jsx
 │   │   │
-│   │   ├── categories/          ← Category displays
+│   │   ├── categories/         # Kategori produk
 │   │   │   ├── BestSeller.tsx
 │   │   │   ├── CategoryGrid.tsx
 │   │   │   └── FeaturedProducts.tsx
 │   │   │
-│   │   └── banners/             ← Product banners
+│   │   └── banners/            # Banner produk
 │   │       └── SustainabilityBanner.tsx
 │   │
-│   ├── ui/                       ← Reusable UI components
-│   │   ├── buttons/             ← Button components
+│   ├── ui/                     # Komponen UI murni (shadcn-ui)
+│   │   ├── buttons/            # Komponen tombol
 │   │   │   ├── button.tsx
 │   │   │   ├── button-variants.ts
 │   │   │   ├── toggle.tsx
 │   │   │   ├── toggle-variants.ts
 │   │   │   └── toggle-group.tsx
 │   │   │
-│   │   ├── forms/               ← Form components
+│   │   ├── forms/              # Komponen form
 │   │   │   ├── form.tsx
 │   │   │   ├── form-hooks.ts
 │   │   │   ├── input.tsx
@@ -129,19 +126,19 @@ src/
 │   │   │   ├── label.tsx
 │   │   │   └── input-otp.tsx
 │   │   │
-│   │   ├── dialogs/             ← Dialog components
+│   │   ├── dialogs/            # Komponen dialog
 │   │   │   ├── dialog.tsx
 │   │   │   ├── alert-dialog.tsx
 │   │   │   ├── drawer.tsx
 │   │   │   └── popover.tsx
 │   │   │
-│   │   ├── menus/               ← Menu components
+│   │   ├── menus/              # Komponen menu
 │   │   │   ├── dropdown-menu.tsx
 │   │   │   ├── context-menu.tsx
 │   │   │   ├── menubar.tsx
 │   │   │   └── navigation-menu.tsx
 │   │   │
-│   │   ├── feedback/            ← Feedback components
+│   │   ├── feedback/           # Komponen umpan balik
 │   │   │   ├── toast.tsx
 │   │   │   ├── toaster.tsx
 │   │   │   ├── sonner.tsx
@@ -149,12 +146,12 @@ src/
 │   │   │   ├── carousel.tsx
 │   │   │   └── alert.tsx
 │   │   │
-│   │   ├── data/                ← Data display
+│   │   ├── data/               # Komponen tabel & data
 │   │   │   ├── table.tsx
 │   │   │   ├── pagination.tsx
 │   │   │   └── scroll-area.tsx
 │   │   │
-│   │   ├── layout-ui/           ← Layout utilities
+│   │   ├── layout-ui/          # Komponen layout
 │   │   │   ├── accordion.tsx
 │   │   │   ├── tabs.tsx
 │   │   │   ├── collapsible.tsx
@@ -163,40 +160,40 @@ src/
 │   │   │   ├── sidebar-variants.ts
 │   │   │   └── sidebar-hooks.ts
 │   │   │
-│   │   ├── utils/               ← Utility components
+│   │   ├── utils/              # Komponen utility
 │   │   │   ├── badge.tsx
 │   │   │   ├── badge-variants.ts
 │   │   │   ├── card.tsx
 │   │   │   ├── avatar.tsx
+│   │   │   ├── aspect-ratio.tsx
 │   │   │   ├── breadcrumb.tsx
 │   │   │   ├── calendar.tsx
 │   │   │   ├── chart.tsx
 │   │   │   ├── command.tsx
 │   │   │   ├── hover-card.tsx
+│   │   │   ├── navigation-menu-trigger-style.ts
 │   │   │   ├── resizable.tsx
 │   │   │   ├── sheet.tsx
 │   │   │   ├── skeleton.tsx
 │   │   │   ├── slider.tsx
 │   │   │   └── tooltip.tsx
 │   │   │
-│   │   └── feature/             ← Custom features
+│   │   └── feature/             # Custom features
 │   │       ├── CartItem.tsx
 │   │       ├── ThemeSwitcher.tsx
 │   │       ├── WhatsAppFloat.tsx
 │   │       ├── Newsletter.tsx
 │   │       ├── SocialShare.tsx
 │   │       ├── ActualBrandSlider.tsx
-│   │       └── CenterModeSlider.jsx
+│   │       ├── CenterModeSlider.jsx
+│   │       ├── ProductCard.tsx
+│   │       └── ProductCardSkeleton.tsx
 │   │
 │   ├── modals/
 │   │   └── InvitationForm.tsx
 │   │
-│   ├── context-providers/
-│   │   ├── ThemeProvider.tsx
-│   │   └── ThemeExamples.tsx
-│   │
-│   └── hero/
-│       └── Hero.tsx
+│   └── context-providers/
+│       └── ThemeProvider.tsx
 │
 ├── pages/
 │   ├── auth/
@@ -244,66 +241,56 @@ src/
 │   ├── options/
 │   │   └── optionService.ts
 │   │
-│   ├── admin/
-│   │   └── adminService.ts
-│   │
-│   ├── api.ts
-│   ├── homeService.ts
-│   └── index.ts
+│   └── admin/
+│       └── adminService.ts
+│
+├── context/
+│   ├── AuthContext.tsx
+│   ├── AuthContext-definition.ts
+│   └── useAuth.ts
 │
 ├── hooks/
 │   ├── cart/
 │   │   ├── useCart.tsx
 │   │   ├── use-cart.ts
-│   │   ├── cart-context.ts
-│   │   └── index.ts
+│   │   └── cart-context.ts
 │   │
 │   ├── auth/
 │   │   ├── useLogin.ts
-│   │   ├── useRegister.ts
-│   │   └── index.ts
+│   │   └── useRegister.ts
 │   │
 │   ├── ui/
 │   │   ├── use-mobile.tsx
-│   │   ├── use-toast.ts
-│   │   └── index.ts
+│   │   └── use-toast.ts
 │   │
-│   ├── navigation/
-│   │   ├── useScrollDirection.ts
-│   │   └── index.ts
-│   │
-│   └── index.ts
-│
-├── context/
-│   ├── AuthContext.tsx
-│   ├── AuthContext-definition.ts
-│   ├── useAuth.ts
-│   └── index.ts
+│   └── navigation/
+│       └── useScrollDirection.ts
 │
 ├── lib/
 │   ├── api.ts
 │   ├── data.ts
-│   ├── utils.ts
-│   └── constants.ts
+│   └── utils.ts
 │
 ├── types/
 │   └── midtrans.d.ts
 │
-├── styles/
-│   ├── index.css
-│   ├── theme-enhancements.css
-│   ├── App.css
-│   └── variables.css
-│
 ├── assets/
 │   └── logo/
 │
+├── styles/
+│   ├── index.css
+│   ├── theme-enhancements.css
+│   └── App.css
+│
 ├── svg/
-│   └── socialmedia.txt
+│   ├── menu.svg
+│   ├── search.svg
+│   ├── shopping-bag.svg
+│   ├── socialmedia.txt
+│   └── user.svg
 │
 ├── main.tsx
-├── vite-env.d.ts
-└── App.tsx
+└── vite-env.d.ts
 
 KEUNTUNGAN:
 ✅ Clear separation of concerns
@@ -331,7 +318,7 @@ import { formatPrice } from "../../../lib/utils"
 // ✅ Clean absolute paths with aliases
 import { Button } from "@/components/ui/buttons/button"
 import { ProductCard } from "@/components/ui/feature/ProductCard"
-import { useCart } from "@/hooks/cart"
+import { useCart } from "@/hooks/cart/useCart"
 import { productService } from "@/services/ecommerce/productService"
 import { formatPrice } from "@/lib/utils"
 ```
@@ -377,7 +364,6 @@ src/
 │   │   └── sections/
 │   ├── product/
 │   │   ├── ProductDetail/
-│   │   ├── ProductCard/
 │   │   ├── selectors/
 │   │   ├── categories/
 │   │   └── banners/
@@ -392,8 +378,7 @@ src/
 │   │   ├── utils/
 │   │   └── feature/
 │   ├── modals/
-│   ├── context-providers/
-│   └── hero/
+│   └── context-providers/
 ├── pages/
 │   ├── auth/
 │   ├── shopping/
@@ -413,8 +398,8 @@ src/
 ├── context/
 ├── lib/
 ├── types/
-├── styles/
 ├── assets/
+├── styles/
 └── svg/
 ```
 
@@ -442,4 +427,3 @@ Week 1:
 
 Result: Well-organized project structure ✅
 ```
-

@@ -236,12 +236,12 @@ Add to `eslint.config.js` atau `.eslintrc`:
 
 ## Checklist Implementasi
 
-- [ ] Update `tsconfig.json` dengan paths
-- [ ] Update `vite.config.ts` dengan resolve.alias
-- [ ] Restart VS Code / IDE
-- [ ] Test dengan import baru: `import { Button } from "@/components/ui/buttons/button"`
-- [ ] Migrate existing imports (gunakan Find & Replace)
-- [ ] Run `npm run build` untuk validasi
+- [x] Update `tsconfig.json` dengan paths
+- [x] Update `vite.config.ts` dengan resolve.alias
+- [x] Restart VS Code / IDE
+- [x] Test dengan import baru: `import { Button } from "@/components/ui/buttons/button"`
+- [x] Migrate existing imports (gunakan Find & Replace)
+- [x] Run `npm run build` untuk validasi
 - [ ] Test aplikasi berjalan normal
-- [ ] Commit changes ke git
+- [x] Commit changes ke git
 

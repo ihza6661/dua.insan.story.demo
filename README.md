@@ -42,3 +42,8 @@ This project is built with:
 - shadcn-ui
 - Tailwind CSS
 
+## Project Structure
+
+The project has been reorganized for better maintainability and scalability. The new structure categorizes components, pages, services, and hooks into logical directories, and utilizes path aliases for cleaner imports.
+
+For a detailed overview of the project structure, please refer to [PROJECT_STRUCTURE.md](./PROJECT_STRUCTURE.md).
