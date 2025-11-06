@@ -34,6 +34,7 @@ export interface ProductImage {
  * Contoh: "Merah", atau "Ukuran M".
  */
 export interface AttributeValue {
+  attribute_name: unknown;
   id: number;
   value: string;
 }
@@ -79,6 +80,8 @@ export interface PaginatedProducts {
 }
 
 export interface ProductDetail extends Product {
+  grouped_options: Record<string, AttributeValue[]>;
+  add_ons?: AddOn[]; // Add this
   description: string;
   min_order_quantity: number;
   category: ProductCategory;
@@ -86,6 +89,11 @@ export interface ProductDetail extends Product {
   variants: ProductVariant[];
 }
 
+export interface AddOn {
+  id: number;
+  name: string;
+  price: number;
+}
 export interface ProductDetailResponse {
     data: ProductDetail
 }

@@ -1,6 +1,4 @@
 import { getImageUrl } from "@/lib/utils";
-// src/components/product/ProductHero.tsx (Corrected)
-
 import { useState, useEffect, useMemo, FC } from "react";
 import {
   ProductDetail,
@@ -16,6 +14,12 @@ import ProductGallery from "@/components/product/ProductDetail/ProductGallery";
 import ProductQuantitySelector from "@/components/product/ProductDetail/ProductQuantitySelector";
 import AddOnSelector from "@/components/product/selectors/AddOnSelector";
 
+// Mapping for attribute display names
+const attributeDisplayNames: Record<string, string> = {
+  "Tipe Cetak": "Pilih Variant",
+  Ukuran: "Pilih Ukuran",
+};
+
 // This helper component needs to be updated to accept AttributeValue[]
 const OptionSelector: FC<{
   title: string;
@@ -23,10 +27,12 @@ const OptionSelector: FC<{
   selectedValueId: number | undefined;
   onOptionChange: (valueId: number) => void;
 }> = ({ title, options, selectedValueId, onOptionChange }) => {
-  // ... UI for a single group of options
+  // Get display name from mapping, or format the title if not found
+  const displayTitle = attributeDisplayNames[title] || title.replace("_", " ");
+
   return (
     <div>
-      <p className="font-semibold mb-2 capitalize">{title.replace("_", " ")}</p>
+      <p className="font-semibold mb-2 capitalize">{displayTitle}</p>
       <div className="flex flex-wrap gap-2">
         {options.map((value) => (
           <Button
@@ -63,7 +69,8 @@ const ProductHero: FC<ProductHeroProps> = ({ product, onAddToCart }) => {
   }, [product]);
 
   const activeVariant = useMemo<ProductVariant | undefined>(() => {
-    const optionGroups = Object.keys(product.grouped_options);
+    const optionGroups =
+      product.variants[0]?.options.map((opt) => opt.attribute_name) || [];
     if (Object.keys(selectedOptions).length !== optionGroups.length) {
       return undefined;
     }
@@ -73,19 +80,18 @@ const ProductHero: FC<ProductHeroProps> = ({ product, onAddToCart }) => {
         variant.options.length === selectedIds.size &&
         variant.options.every((opt) => selectedIds.has(opt.id))
     );
-  }, [selectedOptions, product.variants, product.grouped_options]);
+  }, [selectedOptions, product.variants]);
 
   const price = activeVariant ? activeVariant.price : product.base_price;
 
   const totalPrice = useMemo(() => {
     let finalPrice = price;
     selectedAddOns.forEach((addOnId) => {
-      // This line uses `product.add_ons`
-      const addOn = product.add_ons.find((add) => add.id === addOnId);
+      const addOn = product.add_ons?.find((add) => add.id === addOnId);
       if (addOn) finalPrice += addOn.price;
     });
     return finalPrice * quantity;
-  }, [price, selectedAddOns, quantity, product.add_ons]); // <-- Add it here
+  }, [price, selectedAddOns, quantity, product.add_ons]);
 
   const pricePerItem = quantity > 0 ? totalPrice / quantity : 0;
 
@@ -201,7 +207,7 @@ const ProductHero: FC<ProductHeroProps> = ({ product, onAddToCart }) => {
           )}
 
           <AddOnSelector
-            addOns={product.add_ons}
+            addOns={product.add_ons || []}
             selectedAddOnIds={selectedAddOns}
             onAddOnChange={handleAddOnChange}
           />
@@ -222,7 +228,7 @@ const ProductHero: FC<ProductHeroProps> = ({ product, onAddToCart }) => {
             TAMBAH KE KERANJANG
           </Button>
 
-           {!activeVariant && (
+          {!activeVariant && (
             <p className="text-sm text-center text-muted-foreground mt-2">
               Pilih semua opsi untuk melanjutkan.
             </p>
@@ -234,8 +240,8 @@ const ProductHero: FC<ProductHeroProps> = ({ product, onAddToCart }) => {
               title={product.name}
               media={getImageUrl(
                 activeVariant?.images.length
-                  ? activeVariant.images[0].image_url
-                  : product.featured_image?.image_url
+                  ? activeVariant.images[0].image
+                  : product.featured_image?.image
               )}
             />
           </div>

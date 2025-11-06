@@ -33,7 +33,7 @@ const steps = [
 
 const OrderSteps = () => {
   return (
-    <div className="w-full bg-background py-32 px-4 sm:px-6 md:px-8">
+    <div className="w-full py-32 px-4 sm:px-6 md:px-8">
       <div className="max-w-4xl mx-auto font-sans">
         <h2 className="text-foreground text-center text-2xl sm:text-3xl lg:text-4xl font-serif italic mb-10">
           Cara <span className="">Memesan</span>?
