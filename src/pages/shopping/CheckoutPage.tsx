@@ -479,7 +479,7 @@ const CheckoutPage = () => {
                     id="prewedding_photo"
                     name="prewedding_photo"
                     type="file"
-                    className="hover:bg-accent cursor-pointer"
+                    className="hover:bg-primary cursor-pointer"
                   />
                   <p className="text-xs text-muted-foreground">
                     Unggah satu foto untuk desain undangan Anda.
