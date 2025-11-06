@@ -11,8 +11,8 @@ export interface OrderItem {
   product: {
     id: number;
     name: string;
-    featured_image?: { // Assuming featured_image might be a relationship or direct object
-      image_url: string;
+    featured_image?: {
+      image: string;
     };
   };
   variant: ProductVariant;
