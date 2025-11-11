@@ -7,12 +7,12 @@ import UserIcon from "@/svg/user.svg?react";
 import SearchIcon from "@/svg/search.svg?react";
 import MenuIcon from "@/svg/menu.svg?react";
 import Sidebar from "@/components/layout/Sidebar";
-import { ThemeSwitcher } from "@/components/ui/feature/ThemeSwitcher";
+import { ThemeSwitcher } from "@/components/ui/ThemeSwitcher";
 
 // --- Impor Hook Kustom & Konteks ---
-import { useCart } from "@/hooks/cart/use-cart";
+import { useCart } from "@/features/cart/hooks/cart/use-cart";
 import { useScrollDirection } from "@/hooks/navigation/useScrollDirection";
-import { useAuth } from "@/context/useAuth";
+import { useAuth } from "../../features/auth/hooks/useAuth";
 
 const Header = () => {
   // --- State Lokal untuk UI ---
@@ -23,7 +23,7 @@ const Header = () => {
 
   // --- Menggunakan Hook dari Konteks dan Kustom ---
   const { user, logout, isLoading: isAuthLoading } = useAuth();
-  const { cart, isLoading: isCartLoading } = useCart(); // Ambil seluruh objek cart dan status loading-nya
+  const { cart } = useCart(); // Ambil objek cart dari hook
   const { isVisible } = useScrollDirection();
   const location = useLocation();
 

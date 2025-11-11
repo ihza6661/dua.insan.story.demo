@@ -6,9 +6,9 @@ import { useQuery } from "@tanstack/react-query";
 import {
   fetchProducts,
   fetchCategories,
-} from "@/services/ecommerce/productService";
-import type { ProductCategory } from "@/services/ecommerce/productService";
-import ProductCard from "@/components/ui/feature/ProductCard";
+} from "@/features/product/services/productService";
+import type { ProductCategory } from "@/features/product/services/productService";
+import ProductCard from "@/features/product/components/ProductCard";
 import { Button } from "@/components/ui/buttons/button";
 import { Input } from "@/components/ui/forms/input";
 import { Slider } from "@/components/ui/utils/slider"; // Import Slider
@@ -19,8 +19,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/forms/select";
-import ActualBrandSlider from "@/components/ui/feature/ActualBrandSlider";
-import ProductCardSkeleton from "@/components/ui/feature/ProductCardSkeleton";
+import ActualBrandSlider from "@/components/ui/ActualBrandSlider";
+import ProductCardSkeleton from "@/features/product/components/ProductCardSkeleton";
 
 // Helper for formatting currency
 const formatCurrency = (value: number) => {

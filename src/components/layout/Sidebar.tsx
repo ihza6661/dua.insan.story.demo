@@ -1,12 +1,12 @@
 // src/components/layout/Sidebar.tsx
 
-import { useAuth } from "@/context/useAuth";
+import { useAuth } from "../../features/auth/hooks/useAuth";
 import { Link } from "react-router-dom";
 import { XIcon } from "lucide-react";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { fetchCategories } from "@/services/ecommerce/productService";
-import type { ProductCategory } from "@/services/ecommerce/productService";
+import { fetchCategories } from "@/features/product/services/productService";
+import type { ProductCategory } from "@/features/product/services/productService";
 
 interface SidebarProps {
   isOpen: boolean;

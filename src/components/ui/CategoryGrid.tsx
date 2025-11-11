@@ -1,9 +1,7 @@
-// src/components/CategoryGrid.tsx (Refactored)
-
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { fetchCategories } from "@/services/ecommerce/productService"; // Import the API function
-import type { ProductCategory } from "@/services/ecommerce/productService"; // Import the type
+import { fetchCategories } from "@/features/product/services/productService";
+import type { ProductCategory } from "@/features/product/services/productService";
 
 // Skeleton component for a better loading experience
 const CategorySkeleton = () => (
@@ -49,7 +47,7 @@ const CategoryGrid = () => {
                 <div className="relative h-[500px] overflow-hidden">
                   <img
                     // Use the image_url from the API
-                    src={category.image_url}
+                    src={category.image}
                     alt={category.name}
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />

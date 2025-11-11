@@ -2,7 +2,7 @@
 
 import { useState, FormEvent } from 'react';
 import { Link } from 'react-router-dom';
-import { useLogin } from '@/hooks/auth/useLogin';
+import { useLogin } from '@/features/auth/hooks/useLogin';
 
 const LoginPage = () => {
   // State lokal untuk mengelola nilai dari form input

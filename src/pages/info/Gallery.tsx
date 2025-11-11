@@ -1,7 +1,7 @@
 
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { fetchGalleryItems } from "@/services/ecommerce/galleryService";
-import Newsletter from "@/components/ui/feature/Newsletter";
+import { fetchGalleryItems } from "@/features/gallery/services/galleryService";
+import Newsletter from "@/components/ui/Newsletter";
 import ExploreTheNewestTrend from "@/components/layout/sections/ExploreTheNewestTrend";
 import { Skeleton } from "@/components/ui/utils/skeleton";
 import { Button } from "@/components/ui/buttons/button";

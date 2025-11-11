@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { getOrderById } from '@/services/ecommerce/orderService'; // We'll create this
+import { getOrderById } from '@/features/order/services/orderService'; // We'll create this
 import { Loader2, CheckCircle, XCircle } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/utils/card';
 import { formatRupiah, getImageUrl } from '@/lib/utils';
@@ -73,6 +73,10 @@ const OrderConfirmationPage = () => {
               <p className="text-sm text-gray-500">Status Pesanan:</p>
               <p className="font-semibold capitalize">{order.order_status.replace(/_/g, ' ')}</p>
             </div>
+            <div>
+              <p className="text-sm text-gray-500">Status Pembayaran:</p>
+              <p className="font-semibold capitalize">{order.payment_status.replace(/_/g, ' ')}</p>
+            </div>
             <div className="md:col-span-2">
               <p className="text-sm text-gray-500">Alamat Pengiriman:</p>
               <p className="font-semibold">{order.shipping_address}</p>
@@ -105,8 +109,16 @@ const OrderConfirmationPage = () => {
 
           <div className="border-t pt-4 mt-4 space-y-2">
             <div className="flex justify-between">
-              <span className="font-semibold">Total Pesanan</span>
-              <span className="font-bold text-lg">{formatRupiah(order.total_amount)}</span>
+              <span className="text-gray-600">Total Pesanan</span>
+              <span className="font-semibold">{formatRupiah(order.total_amount)}</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-gray-600">Jumlah Dibayar</span>
+              <span className="font-semibold">{formatRupiah(order.amount_paid)}</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="font-bold">Sisa Tagihan</span>
+              <span className="font-bold text-lg">{formatRupiah(order.remaining_balance)}</span>
             </div>
           </div>
 

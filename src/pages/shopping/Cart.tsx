@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useCart } from "@/hooks/cart/use-cart";
+import { useCart } from "@/features/cart/hooks/cart/use-cart";
 import { Button } from "@/components/ui/buttons/button";
 import {
   Card,
@@ -11,7 +11,7 @@ import {
 import { Trash2, Loader2, ShoppingCart } from "lucide-react";
 import { useDebouncedCallback } from "use-debounce";
 import { formatRupiah } from "@/lib/utils"; 
-import { CartItem } from "@/components/ui/feature/CartItem";
+import { CartItem } from "@/features/cart/components/CartItem";
 
 export default function CartPage() {
   const { cart, isLoading, updateQuantity, removeItem, clearCart, isMutating } =
@@ -31,7 +31,7 @@ export default function CartPage() {
 
   if (!cart || cart.items.length === 0) {
     return (
-      <div className="container mt-20 mx-auto text-center py-20 bg-background">
+      <div className="container mt-20 mx-auto text-center py-20">
         <ShoppingCart className="h-20 w-20 mx-auto text-muted-foreground" />
         <h1 className="text-3xl font-semibold mt-4 text-foreground">Keranjang Anda Kosong</h1>
         <p className="text-muted-foreground mt-2">

@@ -3,15 +3,15 @@ import { Link, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 
 // --- Imports from Service Layer & Contexts ---
-import { fetchProductById } from "@/services/ecommerce/productService";
-import type { ProductDetail as ProductDetailType } from "@/services/ecommerce/productService";
-import { useCart } from "@/hooks/cart/use-cart";
-import type { AddToCartPayload } from "@/services/ecommerce/cartService";
+import { fetchProductById } from "@/features/product/services/productService";
+import type { ProductDetail as ProductDetailType } from "@/features/product/services/productService";
+import { useCart } from "@/features/cart/hooks/cart/use-cart";
+import type { AddToCartPayload } from "@/features/cart/services/cartService";
 import { toast } from "@/hooks/ui/use-toast";
 
 // --- Import UI & Layout Components ---
 import { ArrowLeftIcon } from "lucide-react";
-import ActualBrandSlider from "@/components/ui/feature/ActualBrandSlider";
+import ActualBrandSlider from "@/components/ui/ActualBrandSlider";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -23,11 +23,9 @@ import {
 import { Button } from "@/components/ui/buttons/button";
 import Footer from "@/components/layout/Footer";
 import Header from "@/components/layout/Header";
-import ProductHero from "@/components/product/ProductDetail/ProductHero";
-import ProductServices from "@/components/product/ProductDetail/ProductServices";
-import RelatedProducts from "@/components/product/ProductDetail/RelatedProducts";
-import { log } from "console";
-// import ProductDetailSkeleton from "@/components/ui/ProductDetailSkeleton"; // Ensure this import is active
+import ProductHero from "@/features/product/components/ProductDetail/ProductHero";
+import ProductServices from "@/features/product/components/ProductDetail/ProductServices";
+import RelatedProducts from "@/features/product/components/ProductDetail/RelatedProducts";
 
 const ProductDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -73,7 +71,6 @@ const ProductDetail = () => {
       <div className="min-h-screen flex flex-col bg-background">
         <Header />
         <main className="flex-grow pt-8">
-          {/* <ProductDetailSkeleton /> */}
         </main>
         <Footer />
       </div>

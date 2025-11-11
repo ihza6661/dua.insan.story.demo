@@ -6,8 +6,8 @@ import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
 
 // --- Imports Provider Konteks ---
 import { TooltipProvider } from "@/components/ui/utils/tooltip";
-import { CartProvider } from "@/hooks/cart/useCart";
-import { AuthProvider } from "@/context/AuthContext";
+import { CartProvider } from "@/features/cart/hooks/cart/CartProvider";
+import { AuthProvider } from "@/features/auth/context/AuthContext";
 
 // --- Imports Komponen UI & Layout ---
 import { Toaster } from "@/components/ui/feedback/toaster";
@@ -15,13 +15,13 @@ import { Toaster as Sonner } from "@/components/ui/feedback/sonner";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import ScrollToTop from "@/components/layout/ScrollToTop";
-import FloatingIcons from "@/components/ui/feature/WhatsAppFloat";
-import ProtectedRoute from "@/components/auth/ProtectedRoute";
-import PublicOnlyRoute from "@/components/auth/PublicOnlyRoute";
+import FloatingIcons from "@/components/ui/WhatsAppFloat";
+import ProtectedRoute from "@/features/auth/components/ProtectedRoute";
+import PublicOnlyRoute from "@/features/auth/components/PublicOnlyRoute";
 
 // --- Imports Halaman (Pages) ---
 import Home from "@/pages/info/Home";
-import ShippingForm from "@/components/auth/ShippingForm"; // Import ShippingForm
+import ShippingForm from "@/features/auth/components/ShippingForm";
 import Products from "@/pages/shopping/Products";
 import ProductDetail from "@/pages/shopping/ProductDetail";
 import NotFound from "@/pages/error/NotFound";
@@ -126,10 +126,10 @@ const App = () => (
                     element={<InfoPemesananCetak />}
                   />
 
-                  <Route
-                    path="shipping-calculator"
-                    element={<ShippingForm />}
-                  />
+                  {/* <Route */}
+                  {/*   path="shipping-calculator" */}
+                  {/*   element={<ShippingForm />} */}
+                  {/* /> */}
 
                   <Route
                     path="syarat-ketentuan"

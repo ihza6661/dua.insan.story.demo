@@ -1,6 +1,6 @@
 import { useState, useEffect, FormEvent, ChangeEvent } from "react";
 import { useNavigate } from "react-router-dom"; // ⬅ Import for navigation
-import { useRegister } from "@/hooks/auth/useRegister";
+import { useRegister } from "@/features/auth/hooks/useRegister";
 import type { RegisterPayload } from "@/services/auth/authService";
 
 const RegisterPage = () => {

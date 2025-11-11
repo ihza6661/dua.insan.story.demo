@@ -4,8 +4,8 @@ import PinterestIcon from "@/components/icons/PinterestIcon";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { fetchCategories } from "@/services/ecommerce/productService";
-import type { ProductCategory } from "@/services/ecommerce/productService";
+import { fetchCategories } from "@/features/product/services/productService";
+import type { ProductCategory } from "@/features/product/services/productService";
 import "@/styles/index.css";
 
 const Footer = () => {

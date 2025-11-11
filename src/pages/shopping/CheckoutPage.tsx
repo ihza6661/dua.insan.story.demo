@@ -1,5 +1,5 @@
 import { useState, useEffect, FormEvent } from "react";
-import { useCart } from "@/hooks/cart/use-cart";
+import { useCart } from "@/features/cart/hooks/cart/use-cart";
 import { Button } from "@/components/ui/buttons/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/utils/card";
 import { Input } from "@/components/ui/forms/input";
@@ -11,16 +11,20 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/forms/select";
+import {
+  RadioGroup,
+  RadioGroupItem,
+} from "@/components/ui/forms/radio-group";
 import { Loader2, ShoppingCart } from "lucide-react";
 import { formatRupiah } from "@/lib/utils";
 import {
   createGuestOrder,
   createOrder,
   getShippingCost,
-} from "@/services/ecommerce/checkoutService";
+} from "@/features/order/services/checkoutService";
 import { AxiosError } from "axios";
 
-import { useAuth } from "@/context/useAuth";
+import { useAuth } from "@/features/auth/hooks/useAuth";
 
 import { useToast } from "@/hooks/ui/use-toast";
 import { Textarea } from "@/components/ui/forms/textarea";
@@ -45,6 +49,7 @@ const CheckoutPage = () => {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [snapToken, setSnapToken] = useState<string | null>(null);
+  const [paymentOption, setPaymentOption] = useState("full");
 
   // Shipping State
   const [shippingServices, setShippingServices] = useState<ShippingService[]>(
@@ -145,6 +150,7 @@ const CheckoutPage = () => {
     formData.append("courier", selectedCourier);
     formData.append("shipping_cost", String(shippingCost));
     formData.append("shipping_service", shippingService);
+    formData.append("payment_option", paymentOption);
 
     try {
       const order = user
@@ -584,9 +590,32 @@ const CheckoutPage = () => {
                 <span>Biaya Pengiriman ({shippingService})</span>
                 <span>{formatRupiah(shippingCost)}</span>
               </div>
+              <div className="border-t border-border pt-4 space-y-2">
+                <Label>Opsi Pembayaran</Label>
+                <RadioGroup
+                  defaultValue="full"
+                  onValueChange={setPaymentOption}
+                  className="flex space-x-4"
+                >
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="full" id="full" />
+                    <Label htmlFor="full">Bayar Lunas</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="dp" id="dp" />
+                    <Label htmlFor="dp">Down Payment (50%)</Label>
+                  </div>
+                </RadioGroup>
+              </div>
               <div className="border-t border-border pt-4 flex justify-between text-lg font-bold">
                 <span>Total Pembayaran</span>
-                <span>{formatRupiah(cart.subtotal + shippingCost)}</span>
+                <span>
+                  {formatRupiah(
+                    paymentOption === "dp"
+                      ? (cart.subtotal + shippingCost) * 0.5
+                      : cart.subtotal + shippingCost
+                  )}
+                </span>
               </div>
               <Button
                 type="submit"

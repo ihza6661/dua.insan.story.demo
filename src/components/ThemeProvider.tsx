@@ -1,7 +1,5 @@
-
-import { createContext, useContext, useEffect, useState } from 'react';
-
-const ThemeProviderContext = createContext();
+import { useEffect, useState } from 'react';
+import { ThemeProviderContext } from '@/hooks/ui/use-theme';
 
 export function ThemeProvider({ children, defaultTheme = 'system', storageKey = 'vite-ui-theme', ...props }) {
   const [theme, setTheme] = useState(() => localStorage.getItem(storageKey) || defaultTheme);
@@ -32,11 +30,3 @@ export function ThemeProvider({ children, defaultTheme = 'system', storageKey = 
     </ThemeProviderContext.Provider>
   );
 }
-
-export const useTheme = () => {
-  const context = useContext(ThemeProviderContext);
-  if (context === undefined) {
-    throw new Error('useTheme must be used within a ThemeProvider');
-  }
-  return context;
-};

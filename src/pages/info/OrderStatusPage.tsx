@@ -1,5 +1,5 @@
 import { getImageUrl } from "@/lib/utils";
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Card,
   CardContent,
@@ -7,29 +7,112 @@ import {
   CardTitle,
 } from "@/components/ui/utils/card";
 import { Badge } from "@/components/ui/utils/badge";
+import { Button } from "@/components/ui/buttons/button";
 import { formatRupiah } from "@/lib/utils";
 import { Separator } from "@/components/ui/layout-ui/separator";
 import { useParams, Link } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
-import { getOrderById, fetchOrders } from "@/services/ecommerce/orderService";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { getOrderById, fetchOrders, getFinalPaymentSnapToken } from "@/features/order/services/orderService";
 import { Loader2 } from "lucide-react";
+import { toast } from "sonner";
+
+interface Snap {
+  pay: (
+    token: string,
+    options: {
+      onSuccess: () => void;
+      onPending: () => void;
+      onError: () => void;
+      onClose: () => void;
+    }
+  ) => void;
+}
+
+declare global {
+  interface Window {
+    snap: Snap;
+  }
+}
+
 
 const statusMap: {
   [key: string]: {
     text: string;
     variant: "default" | "secondary" | "destructive";
+    textColor?: string;
   };
 } = {
-  pending_payment: { text: "Menunggu Pembayaran", variant: "secondary" },
+  pending: { text: "Menunggu Pembayaran", variant: "secondary" },
+  partially_paid: { text: "Dibayar Sebagian", variant: "secondary" },
+  paid: { text: "Lunas", variant: "default" },
   processing: { text: "Sedang Diproses", variant: "default" },
-  packing: { text: "Sedang Dikemas", variant: "default" },
   shipped: { text: "Telah Dikirim", variant: "default" },
-  completed: { text: "Selesai", variant: "default" },
+  delivered: { text: "Telah Diterima", variant: "default" },
+  cancelled: { text: "Dibatalkan", variant: "destructive" },
+};
+
+const paymentStatusMap: {
+  [key: string]: {
+    text: string;
+    variant: "default" | "secondary" | "destructive";
+  };
+} = {
+  pending: { text: "Menunggu Pembayaran", variant: "secondary" },
+  partially_paid: { text: "Dibayar Sebagian", variant: "secondary" },
+  paid: { text: "Lunas", variant: "default" },
+  expired: { text: "Kedaluwarsa", variant: "destructive" },
+  failed: { text: "Gagal", variant: "destructive" },
   cancelled: { text: "Dibatalkan", variant: "destructive" },
 };
 
 const OrderStatusPage = () => {
   const { orderId } = useParams<{ orderId?: string }>();
+  const queryClient = useQueryClient();
+
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "https://app.sandbox.midtrans.com/snap/snap.js";
+    script.setAttribute(
+      "data-client-key",
+      import.meta.env.VITE_MIDTRANS_CLIENT_KEY
+    );
+    script.async = true;
+    document.body.appendChild(script);
+
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
+
+  const payFinalMutation = useMutation({
+    mutationFn: getFinalPaymentSnapToken,
+    onSuccess: (data) => {
+      if (window.snap && data.token) {
+        window.snap.pay(data.token, {
+          onSuccess: () => {
+            toast.success("Pembayaran sisa tagihan berhasil!");
+            queryClient.invalidateQueries({ queryKey: ["order", orderId] });
+            queryClient.invalidateQueries({ queryKey: ["orders"] });
+          },
+          onPending: () => {
+            toast.info("Menunggu pembayaran Anda...");
+          },
+          onError: () => {
+            toast.error("Pembayaran gagal. Silakan coba lagi.");
+          },
+          onClose: () => {
+            toast.info("Anda menutup pop-up pembayaran.");
+          },
+        });
+      } else {
+        toast.error("Gagal memproses pembayaran. Snap.js tidak ditemukan.");
+      }
+    },
+    onError: (error) => {
+      toast.error(`Gagal mendapatkan token pembayaran: ${error.message}`);
+    },
+  });
+
 
   // Fetch single order if orderId is present
   const {
@@ -101,6 +184,16 @@ const OrderStatusPage = () => {
       variant: "secondary",
     };
 
+    const paymentStatusInfo = paymentStatusMap[order.payment_status] || {
+      text: "Status Tidak Diketahui",
+      variant: "secondary",
+    };
+
+    const handlePayFinal = () => {
+      payFinalMutation.mutate(order.id.toString());
+    };
+
+
     return (
       <div className="container mt-20 mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto">
@@ -118,6 +211,9 @@ const OrderStatusPage = () => {
                 <Badge variant={statusInfo.variant} className="text-base">
                   {statusInfo.text}
                 </Badge>
+                <Badge variant={paymentStatusInfo.variant} className="text-base">
+                  {paymentStatusInfo.text}
+                </Badge>
               </div>
             </CardHeader>
             <CardContent className="p-6 space-y-6">
@@ -134,9 +230,21 @@ const OrderStatusPage = () => {
                   </p>
                 </div>
                 <div>
-                  <p className="text-muted-foreground">Total Pembayaran</p>
+                  <p className="text-muted-foreground">Total Pesanan</p>
                   <p className="font-medium text-lg text-primary">
                     {formatRupiah(order.total_amount)}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-muted-foreground">Jumlah Dibayar</p>
+                  <p className="font-medium text-lg text-primary">
+                    {formatRupiah(order.amount_paid)}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-muted-foreground">Sisa Tagihan</p>
+                  <p className="font-medium text-lg text-primary">
+                    {formatRupiah(order.remaining_balance)}
                   </p>
                 </div>
               </div>
@@ -226,6 +334,21 @@ const OrderStatusPage = () => {
                   </p>
                 </div>
               </div>
+              {order.payment_status === "partially_paid" && (
+                <div className="mt-6 text-center">
+                  <Button
+                    onClick={handlePayFinal}
+                    disabled={payFinalMutation.isPending || order.remaining_balance <= 0}
+                  >
+                    {payFinalMutation.isPending
+                      ? "Membuka Pembayaran..."
+                      : "Lakukan Pelunasan"}
+                  </Button>
+                  <p className="text-sm text-muted-foreground mt-2">
+                    Selesaikan pembayaran untuk melanjutkan pesanan Anda.
+                  </p>
+                </div>
+              )}
             </CardContent>
           </Card>
         </div>
@@ -265,6 +388,10 @@ const OrderStatusPage = () => {
             text: "Status Tidak Diketahui",
             variant: "secondary",
           };
+          const paymentStatusInfo = statusMap[order.payment_status] || {
+            text: "Status Tidak Diketahui",
+            variant: "secondary",
+          };
           return (
             <Card key={order.id}>
               <CardContent className="p-4 flex flex-col md:flex-row justify-between items-start md:items-center">
@@ -287,10 +414,21 @@ const OrderStatusPage = () => {
                   <p className="text-md font-bold text-foreground">
                     Total: {formatRupiah(order.total_amount)}
                   </p>
+                  <p className="text-sm text-muted-foreground">
+                    Sisa Tagihan: {formatRupiah(order.remaining_balance)}
+                  </p>
                 </div>
-                <Badge variant={statusInfo.variant} className="text-base">
-                  {statusInfo.text}
-                </Badge>
+                <div className="flex flex-col space-y-2">
+                  <Badge variant={statusInfo.variant} className="text-base">
+                    {statusInfo.text}
+                  </Badge>
+                  <Badge
+                    variant={paymentStatusInfo.variant}
+                    className="text-base"
+                  >
+                    {paymentStatusInfo.text}
+                  </Badge>
+                </div>
               </CardContent>
             </Card>
           );

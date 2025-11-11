@@ -9,13 +9,14 @@ import * as z from "zod";
 import { toast } from "sonner";
 import { Loader2, Edit2Icon, XCircle } from "lucide-react";
 
-import { getMyProfile, updateProfile, changePassword, UpdateProfilePayload, ChangePasswordPayload } from "@/services/auth/authService";
+import { getMyProfile, updateProfile, changePassword, UpdateProfilePayload, ChangePasswordPayload } from "@/features/auth/services/auth/authService";
 import { getProvinces, getCities, Province, City } from "@/services/shipping/rajaOngkirService";
-import { useAuth } from "@/context/useAuth";
+import { useAuth } from "@/features/auth/hooks/useAuth";
 import { Button } from "@/components/ui/buttons/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/utils/card";
 import { Input } from "@/components/ui/forms/input";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/forms/form";
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/forms/form";
+import { Form } from "@/components/ui/forms/form-provider";
 import { Separator } from "@/components/ui/layout-ui/separator";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/forms/select";
 
