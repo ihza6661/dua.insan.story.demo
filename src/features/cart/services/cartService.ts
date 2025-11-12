@@ -77,19 +77,27 @@ export const fetchCart = async (): Promise<Cart> => {
 export const addToCart = async (payload: AddToCartPayload): Promise<Cart> => {
     return new Promise(resolve => {
         setTimeout(() => {
-            const product = { id: 1, name: 'Tema Alice in Wonderland', slug: 'tema-alice-in-wonderland', base_price: 150000, featured_image: { id: 1, image: '/public/products/alice-wonderland-theme/1.jpg', alt_text: 'Alice in Wonderland', is_featured: true } };
-            const variant = { id: payload.variantId, price: 150000, stock: 10, options: [], images: [] };
-            const newItem: CartItem = {
-                id: mockCart.items.length + 1,
-                quantity: payload.quantity,
-                unit_price: variant.price,
-                sub_total: payload.quantity * variant.price,
-                customizations: null,
-                product: product,
-                variant: variant
-            };
-            mockCart.items.push(newItem);
-            mockCart.total_items = mockCart.items.length;
+            const existingItem = mockCart.items.find(item => item.variant.id === payload.variantId);
+
+            if (existingItem) {
+                existingItem.quantity += payload.quantity;
+                existingItem.sub_total = existingItem.quantity * existingItem.unit_price;
+            } else {
+                const product = { id: 1, name: 'Tema Alice in Wonderland', slug: 'tema-alice-in-wonderland', base_price: 150000, featured_image: { id: 1, image: '/products/alice-wonderland-theme/1.jpg', alt_text: 'Alice in Wonderland', is_featured: true } };
+                const variant = { id: payload.variantId, price: 150000, stock: 10, options: [], images: [{ id: 1, image: '/products/alice-wonderland-theme/1.jpg', alt_text: 'Alice in Wonderland', is_featured: true }] };
+                const newItem: CartItem = {
+                    id: mockCart.items.length + 1,
+                    quantity: payload.quantity,
+                    unit_price: variant.price,
+                    sub_total: payload.quantity * variant.price,
+                    customizations: null,
+                    product: product,
+                    variant: variant
+                };
+                mockCart.items.push(newItem);
+            }
+
+            mockCart.total_items = mockCart.items.reduce((acc, item) => acc + item.quantity, 0);
             mockCart.subtotal = mockCart.items.reduce((acc, item) => acc + item.sub_total, 0);
             resolve(mockCart);
         }, 500);

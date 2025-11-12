@@ -148,8 +148,30 @@ export const fetchProductById = async (productId: string): Promise<ProductDetail
                     { id: 1, image: '/products/alice-wonderland-theme/1.jpg', alt_text: 'Alice in Wonderland 1', is_featured: true },
                     { id: 2, image: '/products/alice-wonderland-theme/2.jpg', alt_text: 'Alice in Wonderland 2', is_featured: false },
                 ],
-                variants: [],
-                grouped_options: {},
+                variants: [
+                    {
+                        id: 1,
+                        price: 150000,
+                        stock: 10,
+                        options: [
+                            {
+                                id: 1,
+                                value: 'Blue',
+                                attribute_name: 'Warna'
+                            }
+                        ],
+                        images: []
+                    }
+                ],
+                grouped_options: {
+                    'Warna': [
+                        {
+                            id: 1,
+                            value: 'Blue',
+                            attribute_name: 'Warna'
+                        }
+                    ]
+                },
                 add_ons: [
                     { id: 1, name: 'Buku Tamu Digital', price: 50000 },
                     { id: 2, name: 'Filter Instagram', price: 100000 },
