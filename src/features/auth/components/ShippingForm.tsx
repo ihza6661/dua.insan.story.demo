@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { mockApi } from '../../../lib/mockApi';
 
 const ShippingForm = () => {
   const [provinces, setProvinces] = useState([]);
@@ -10,13 +10,11 @@ const ShippingForm = () => {
   const [weight, setWeight] = useState(1000); // Example weight in grams
   const [courier, setCourier] = useState('jne'); // Example courier
 
-  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
-
   useEffect(() => {
     // Fetch provinces on component mount
     const fetchProvinces = async () => {
       try {
-        const response = await axios.get(`${API_BASE_URL}/rajaongkir/provinces`);
+        const response = await mockApi.getProvinces();
         if (response.data && response.data.rajaongkir && response.data.rajaongkir.results) {
           setProvinces(response.data.rajaongkir.results);
         }
@@ -25,14 +23,14 @@ const ShippingForm = () => {
       }
     };
     fetchProvinces();
-  }, [API_BASE_URL]);
+  }, []);
 
   useEffect(() => {
     // Fetch cities when a province is selected
     const fetchCities = async () => {
       if (selectedProvince) {
         try {
-          const response = await axios.get(`${API_BASE_URL}/rajaongkir/cities?province_id=${selectedProvince}`);
+          const response = await mockApi.getCities(selectedProvince);
           if (response.data && response.data.rajaongkir && response.data.rajaongkir.results) {
             setCities(response.data.rajaongkir.results);
           }
@@ -44,7 +42,7 @@ const ShippingForm = () => {
       }
     };
     fetchCities();
-  }, [selectedProvince, API_BASE_URL]);
+  }, [selectedProvince]);
 
   const handleCalculateCost = async () => {
     if (!selectedCity || !weight || !courier) {
@@ -53,14 +51,7 @@ const ShippingForm = () => {
     }
 
     try {
-      const response = await axios.post(`${API_BASE_URL}/rajaongkir/cost`, {
-        origin: selectedCity, // This should be the ID of the origin city
-        destination: selectedCity, // This should be the ID of the destination city (for now, assuming same for example)
-        weight: weight,
-        courier: courier,
-        origin_type: 'city', // or 'subdistrict' if using Pro account
-        destination_type: 'city', // or 'subdistrict' if using Pro account
-      });
+      const response = await mockApi.getCost(selectedCity, selectedCity, weight, courier);
 
       if (response.data && response.data.rajaongkir && response.data.rajaongkir.results) {
         setShippingCost(response.data.rajaongkir.results);

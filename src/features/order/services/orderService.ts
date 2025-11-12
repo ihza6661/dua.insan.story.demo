@@ -1,4 +1,3 @@
-import api from '@/lib/api';
 import { ProductVariant } from '@/features/product/services/productService';
 
 export interface OrderItem {
@@ -61,24 +60,144 @@ interface OrdersResponse {
 }
 
 export const getOrderById = async (orderId: string): Promise<Order> => {
-  const response = await api.get<OrderResponse>(`/orders/${orderId}`);
-  return response.data.data;
+    return new Promise(resolve => {
+        setTimeout(() => {
+            resolve({
+                id: 1,
+                order_number: 'MOCK-123',
+                total_amount: 200000,
+                shipping_address: 'Jl. Mockingbird No. 123',
+                order_status: 'paid',
+                payment_status: 'paid',
+                amount_paid: 200000,
+                remaining_balance: 0,
+                created_at: new Date().toISOString(),
+                items: [],
+                custom_data: {
+                    bride_full_name: 'Jane Doe',
+                    groom_full_name: 'John Doe',
+                    bride_nickname: 'Jane',
+                    groom_nickname: 'John',
+                    bride_parents: 'Mr. & Mrs. Doe',
+                    groom_parents: 'Mr. & Mrs. Smith',
+                    akad_date: '2025-12-12',
+                    akad_time: '10:00',
+                    akad_location: 'Mockingbird Hall',
+                    reception_date: '2025-12-12',
+                    reception_time: '19:00',
+                    reception_location: 'Mockingbird Ballroom',
+                }
+            });
+        }, 500);
+    });
 };
 
 // ADD THIS NEW FUNCTION
 export const fetchOrders = async (): Promise<Order[]> => {
-  const response = await api.get<OrdersResponse>('/orders');
-  return response.data.data;
+    return new Promise(resolve => {
+        setTimeout(() => {
+            resolve([
+                {
+                    id: 1,
+                    order_number: 'MOCK-001',
+                    total_amount: 250000,
+                    shipping_address: 'Jl. Contoh No. 1, Jakarta',
+                    order_status: 'paid',
+                    payment_status: 'paid',
+                    amount_paid: 250000,
+                    remaining_balance: 0,
+                    created_at: '2023-10-26T10:00:00Z',
+                    items: [
+                        {
+                            id: 1,
+                            product_id: 1,
+                            product_variant_id: 1,
+                            quantity: 1,
+                            unit_price: 150000,
+                            sub_total: 150000,
+                            product: {
+                                id: 1,
+                                name: 'Tema Alice in Wonderland',
+                                featured_image: { image: '/products/alice-wonderland-theme/1.jpg' }
+                            },
+                            variant: { id: 1, price: 150000, stock: 10, options: [], images: [] }
+                        },
+                        {
+                            id: 2,
+                            product_id: 2,
+                            product_variant_id: 2,
+                            quantity: 1,
+                            unit_price: 100000,
+                            sub_total: 100000,
+                            product: {
+                                id: 2,
+                                name: 'Buku Tamu Digital',
+                                featured_image: { image: '/products/guestbook\'s/guestbook.jpg' }
+                            },
+                            variant: { id: 2, price: 100000, stock: 10, options: [], images: [] }
+                        }
+                    ],
+                    custom_data: {
+                        bride_full_name: 'Jane Doe',
+                        groom_full_name: 'John Doe',
+                        bride_nickname: 'Jane',
+                        groom_nickname: 'John',
+                        bride_parents: 'Mr. & Mrs. Doe',
+                        groom_parents: 'Mr. & Mrs. Smith',
+                        akad_date: '2025-12-12',
+                        akad_time: '10:00',
+                        akad_location: 'Mockingbird Hall',
+                        reception_date: '2025-12-12',
+                        reception_time: '19:00',
+                        reception_location: 'Mockingbird Ballroom',
+                    }
+                },
+                {
+                    id: 2,
+                    order_number: 'MOCK-002',
+                    total_amount: 120000,
+                    shipping_address: 'Jl. Raya No. 45, Bandung',
+                    order_status: 'pending',
+                    payment_status: 'pending',
+                    amount_paid: 0,
+                    remaining_balance: 120000,
+                    created_at: '2023-10-25T14:30:00Z',
+                    items: [
+                        {
+                            id: 3,
+                            product_id: 3,
+                            product_variant_id: 3,
+                            quantity: 1,
+                            unit_price: 120000,
+                            sub_total: 120000,
+                            product: {
+                                id: 3,
+                                name: 'Tema Blue on Blue',
+                                featured_image: { image: '/products/blue-on-blue/1.jpg' }
+                            },
+                            variant: { id: 3, price: 120000, stock: 10, options: [], images: [] }
+                        }
+                    ]
+                }
+            ]);
+        }, 500);
+    });
 };
 
 export const getFinalPaymentSnapToken = async (
   orderId: string
 ): Promise<{ snap_token: string; message?: string }> => {
-  const response = await api.post(`/orders/${orderId}/pay-final`);
-  return response.data;
+    return new Promise(resolve => {
+        setTimeout(() => {
+            resolve({ snap_token: 'mock-snap-token' });
+        }, 500);
+    });
 };
 
 export const retryPayment = async (orderId: string): Promise<{ snap_token: string; message: string }> => {
-  const response = await api.post(`/orders/${orderId}/retry-payment`);
-  return response.data;
+    return new Promise(resolve => {
+        setTimeout(() => {
+            resolve({ snap_token: 'mock-retry-snap-token', message: 'Payment retried' });
+        }, 500);
+    });
 };

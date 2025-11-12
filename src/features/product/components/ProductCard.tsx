@@ -25,7 +25,7 @@ const ProductCard = ({ product, loading = false }: ProductCardProps) => {
   return (
     <Link
       to={`/product/${product.id}`}
-      className="group product-card block bg-popover overflow-hidden transition-all duration-300 h-full border border-border rounded-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+      className="group product-card block bg-background overflow-hidden transition-all duration-300 h-full border border-border rounded-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
       aria-label={`View details for ${product.name}`}
     >
       <div className="relative w-full overflow-hidden aspect-square p-4 pb-0">
@@ -44,14 +44,13 @@ const ProductCard = ({ product, loading = false }: ProductCardProps) => {
 
       <div className="p-4">
         <h3
-          className="text-base font-semibold text-foreground line-clamp-2 min-h-[3rem]"
-          // title={product.name}
+          className="text-lg font-semibold text-card-foreground line-clamp-2 min-h-[3rem]"
         >
           {product.name}
         </h3>
 
-        <div className="flex items-baseline justify-between">
-          <p className="text-lg font-bold text-foreground">
+        <div className="">
+          <p className="text-lg font-bold text-card-foreground">
             {new Intl.NumberFormat("id-ID", {
               style: "currency",
               currency: "IDR",

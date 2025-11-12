@@ -1,7 +1,6 @@
 // src/services/cartService.ts (Corrected for API v1.1.0)
 
-import apiClient from "@/lib/api";
-import type { Product, ProductVariant } from "./productService"; // Import ProductVariant
+import type { Product, ProductVariant } from "../product/services/productService"; // Import ProductVariant
 
 // =================================================================================
 // --- TYPE DEFINITIONS (SYNCHRONIZED WITH API v1.1.0) ---
@@ -52,20 +51,23 @@ export interface AddToCartPayload {
 // --- API FUNCTIONS ---
 // =================================================================================
 
+let mockCart: Cart = {
+    id: 1,
+    session_id: 'mock-session-id',
+    total_items: 0,
+    subtotal: 0,
+    items: []
+};
+
 /**
  * Fetches the current user's or guest's cart from the server.
  */
 export const fetchCart = async (): Promise<Cart> => {
-  const response = await apiClient.get<CartResponse>('/cart', {
-    headers: {
-      'X-Session-ID': localStorage.getItem('cartSessionId') || '',
-    },
-  });
-  // Save the session_id to localStorage if it exists in the response
-  if (response.data.data.session_id) {
-    localStorage.setItem('cartSessionId', response.data.data.session_id);
-  }
-  return response.data.data;
+    return new Promise(resolve => {
+        setTimeout(() => {
+            resolve(mockCart);
+        }, 500);
+    });
 };
 
 /**
@@ -73,34 +75,72 @@ export const fetchCart = async (): Promise<Cart> => {
  * CORRECTED: Sends `variant_id` instead of `product_id`.
  */
 export const addToCart = async (payload: AddToCartPayload): Promise<Cart> => {
-  const response = await apiClient.post<CartResponse>('/cart/items', {
-    variant_id: payload.variantId, // Use variant_id as required by the new API
-    quantity: payload.quantity,
-    add_ons: payload.addOns,
-  });
-  return response.data.data;
+    return new Promise(resolve => {
+        setTimeout(() => {
+            const product = { id: 1, name: 'Tema Alice in Wonderland', slug: 'tema-alice-in-wonderland', base_price: 150000, featured_image: { id: 1, image: '/public/products/alice-wonderland-theme/1.jpg', alt_text: 'Alice in Wonderland', is_featured: true } };
+            const variant = { id: payload.variantId, price: 150000, stock: 10, options: [], images: [] };
+            const newItem: CartItem = {
+                id: mockCart.items.length + 1,
+                quantity: payload.quantity,
+                unit_price: variant.price,
+                sub_total: payload.quantity * variant.price,
+                customizations: null,
+                product: product,
+                variant: variant
+            };
+            mockCart.items.push(newItem);
+            mockCart.total_items = mockCart.items.length;
+            mockCart.subtotal = mockCart.items.reduce((acc, item) => acc + item.sub_total, 0);
+            resolve(mockCart);
+        }, 500);
+    });
 };
 
 /**
  * Updates the quantity of a specific item in the cart.
  */
 export const updateCartItem = async ({ itemId, quantity }: { itemId: number; quantity: number }) => {
-  const response = await apiClient.patch<CartResponse>(`/cart/items/${itemId}`, { quantity });
-  return response.data.data;
+    return new Promise(resolve => {
+        setTimeout(() => {
+            const item = mockCart.items.find(i => i.id === itemId);
+            if (item) {
+                item.quantity = quantity;
+                item.sub_total = item.unit_price * quantity;
+                mockCart.subtotal = mockCart.items.reduce((acc, item) => acc + item.sub_total, 0);
+            }
+            resolve(mockCart);
+        }, 500);
+    });
 };
 
 /**
  * Removes a specific item from the cart.
  */
 export const removeCartItem = async (itemId: number): Promise<Cart> => {
-  const response = await apiClient.delete<CartResponse>(`/cart/items/${itemId}`);
-  return response.data.data;
+    return new Promise(resolve => {
+        setTimeout(() => {
+            mockCart.items = mockCart.items.filter(i => i.id !== itemId);
+            mockCart.total_items = mockCart.items.length;
+            mockCart.subtotal = mockCart.items.reduce((acc, item) => acc + item.sub_total, 0);
+            resolve(mockCart);
+        }, 500);
+    });
 };
 
 /**
  * Removes all items from the cart.
  */
 export const clearCart = async (): Promise<Cart> => {
-  const response = await apiClient.delete<CartResponse>('/cart');
-  return response.data.data;
+    return new Promise(resolve => {
+        setTimeout(() => {
+            mockCart = {
+                id: 1,
+                session_id: 'mock-session-id',
+                total_items: 0,
+                subtotal: 0,
+                items: []
+            };
+            resolve(mockCart);
+        }, 500);
+    });
 };

@@ -1,37 +1,13 @@
-import api from '@/lib/api';
-import { AxiosError } from 'axios';
+import { mockApi } from '@/lib/mockApi';
 
 export const fetchProvinces = async () => {
-    const response = await api.get('/rajaongkir/provinces');
+    const response: any = await mockApi.getProvinces();
     return response.data;
 };
 
 export const fetchCities = async (provinceId: string) => {
-  try {
-    const response = await api.get(`/rajaongkir/cities?province_id=${provinceId}`);
-    console.log("RajaOngkir Cities API Response:", response.data); // Add this line
-
-    // Check if the response contains an error from RajaOngkir
-    if (response.data && response.data.rajaongkir && response.data.rajaongkir.status && response.data.rajaongkir.status.code !== 200) {
-      console.warn("RajaOngkir API returned an error status:", response.data.rajaongkir.status.description);
-      return []; // Return an empty array if RajaOngkir API indicates an error
-    }
-
-    if (response.data && response.data.rajaongkir && Array.isArray(response.data.rajaongkir.results)) {
-      return response.data.rajaongkir.results;
-    } else {
-      // If the format is unexpected but not an explicit RajaOngkir error, log and return empty array
-      console.error("Unexpected response format from RajaOngkir API:", response.data);
-      return [];
-    }
-  } catch (error) {
-    const axiosError = error as AxiosError<{
-      message: string;
-    }>;
-    console.error("API call failed:", axiosError.response?.data || axiosError.message);
-    // If there's a network error or other exception, return an empty array
-    return [];
-  }
+    const response: any = await mockApi.getCities(provinceId);
+    return response.data.rajaongkir.results;
 };
 /**
  * Mengirimkan data checkout ke server untuk pengguna yang terautentikasi.
@@ -39,12 +15,17 @@ export const fetchCities = async (provinceId: string) => {
  * @returns Respon dari server.
  */
 export const createOrder = async (checkoutData: FormData) => {
-    const response = await api.post('/checkout', checkoutData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
+    return new Promise(resolve => {
+        setTimeout(() => {
+            resolve({
+                message: 'Order created successfully',
+                data: {
+                    order_id: 'mock-order-id',
+                    payment_token: 'mock-payment-token'
+                }
+            });
+        }, 500);
     });
-    return response.data;
 };
 
 /**
@@ -53,24 +34,20 @@ export const createOrder = async (checkoutData: FormData) => {
  * @returns Respon dari server.
  */
 export const createGuestOrder = async (checkoutData: FormData) => {
-    const sessionId = localStorage.getItem('cartSessionId');
-    const headers: { [key: string]: string } = {
-      'Content-Type': 'multipart/form-data',
-    };
-    if (sessionId) {
-      headers['X-Session-ID'] = sessionId;
-    }
-
-    const response = await api.post('/guest-checkout', checkoutData, { headers });
-    return response.data;
+    return new Promise(resolve => {
+        setTimeout(() => {
+            resolve({
+                message: 'Guest order created successfully',
+                data: {
+                    order_id: 'mock-guest-order-id',
+                    payment_token: 'mock-guest-payment-token'
+                }
+            });
+        }, 500);
+    });
 };
 
 export const getShippingCost = async (origin: string, destination: string, weight: number, courier: string) => {
-    const response = await api.post('/rajaongkir/cost', {
-      origin,
-      destination,
-      weight,
-      courier,
-    });
+    const response: any = await mockApi.getCost(origin, destination, weight, courier);
     return response.data;
 };

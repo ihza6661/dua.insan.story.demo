@@ -1,6 +1,4 @@
 
-import React from "react";
-
 const faqs = [
   {
     question: "Apakah ada batas revisinya?",
@@ -27,11 +25,11 @@ export default function FaqSection() {
         {faqs.map((faq, index) => (
           <div className="px-4 py-4" key={index}>
             <div className="bg-card p-4 rounded-xl">
-            <h3 className="text-lg font-semibold mb-2">
-              {faq.question}
-            </h3>
-            <p className="text-muted-foreground">{faq.answer}</p>
-          </div>
+              <h3 className="text-lg font-semibold mb-2">
+                {faq.question}
+              </h3>
+              <p className="text-muted-foreground">{faq.answer}</p>
+            </div>
           </div>
         ))}
       </div>

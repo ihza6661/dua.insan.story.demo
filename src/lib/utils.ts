@@ -9,11 +9,7 @@ export const getImageUrl = (path: string | null | undefined): string => {
   if (!path) {
     return "/placeholder.svg";
   }
-  if (path.startsWith("http")) {
-    return path;
-  }
-  const storageUrl = import.meta.env.VITE_PUBLIC_STORAGE_URL || "";
-  return `${storageUrl}/${path}`;
+  return path;
 };
 
 export const formatRupiah = (amount: number): string => {

@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/buttons/button";
 import React from "react";
 
 export default function GalleryPage() {
-  const { 
+  const {
     data,
     isLoading,
     isError,
@@ -32,10 +32,10 @@ export default function GalleryPage() {
   const galleryItems = data?.pages.flatMap(page => page.data) || [];
 
   return (
-    <div className="pt-24 w-full">
+    <div className="pt-28 w-full">
       <div className="text-center space-y-4">
         <h1 className="text-4xl font-normal tracking-wide">SHOP THE LOOK</h1>
-        <p className="text-sm pb-8 text-gray-600">
+        <p className="text-sm pb-8 text-foreground">
           Explore our design inspirations for fine perfect style
         </p>
       </div>
@@ -57,33 +57,33 @@ export default function GalleryPage() {
       )}
 
       <div className="container mx-auto px-4">
-          <div className="columns-2 md:columns-3 lg:columns-4 gap-4">
-              {galleryItems.map((item) => (
-              <div key={item.id} className="relative overflow-hidden mb-4 break-inside-avoid">
-                  <img 
-                      src={item.file_url} 
-                      alt={item.title} 
-                      className="w-full h-auto rounded-lg shadow-md" 
+        <div className="columns-2 md:columns-3 lg:columns-4 gap-4">
+          {galleryItems.map((item) => (
+            <div key={item.id} className="relative overflow-hidden mb-4 break-inside-avoid">
+              <img
+                src={item.file_url}
+                alt={item.title}
+                className="w-full h-auto rounded-lg shadow-md"
+              />
+              <div className="absolute top-4 right-4 bg-white p-2 cursor-pointer rounded-full shadow-md">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  className="w-6 h-6 text-black"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="1"
+                    d="M12 5v14m7-7H5"
                   />
-                  <div className="absolute top-4 right-4 bg-white p-2 cursor-pointer rounded-full shadow-md">
-                  <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      className="w-6 h-6 text-black"
-                  >
-                      <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="1"
-                      d="M12 5v14m7-7H5"
-                      />
-                  </svg>
-                  </div>
+                </svg>
               </div>
-              ))}
-          </div>
+            </div>
+          ))}
+        </div>
       </div>
 
       <div className="text-center my-8">
@@ -99,7 +99,7 @@ export default function GalleryPage() {
 
       {!isLoading && !isError && galleryItems.length === 0 && (
         <div className="text-center py-20">
-            <p className="text-lg text-gray-500">Tidak ada gambar di galeri saat ini.</p>
+          <p className="text-lg text-gray-500">Tidak ada gambar di galeri saat ini.</p>
         </div>
       )}
 

@@ -1,6 +1,5 @@
-// src/services/authService.ts (Final & Corrected)
 
-import apiClient from "@/lib/api";
+// src/services/authService.ts (Final & Corrected)
 
 // ===================================================================
 // --- DEFINISI TIPE (Bersih & Sesuai API) ---
@@ -78,24 +77,54 @@ interface LoginApiResponse {
  * Mengirim permintaan registrasi pengguna baru.
  */
 export const registerUser = async (data: RegisterPayload): Promise<ApiResponse<User>> => {
-  const response = await apiClient.post<ApiResponse<User>>("/register", data);
-  return response.data;
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve({
+        message: 'Registration successful',
+        data: {
+          id: 1,
+          full_name: data.full_name,
+          email: data.email,
+          phone_number: data.phone_number || null,
+          role: 'customer'
+        }
+      });
+    }, 500);
+  });
 };
 
 /**
  * Mengirim permintaan login pengguna.
  */
 export const loginUser = async (credentials: LoginPayload): Promise<LoginApiResponse> => {
-  const response = await apiClient.post<LoginApiResponse>("/login", credentials);
-  return response.data;
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve({
+        message: 'Login successful',
+        data: {
+          user: {
+            id: 1,
+            full_name: 'John Doe',
+            email: credentials.email,
+            phone_number: '08123456789',
+            role: 'customer'
+          },
+          token: 'mock-auth-token'
+        }
+      });
+    }, 500);
+  });
 };
 
 /**
  * Mengirim permintaan logout.
  */
 export const logoutUser = async (): Promise<{ message: string }> => {
-  const response = await apiClient.post<{ message: string }>("/logout");
-  return response.data;
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve({ message: 'Logout successful' });
+    }, 500);
+  });
 };
 
 /**
@@ -103,8 +132,17 @@ export const logoutUser = async (): Promise<{ message: string }> => {
  * ✅ PERBAIKAN: Mengharap ApiResponse<User> dan mengembalikan response.data.data
  */
 export const getMyProfile = async (): Promise<User> => {
-  const response = await apiClient.get<ApiResponse<User>>("/user");
-  return response.data.data;
+    return new Promise(resolve => {
+        setTimeout(() => {
+            resolve({
+                id: 1,
+                full_name: 'John Doe',
+                email: 'john.doe@example.com',
+                phone_number: '08123456789',
+                role: 'customer'
+            });
+        }, 500);
+    });
 };
 
 /**
@@ -112,14 +150,29 @@ export const getMyProfile = async (): Promise<User> => {
  * ✅ PERBAIKAN: Mengharap ApiResponse<User> dan mengembalikan response.data
  */
 export const updateProfile = async (payload: UpdateProfilePayload): Promise<ApiResponse<User>> => {
-  const response = await apiClient.put<ApiResponse<User>>("/user", payload);
-  return response.data;
+    return new Promise(resolve => {
+        setTimeout(() => {
+            resolve({
+                message: 'Profile updated successfully',
+                data: {
+                    id: 1,
+                    full_name: payload.full_name,
+                    email: payload.email,
+                    phone_number: payload.phone_number || null,
+                    role: 'customer'
+                }
+            });
+        }, 500);
+    });
 };
 
 /**
  * Mengubah password pengguna.
  */
 export const changePassword = async (payload: ChangePasswordPayload): Promise<{ message: string }> => {
-  const response = await apiClient.post<{ message: string }>("/user/change-password", payload);
-  return response.data;
+    return new Promise(resolve => {
+        setTimeout(() => {
+            resolve({ message: 'Password changed successfully' });
+        }, 500);
+    });
 };

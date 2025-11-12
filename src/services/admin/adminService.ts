@@ -1,6 +1,6 @@
-// src/services/adminService.ts
 
-import apiClient from "@/lib/api";
+import { ProductImage } from './adminService';
+// src/services/adminService.ts
 
 export interface ProductImage {
     id: number;
@@ -18,15 +18,14 @@ interface UploadImagePayload {
  * Mengunggah gambar baru untuk sebuah varian produk.
  */
 export const uploadProductImage = async (variantId: number, payload: UploadImagePayload): Promise<ProductImage> => {
-    const formData = new FormData();
-    formData.append('image', payload.image);
-    formData.append('is_featured', payload.is_featured ? '1' : '0');
-
-    const response = await apiClient.post<{ data: ProductImage }>(`/admin/variants/${variantId}/images`, formData, {
-        headers: {
-            'Content-Type': 'multipart/form-data',
-        },
+    return new Promise(resolve => {
+        setTimeout(() => {
+            resolve({
+                id: 1,
+                image: 'https://via.placeholder.com/150',
+                alt_text: 'mock image',
+                is_featured: payload.is_featured
+            });
+        }, 500);
     });
-
-    return response.data.data;
 };

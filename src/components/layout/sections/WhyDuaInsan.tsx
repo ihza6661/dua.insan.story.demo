@@ -44,7 +44,7 @@ const WhyDuaInsan = () => {
   return (
     <section className="py-10 px-4 sm:px-6 md:px-12 lg:px-24 xl:px-36 bg-background">
       <h2 className="text-foreground text-center text-2xl sm:text-3xl lg:text-4xl font-serif italic mb-10 md:mb-14">
-        Why <span className="">DuaInsan.story</span>?
+        Kenapa <span className="">DuaInsan.story</span>?
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10 max-w-7xl mx-auto">
         {features.map((feature, index) => (

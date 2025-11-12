@@ -1,6 +1,5 @@
-// src/services/optionService.ts
 
-import apiClient from "@/lib/api";
+// src/services/optionService.ts
 
 // Definisikan tipe data untuk Jenis Kertas
 export interface PaperType {
@@ -13,7 +12,13 @@ export interface PaperType {
  * Mengambil daftar semua jenis kertas yang tersedia dari API.
  */
 export const fetchPaperTypes = async (): Promise<PaperType[]> => {
-  // Asumsi endpoint ini ada di backend Anda
-  const response = await apiClient.get<{ data: PaperType[] }>("/paper-types");
-  return response.data.data;
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve([
+        { id: 1, name: 'Kertas Art Carton', value: 'art_carton' },
+        { id: 2, name: 'Kertas Ivory', value: 'ivory' },
+        { id: 3, name: 'Kertas Matte Paper', value: 'matte_paper' },
+      ]);
+    }, 500);
+  });
 };

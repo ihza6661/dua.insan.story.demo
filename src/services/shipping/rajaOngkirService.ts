@@ -1,4 +1,5 @@
-import apiClient from "@/lib/api";
+
+import { mockApi } from '@/lib/mockApi';
 
 export interface Province {
   province_id: string;
@@ -20,11 +21,11 @@ interface ApiResponse<T> {
 }
 
 export const getProvinces = async (): Promise<Province[]> => {
-  const response = await apiClient.get<ApiResponse<Province[]>>("/rajaongkir/provinces");
-  return response.data.data;
+  const response: any = await mockApi.getProvinces();
+  return response.data.rajaongkir.results;
 };
 
 export const getCities = async (provinceId: string): Promise<City[]> => {
-  const response = await apiClient.get<ApiResponse<City[]>>(`/rajaongkir/cities?province_id=${provinceId}`);
-  return response.data.data;
+  const response: any = await mockApi.getCities(provinceId);
+  return response.data.rajaongkir.results;
 };

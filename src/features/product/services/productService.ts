@@ -1,4 +1,3 @@
-import apiClient from "@/lib/api";
 /**
  * Mendefinisikan struktur data untuk Kategori Produk.
 */
@@ -102,24 +101,60 @@ interface FetchProductsParams {
  * Mengambil daftar semua kategori produk dari API.
  */
 export const fetchCategories = async (): Promise<ProductCategory[]> => {
-  const response = await apiClient.get<{ data: ProductCategory[] }>("/customer/product-categories");
-  return response.data.data;
+    return new Promise(resolve => {
+        setTimeout(() => {
+            resolve([
+                { id: 1, name: 'Undangan Digital', slug: 'undangan-digital', description: 'Undangan digital modern dan interaktif.', image: '/category/wedding.jpg' },
+                { id: 2, name: 'Buku Tamu Digital', slug: 'buku-tamu-digital', description: 'Buku tamu digital dengan QR code.', image: '/category/guestbook.jpg' },
+            ]);
+        }, 500);
+    });
 };
 
 /**
  * Mengambil daftar produk dari API, mendukung filter dan paginasi.
  */
 export const fetchProducts = async (params: FetchProductsParams): Promise<PaginatedProducts> => {
-  const response = await apiClient.get<PaginatedProducts>("/customer/products", {
-    params: params,
-  });
-  return response.data;
+    return new Promise(resolve => {
+        setTimeout(() => {
+            resolve({
+                data: [
+                    { id: 1, name: 'Tema Alice in Wonderland', slug: 'tema-alice-in-wonderland', base_price: 150000, featured_image: { id: 1, image: '/products/alice-wonderland-theme/1.jpg', alt_text: 'Alice in Wonderland', is_featured: true } },
+                    { id: 2, name: 'Tema Blue on Blue', slug: 'tema-blue-on-blue', base_price: 120000, featured_image: { id: 2, image: '/products/blue-on-blue/1.jpg', alt_text: 'Blue on Blue', is_featured: true } },
+                ],
+                links: { first: '', last: '', prev: null, next: null },
+                meta: { current_page: 1, from: 1, last_page: 1, path: '', per_page: 10, to: 2, total: 2 }
+            });
+        }, 500);
+    });
 };
 
 /**
  * Mengambil data detail lengkap untuk satu produk berdasarkan ID-nya.
  */
 export const fetchProductById = async (productId: string): Promise<ProductDetail> => {
-  const response = await apiClient.get<ProductDetailResponse>(`/customer/products/${productId}`);
-  return response.data.data;
+    return new Promise(resolve => {
+        setTimeout(() => {
+            resolve({
+                id: 1,
+                name: 'Tema Alice in Wonderland',
+                slug: 'tema-alice-in-wonderland',
+                base_price: 150000,
+                featured_image: { id: 1, image: '/products/alice-wonderland-theme/1.jpg', alt_text: 'Alice in Wonderland', is_featured: true },
+                description: 'Undangan dengan tema Alice in Wonderland yang unik dan menarik.',
+                min_order_quantity: 50,
+                category: { id: 1, name: 'Undangan Digital', slug: 'undangan-digital', description: 'Undangan digital modern dan interaktif.', image: '/category/wedding.jpg' },
+                images: [
+                    { id: 1, image: '/products/alice-wonderland-theme/1.jpg', alt_text: 'Alice in Wonderland 1', is_featured: true },
+                    { id: 2, image: '/products/alice-wonderland-theme/2.jpg', alt_text: 'Alice in Wonderland 2', is_featured: false },
+                ],
+                variants: [],
+                grouped_options: {},
+                add_ons: [
+                    { id: 1, name: 'Buku Tamu Digital', price: 50000 },
+                    { id: 2, name: 'Filter Instagram', price: 100000 },
+                ]
+            });
+        }, 500);
+    });
 };
