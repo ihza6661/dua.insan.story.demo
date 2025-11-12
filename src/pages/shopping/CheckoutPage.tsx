@@ -160,7 +160,7 @@ const CheckoutPage = () => {
 
       if (order.snap_token) {
         window.snap.pay(order.snap_token, {
-          onSuccess: function (result) {
+          onSuccess: function(result) {
             console.log("success", result);
             toast({
               title: "Pembayaran Berhasil!",
@@ -168,7 +168,7 @@ const CheckoutPage = () => {
             });
             navigate(`/order-confirmation/${order.data.id}`);
           },
-          onPending: function (result) {
+          onPending: function(result) {
             console.log("pending", result);
             toast({
               title: "Pembayaran Tertunda",
@@ -176,7 +176,7 @@ const CheckoutPage = () => {
             });
             navigate(`/order-confirmation/${order.data.id}`);
           },
-          onError: function (result) {
+          onError: function(result) {
             console.log("error", result);
             toast({
               title: "Pembayaran Gagal",
@@ -184,7 +184,7 @@ const CheckoutPage = () => {
               variant: "destructive",
             });
           },
-          onClose: function () {
+          onClose: function() {
             toast({
               title: "Pembayaran Dibatalkan",
               description:
@@ -517,7 +517,7 @@ const CheckoutPage = () => {
                               className="w-16 h-16 object-cover rounded"
                             />
                           )}
-                        <div>
+                        <div className="p-2">
                           <p className="text-sm font-medium">
                             {item.product?.name} x {item.quantity}
                           </p>
@@ -529,9 +529,10 @@ const CheckoutPage = () => {
                               )
                               .join(" / ")}
                           </p>
+                          <span className="text-xs">Jumlah Total: {formatRupiah(item.sub_total)}</span>
                         </div>
                       </div>
-                      <span>{formatRupiah(item.sub_total)}</span>
+
                     </div>
                   );
                 })}
