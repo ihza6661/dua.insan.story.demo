@@ -17,7 +17,7 @@ const BestSeller = () => {
   const products = productData?.data.slice(0, 8) || [];
 
   return (
-    <div className="px-4 text-center">
+    <div className="px-4 bg-background text-center">
       <h2 className="inline-block text-lg sm:text-xl font-medium mb-4 sm:mb-6 uppercase tracking-widest mt-6 bg-background text-muted-foreground px-6 py-2 rounded-full shadow-sm">
         Produk Andalan Kami
       </h2>
